@@ -1,0 +1,794 @@
+package com.wr.controller;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Null;
+
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.wr.model.Report;
+import com.wr.model.Sign;
+import com.wr.model.User;
+import com.wr.service.ReportService;
+import com.wr.service.SignService;
+import com.wr.service.UserService;
+import com.wr.utils.SystemTime;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+
+@Controller
+@RequestMapping("/function")
+public class FunctionController {
+	
+	@Autowired
+	ReportService reportService;
+	
+	@Autowired
+	SignService signSerivce;
+	
+	@Autowired
+	UserService userService;
+	
+	/****************** Group Member ************** Group Leader *****************/
+	@RequestMapping(value = "/reportsubmit", method = RequestMethod.POST)
+	@ResponseBody
+	public String submitReport(@RequestParam(value = "file", required = false)MultipartFile[] files, HttpServletRequest request, HttpSession session) {
+		
+		String username = (String) session.getAttribute("username");
+		String role = (String) session.getAttribute("role");
+		
+		String sdate = request.getParameter("sdate");
+		String edate = request.getParameter("edate");
+		String lplan = request.getParameter("lplan");
+		String done = request.getParameter("done");
+		String summary = request.getParameter("summary");
+		String nplan = request.getParameter("nplan");
+		String lread = request.getParameter("lread");
+		String nread = request.getParameter("nread");
+		String term = SystemTime.term;
+		int nw = SystemTime.start_NW_of_Term;
+		int year  = SystemTime.year;
+		int month = SystemTime.month;
+		String upload = null;
+		
+		//这里因为需要获取路径，用到request，所以将文件保存的业务写在控制层
+		if (files != null && files.length > 0) {
+			//根据不同用户，不同日期生成不同存储路径
+			String savePath ="upload" + "/" + username + "/" + term + "/" +"week" + nw;
+			//获取项目绝对路径,将文件存储到该路径
+			String path = request.getServletContext().getRealPath("/") + savePath;
+			upload = path;
+			for(MultipartFile  file : files) {
+				if (!file.isEmpty()) {
+					//TODO:newFileName
+					String fileName = file.getOriginalFilename();
+					
+					//要存储的文件
+					File desFile = new File(path, fileName);
+					if (!desFile.exists()) {
+						desFile.mkdirs();
+					}
+					//转存
+					try {
+						file.transferTo(desFile);
+					} catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+					//访问file的url
+				}
+			}
+		}
+		int qualify = 0;
+		if (role.equals("groupleader") || role.equals("secretary")) {
+			qualify = 1;
+		}
+		reportService.addReport(sdate, edate, lplan, done, summary, nplan, lread, nread, upload, username, qualify, nw, term, year, month);
+		return "success";
+	}
+	
+	@RequestMapping(value = "/getuserreptable", method = RequestMethod.POST, produces="application/json;charset=UTF-8")//这里解决中文乱码，在mvc配置文件中加入<mvc:annotation-driven>，然后添加application/json;charset=UTF-8
+	@ResponseBody
+	public String getUserRepTable(HttpServletRequest request, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		String term = request.getParameter("term");
+		List<Report> reports = reportService.getReportsByTerm(username, term);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"user", "id", "sdate", "edate", "lplan", "done",
+				"summary", "nplan", "lread", "nread"});
+		JSONArray jsonArray = JSONArray.fromObject(reports, jsonConfig);
+		String result = jsonArray.toString();
+		System.out.println(jsonArray);
+		return result;
+	}
+	
+	@RequestMapping(value = "/getrep", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getRep(HttpServletRequest request, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String term = request.getParameter("term");
+		Report report = reportService.getReport(username, term, nw);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"user", "id"});
+		JSONArray jsonArray = JSONArray.fromObject(report, jsonConfig);
+		String result = jsonArray.toString();
+		return result;
+	}
+	
+	@RequestMapping(value = "/repupdate", method = RequestMethod.POST)
+	@ResponseBody
+	public String repUpdate(@RequestParam(value = "file", required = false)MultipartFile[] files,HttpServletRequest request, HttpSession session) {
+		
+		String username = (String) session.getAttribute("username");
+		String sdate = request.getParameter("sdate");
+		String edate = request.getParameter("edate");
+		String lplan = request.getParameter("lplan");
+		String done = request.getParameter("done");
+		String summary = request.getParameter("summary");
+		String nplan = request.getParameter("nplan");
+		String lread = request.getParameter("lread");
+		String nread = request.getParameter("nread");
+		String term = SystemTime.term;
+		int nw = SystemTime.start_NW_of_Term;
+
+		Report report = reportService.getReport(username, term, nw);
+		String upload = report.getUpload();
+		
+		if (upload == null) {
+			//根据不同用户，不同日期生成不同存储路径
+			String savePath ="upload" + "/" + username + "/" + term + "/" +"week" + nw;
+			//获取项目绝对路径,将文件存储到该路径
+			String path = request.getServletContext().getRealPath("/") + savePath;
+			upload = path;
+			for(MultipartFile  file : files) {
+				if (!file.isEmpty()) {
+					//TODO:newFileName
+					String fileName = file.getOriginalFilename();
+					
+					//要存储的文件
+					File desFile = new File(path, fileName);
+					if (!desFile.exists()) {
+						desFile.mkdirs();
+					}
+					//转存
+					try {
+						file.transferTo(desFile);
+					} catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+				}
+			}
+			report.setUpload(upload);
+		}
+		
+		if (files != null && files.length > 0) {
+			for(MultipartFile  file : files) {
+				if (!file.isEmpty()) {
+					//TODO:newFileName
+					String fileName = file.getOriginalFilename();
+					//要存储的文件
+					File desFile = new File(upload, fileName);
+					if (!desFile.exists()) {
+						desFile.mkdirs();
+					}
+					//转存
+					try {
+						file.transferTo(desFile);
+					} catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+				}
+			}
+		}
+		report.setDone(done);
+		report.setEdate(edate);
+		report.setLplan(lplan);
+		report.setLread(lread);
+		report.setNplan(nplan);
+		report.setNread(nread);
+		report.setSdate(sdate);
+		report.setSummary(summary);
+		report.setQualify(0);
+		
+		reportService.updateReport(report);
+		return "success";
+	}
+	
+	@RequestMapping(value = "/deletereport", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteReport(HttpServletRequest request, HttpSession session) throws IOException {
+		String username = (String) session.getAttribute("username");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String term = request.getParameter("term");
+		
+		reportService.deleteReport(username, term, nw);
+		return "success";
+	}
+	
+	@RequestMapping(value = "/download", method =RequestMethod.POST)
+	public ResponseEntity<byte[]> downLoadFile(HttpServletRequest request, HttpSession session) throws IOException  {
+		String username = (String) session.getAttribute("username");
+		String term = request.getParameter("term");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String name = request.getParameter("name");
+		String filename = request.getParameter("filename");
+		Report report = reportService.getReport(username, term, nw);
+		String upload = report.getUpload();
+		String filePath = upload + "/" + filename;
+		File file = new File(filePath);	
+		if (file.isFile()) {
+			HttpHeaders headers = new HttpHeaders();
+			filename = new String(filename.getBytes("utf-8"),"iso-8859-1");
+			headers.setContentDispositionFormData("attachment", filename);
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+			return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers,HttpStatus.CREATED);
+		} else {
+			return null;
+		}
+	}
+
+	@RequestMapping(value = "/getuserfilelist", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getUserFileList(HttpServletRequest request, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String term = request.getParameter("term");
+		Report report = reportService.getReport(username, term, nw);
+		String filePath = report.getUpload();
+		
+		JSONArray jsonArray = new JSONArray();
+		List<String> fileList = new ArrayList<>();
+		
+		if (filePath == null) {
+			return jsonArray.toString();
+		}
+
+		File file = new File(filePath);
+		File[] files = file.listFiles();
+		
+		if (files == null) {
+			return jsonArray.toString();
+		}
+		
+		for(File f:files) {
+			String fileName= f.getName();
+			fileList.add(fileName);
+		}
+		jsonArray = JSONArray.fromObject(fileList);
+
+		return jsonArray.toString();
+	}
+
+	@RequestMapping(value = "/getsign", method =RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getSign(HttpServletRequest request, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		String term = SystemTime.term;
+		int nw = SystemTime.start_NW_of_Term;
+		Sign sign = signSerivce.getSign(username, term, nw);
+		if (sign == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("return", "false");
+			return jsonObject.toString();
+		}
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"user", "id"});
+		JSONObject jsonObject = JSONObject.fromObject(sign,jsonConfig);
+		String result = jsonObject.toString();
+		return result;
+	}
+	
+	@RequestMapping(value = "/signstatus", method = RequestMethod.GET)
+	@ResponseBody
+	public String signStatus (HttpServletRequest request, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		String term = SystemTime.term;
+		int nw = SystemTime.start_NW_of_Term;
+		Sign sign = signSerivce.getSign(username, term, nw);
+		if (sign == null) {
+			return "unsubmit";
+		}
+		return "submited";
+	}
+	
+	@RequestMapping(value = "/submitsign", method =RequestMethod.POST)
+	@ResponseBody
+	public String submitSign(HttpServletRequest request, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		String term = SystemTime.term;
+		int nw = SystemTime.start_NW_of_Term;
+
+		int year  = SystemTime.year;
+		int month = SystemTime.month;
+		String sun_am_in = request.getParameter("sun_am_in");
+		String sun_am_out = request.getParameter("sun_am_out");
+		String sun_pm_in = request.getParameter("sun_am_in");
+		String sun_pm_out = request.getParameter("sun_pm_out");
+		String sun_eve_in = request.getParameter("sun_eve_in");
+		String sun_eve_out = request.getParameter("sun_eve_out");
+		
+		String mon_am_in = request.getParameter("mon_am_in");
+		String mon_am_out = request.getParameter("mon_am_out");
+		String mon_pm_in = request.getParameter("mon_am_in");
+		String mon_pm_out = request.getParameter("mon_pm_out");
+		String mon_eve_in = request.getParameter("mon_eve_in");
+		String mon_eve_out = request.getParameter("mon_eve_out");
+		
+		String tues_am_in = request.getParameter("tues_am_in");
+		String tues_am_out = request.getParameter("tues_am_out");
+		String tues_pm_in = request.getParameter("tues_am_in");
+		String tues_pm_out = request.getParameter("tues_pm_out");
+		String tues_eve_in = request.getParameter("tues_eve_in");
+		String tues_eve_out = request.getParameter("tues_eve_out");
+		
+		String wed_am_in = request.getParameter("wed_am_in");
+		String wed_am_out = request.getParameter("wed_am_out");
+		String wed_pm_in = request.getParameter("wed_am_in");
+		String wed_pm_out = request.getParameter("wed_pm_out");
+		String wed_eve_in = request.getParameter("wed_eve_in");
+		String wed_eve_out = request.getParameter("wed_eve_out");
+		
+		String thur_am_in = request.getParameter("thur_am_in");
+		String thur_am_out = request.getParameter("thur_am_out");
+		String thur_pm_in = request.getParameter("thur_am_in");
+		String thur_pm_out = request.getParameter("thur_pm_out");
+		String thur_eve_in = request.getParameter("thur_eve_in");
+		String thur_eve_out = request.getParameter("thur_eve_out");
+		
+		String fri_am_in = request.getParameter("fri_am_in");
+		String fri_am_out = request.getParameter("fri_am_out");
+		String fri_pm_in = request.getParameter("fri_am_in");
+		String fri_pm_out = request.getParameter("fri_pm_out");
+		String fri_eve_in = request.getParameter("fri_eve_in");
+		String fri_eve_out = request.getParameter("fri_eve_out");
+		
+		
+		String note = request.getParameter("note");
+		
+		int late = Integer.parseInt(request.getParameter("late"));
+		int dayoff = Integer.parseInt(request.getParameter("dayoff"));
+		int totalTime = Integer.parseInt(request.getParameter("totaltime"));  
+		
+		Sign sign = signSerivce.getSign(username, term, nw);
+		if (sign == null) {
+			signSerivce.addSign(username, term, nw, late, dayoff, totalTime, 
+					sun_am_in, sun_am_out, sun_pm_in, sun_pm_out, sun_eve_in, sun_eve_out, 
+					mon_am_in, mon_am_out, mon_pm_in, mon_pm_out, mon_eve_in, mon_eve_out, 
+					tues_am_in, tues_am_out, tues_pm_in, tues_pm_out, tues_eve_in, tues_eve_out, 
+					wed_am_in, wed_am_out, wed_pm_in, wed_pm_out, wed_eve_in, wed_eve_out, 
+					thur_am_in, thur_am_out, thur_pm_in, thur_pm_out, thur_eve_in, thur_eve_out, 
+					fri_am_in, fri_am_out, fri_pm_in, fri_pm_out, fri_eve_in, fri_eve_out, note, year, month);
+		} else {
+			signSerivce.updateSign(username, term, nw, late, dayoff, totalTime, 
+					sun_am_in, sun_am_out, sun_pm_in, sun_pm_out, sun_eve_in, sun_eve_out, 
+					mon_am_in, mon_am_out, mon_pm_in, mon_pm_out, mon_eve_in, mon_eve_out, 
+					tues_am_in, tues_am_out, tues_pm_in, tues_pm_out, tues_eve_in, tues_eve_out, 
+					wed_am_in, wed_am_out, wed_pm_in, wed_pm_out, wed_eve_in, wed_eve_out, 
+					thur_am_in, thur_am_out, thur_pm_in, thur_pm_out, thur_eve_in, thur_eve_out, 
+					fri_am_in, fri_am_out, fri_pm_in, fri_pm_out, fri_eve_in, fri_eve_out, note);
+		}
+		
+		return "success";
+	}
+	
+	/*********************** Group Leader **************** Teacher ***********************/
+	
+	@RequestMapping(value = "/getfilelist", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getFileList(HttpServletRequest request, HttpSession session) {
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String term = request.getParameter("term");
+		String name = request.getParameter("name");
+		Report report = reportService.getReportByName(name, term, nw);
+		String filePath = report.getUpload();
+		
+		JSONArray jsonArray = new JSONArray();
+		List<String> fileList = new ArrayList<>();
+		
+		if (filePath == null) {
+			return jsonArray.toString();
+		}
+
+		File file = new File(filePath);
+		File[] files = file.listFiles();
+		
+		if (files == null) {
+			return jsonArray.toString();
+		}
+		
+		for(File f:files) {
+			String fileName= f.getName();
+			fileList.add(fileName);
+		}
+		jsonArray = JSONArray.fromObject(fileList);
+
+		return jsonArray.toString();
+	}
+	
+	
+	//获取成员周报
+	@RequestMapping(value = "/getweekrepbygroup", method =RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getWeekRepByGroup(HttpServletRequest request, HttpSession session) {
+		String role = (String) session.getAttribute("role");
+		String username = (String) session.getAttribute("username");
+		
+		String term = SystemTime.term;
+		int nw = SystemTime.start_NW_of_Term;
+
+		String belong = username;
+		String result = null;
+		if (role.equals("groupleader") || role.equals("secretary")) {
+			List<Report> reports = reportService.getWeekGroupReports(term, nw, belong);
+			JSONArray jsonArray = new JSONArray();
+			for(Report rep:reports) {
+				JsonConfig jsonConfig = new JsonConfig();
+				jsonConfig.setExcludes(new String[] {"user", "id","sdate", "edate", "lplan", "done",
+						"summary", "nplan", "lread", "nread"});
+				JSONObject jObject = JSONObject.fromObject(rep,jsonConfig);
+				jObject.put("name", rep.getUser().getName());
+				jsonArray.add(jObject);
+			}
+			result = jsonArray.toString();
+		} else if (role.equals("teacher")) {
+			List<Report> reports = reportService.getWeekAllReports(term, nw);
+			JSONArray jsonArray = new JSONArray();
+			for(Report rep:reports) {
+				JsonConfig jsonConfig = new JsonConfig();
+				jsonConfig.setExcludes(new String[] {"user", "id","sdate", "edate", "lplan", "done",
+						"summary", "nplan", "lread", "nread"});
+				JSONObject jObject = JSONObject.fromObject(rep,jsonConfig);
+				jObject.put("name", rep.getUser().getName());
+				jsonArray.add(jObject);
+			}
+			result = jsonArray.toString();
+		}
+		return result;
+	}
+	@RequestMapping(value = "/downloadsinglefile", method =RequestMethod.POST)
+	public ResponseEntity<byte[]> downloadSingleFile (HttpServletRequest request, HttpSession session) throws IOException{
+		String term = request.getParameter("term");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String name = request.getParameter("name");
+		String filename = request.getParameter("filename");
+		Report report = reportService.getReportByName(name, term, nw);
+		String upload = report.getUpload();
+		String filePath = upload + "/" + filename;
+		File file = new File(filePath);	
+		if (file.isFile()) {
+			HttpHeaders headers = new HttpHeaders();
+			filename = new String(filename.getBytes("utf-8"),"iso-8859-1");
+			headers.setContentDispositionFormData("attachment", filename);
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+			return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers,HttpStatus.CREATED);
+		} else {
+			return null;
+		}
+	} 
+	
+	
+	
+	@RequestMapping(value = "/downloadmemberfile", method =RequestMethod.POST)
+	public ResponseEntity<byte[]> downloadMemberFile (HttpServletRequest request, HttpSession session) throws IOException {
+		
+		List<File> list = new ArrayList<File>();
+
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String term = request.getParameter("term");
+		String name = request.getParameter("name");
+		Report report = reportService.getReportByName(name, term, nw);
+		String directoryPath = report.getUpload();
+		if (directoryPath == null) {
+			return null;
+		}
+		
+        File baseFile = new File(directoryPath);
+        File[] files = baseFile.listFiles();
+		if (files == null) {// 如果目录为空，直接退出
+			return null;
+		}
+		for(File f:files) {
+			if (f.isFile()) {
+				list.add(f);
+			}
+		}
+		
+		String resourcesName = "undefined.zip";
+		ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(directoryPath+resourcesName));
+		InputStream input = null;
+		for (File file : list) {
+			input = new FileInputStream(file);  
+            zipOut.putNextEntry(new ZipEntry(file.getName()));  
+            int temp = 0;  
+            while((temp = input.read()) != -1){  
+                zipOut.write(temp);  
+            }  
+            input.close();
+		}
+		
+		zipOut.close();
+		File file = new File(directoryPath+resourcesName);
+		HttpHeaders headers = new HttpHeaders();
+		String filename = new String(resourcesName.getBytes("utf-8"),"iso-8859-1");
+		headers.setContentDispositionFormData("attachment", filename);
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers,HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = "/getmemberrep", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getMemberRep(HttpServletRequest request) {
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String term = request.getParameter("term");
+		String name = request.getParameter("name");
+		Report report = reportService.getReportByName(name, term, nw);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"user", "id"});
+		JSONArray jsonArray = JSONArray.fromObject(report, jsonConfig);
+		String result = jsonArray.toString();
+		return result;
+	}
+	
+	
+	
+	/******************************* Group Leader *********************************/
+	@RequestMapping(value = "/review", method =RequestMethod.POST)
+	@ResponseBody
+	public String review(HttpServletRequest request) {
+		String name = request.getParameter("name");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String term = request.getParameter("term");
+		int qualify = Integer.parseInt(request.getParameter("qualify"));
+		Report report = reportService.getReportByName(name, term, nw);
+		report.setQualify(qualify);
+		reportService.updateReport(report);
+		return "success";
+	}
+	
+	/******************************* Teacher *************************************/
+	//
+	@RequestMapping(value = "/getmembersign", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getMemberSign(HttpServletRequest request) {
+		String name = request.getParameter("name");
+		String term = request.getParameter("term");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		Sign sign = signSerivce.getSignByName(name, term, nw);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"user", "id"});
+		JSONObject jsonobj = JSONObject.fromObject(sign, jsonConfig);
+		String result = jsonobj.toString();
+		return result;
+	}
+	
+	@RequestMapping(value = "/getweeksigns",method =RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getWeekSign() {
+		String term = SystemTime.term;
+		int nw = SystemTime.start_NW_of_Term;
+		List<Sign> signs = signSerivce.getAllSignByNW(nw, term);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"user", "id"});
+		JSONArray jsonArray = JSONArray.fromObject(signs, jsonConfig);
+		String result = jsonArray.toString();
+		return result;
+	}
+	
+	@RequestMapping(value = "/getstudentnames",method =RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getStudentNames() {
+		List<String> names = userService.getStudentNames();
+		JSONArray jsonArray = JSONArray.fromObject(names);
+		String result = jsonArray.toString();
+		return result;
+	}
+	
+	@RequestMapping(value = "/searchreport",method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchReport(HttpServletRequest request, HttpSession session) {
+		String name = request.getParameter("name");
+		String term = request.getParameter("term");
+		JSONArray jsonArray = new JSONArray();
+		List<Report> reports = reportService.getReportByNameAndTerm(name, term);
+		
+		for(Report rep:reports) {  
+			JsonConfig jsonConfig = new JsonConfig();
+			jsonConfig.setExcludes(new String[] {"user", "id"});
+			JSONObject jObject = JSONObject.fromObject(rep,jsonConfig);
+			jObject.put("name", rep.getUser().getName());
+			jsonArray.add(jObject);
+		}
+		
+		String result = jsonArray.toString();
+		return result;
+	}
+	
+	/******************************* Admin **************************************/
+	
+	@RequestMapping(value = "/getglnames", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getAllUserName() {
+		List<String> names = userService.getGLNames();
+		JSONArray jsonArray = JSONArray.fromObject(names);
+		String result = jsonArray.toString();
+		return result;
+	}
+	
+	@RequestMapping(value = "/getalluser", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getAllUser() {
+		List<User> users = userService.getAllUser();
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"id", "signs", "reports"});
+		JSONArray jsonArray = JSONArray.fromObject(users, jsonConfig);
+		String result = jsonArray.toString();
+		return result;
+	}
+
+	@RequestMapping(value = "/saveuser", method =RequestMethod.POST)
+	@ResponseBody
+	public String saveUser(HttpServletRequest request) {
+		String username = request.getParameter("username");
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+		String role = request.getParameter("role");
+		String belong = request.getParameter("belong");
+		userService.update(username, password, role, name, belong);
+		return "success";
+	}
+	
+	@RequestMapping(value = "/newuser", method = RequestMethod.POST)
+	@ResponseBody
+	public String newUser(HttpServletRequest request) {
+		String username = request.getParameter("username");
+		String name = request.getParameter("name");
+		String role = request.getParameter("role");
+		String password = request.getParameter("password");
+		String belong = request.getParameter("belong");
+		System.out.println(role);
+		System.out.println(belong);
+		userService.addUser(username, name, password, role, belong);
+		return "success";
+	}
+	
+	@RequestMapping(value = "/deleteuser", method =RequestMethod.POST)
+	@ResponseBody
+	public String deleteUser(HttpServletRequest request) {
+		String username = request.getParameter("username");
+		userService.delete(username);
+		return "success";
+	}
+
+	@RequestMapping(value = "/getalluserreport", method =RequestMethod.POST, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getAllUserReport(HttpServletRequest request) {
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String term = request.getParameter("term");
+		List<Report> reports = reportService.getWeekAllReports(term, nw);
+		
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"id", "user"});
+		
+		JSONArray jsonArray = new JSONArray();
+		for(Report rep:reports) {
+			JSONObject jObject = JSONObject.fromObject(rep,jsonConfig);
+			jObject.put("name", rep.getUser().getName());
+			jsonArray.add(jObject);
+		}
+
+		String result = jsonArray.toString();
+		return result;
+		
+	}
+	
+	@RequestMapping(value = "/getallusersign", method =RequestMethod.POST, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getAllUserSign(HttpServletRequest request) {
+		String ss = request.getParameter("nw");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String term = request.getParameter("term");
+		List<Sign> signs = signSerivce.getAllSignByNW(nw, term);
+		
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"id", "user"});
+		
+		JSONArray jsonArray = new JSONArray();
+		for(Sign s:signs) {
+			JSONObject jObject = JSONObject.fromObject(s,jsonConfig);
+			jObject.put("name", s.getUser().getName());
+			jsonArray.add(jObject);
+		}
+		String result = jsonArray.toString();
+		return result;
+	}
+	
+	@RequestMapping(value = "/deleterep", method =RequestMethod.POST)
+	@ResponseBody
+	public String deleteRep(HttpServletRequest request) throws IOException {
+		String name = request.getParameter("name");
+		String term = request.getParameter("term");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		reportService.deleteReportByName(name, term, nw);
+		return "success";
+	}
+	
+	
+	
+	/************************System function**********************/
+	@RequestMapping(value = "/gettime", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getTime(HttpServletResponse response) {
+		int nw = SystemTime.start_NW_of_Term;
+		String term = SystemTime.term;
+		JSONObject jObject = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		jObject.put("nw", nw);
+		jObject.put("term", term);
+		jsonArray.add(jObject);
+		String result = jsonArray.toString();
+		return result;
+	}
+	
+	@RequestMapping(value = "/changepw", method = RequestMethod.POST)
+	@ResponseBody
+	public String changePW(HttpServletRequest request, HttpSession session) throws IOException {
+		String username = (String) session.getAttribute("username");
+		User user = userService.getUser(username);
+		String oldPassword = request.getParameter("oldpw");
+		String pw = user.getPassword();
+		if (!oldPassword.equals(pw)) {
+			return "fail";
+		}
+		else {
+			String newPassword = request.getParameter("newpw");
+			userService.update(user.getUsername(), newPassword,user.getRole(), user.getName(), user.getBelong());	
+			session.invalidate();
+			return "success";
+		}
+	}	
+	
+	@RequestMapping(value = "/startsystem", method = RequestMethod.POST)
+	@ResponseBody
+	public String startSystem(HttpServletRequest request , HttpSession session) {
+		String year = request.getParameter("year");
+		String half = request.getParameter("half");
+		String term = year + half;
+		int start_NW_of_Term = Integer.parseInt(request.getParameter("nw"));
+		SystemTime systemTime = new SystemTime();
+		systemTime.start(term, start_NW_of_Term);
+		return "sucesse";
+	}
+}

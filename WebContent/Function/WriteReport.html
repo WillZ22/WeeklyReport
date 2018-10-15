@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="#">
+
+    <title>WeeklyReport</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--Font Awesome CSS-->
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Custom styles for this project -->
+    <link href="../Static/css/style.css" rel="stylesheet">
+
+    <!--datetimepicker CSS-->
+    <link href="../Static/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+    <!--Bootstrap table CSS-->
+    <link rel="stylesheet" href="../Static/bootstrap-table/bootstrap-table.min.css">
+
+    <!--Wang Editor CSS-->
+    <link rel="stylesheet" href="../Static/wangEditor-3.1.0/wangEditor.min.css">
+
+    <!--Bootstrapvalidator CSS-->
+    <link rel="stylesheet" href="../Static/bootstrapvalidator/bootstrapValidator.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="container col-md-10 col-md-offset-1"  style="margin-top:60px;">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">周报</h3>
+        </div>
+        <div class="panel-body">
+          <div class="container col-md-10 col-md-offset-1" style="margin-bottom:15px">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" id="new_btn" data-toggle="modal" data-target="#newModal"><i class="fa fa-plus"></i>新增</button>
+            </div>
+            <div class="col-md-3 pull-right">
+              <select class="form-control">
+                <option>2018上半学期</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-10 col-md-offset-1">
+            <table id="td_WR" ></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--写周报模态框-->
+    <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="">本周汇报</h4>
+          </div>
+          <div class="modal-body col-md-12">
+            <form class="col-md-12" id="reportForm">
+
+              <div class="form-group col-md-4">
+                <label for="dtp_input1" class="control-label">起始日期</label>
+                <div class="input-group form_date date" data-date="" data-date-format="yyyy-MM-dd">
+                  <input class="form-control" size="16" type="text" name="startDate" readonly>
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+              </div>
+              <div class="form-group col-md-4 pull-right">
+                <label for="dtp_input2" class="control-label">终止日期</label>
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-MM-dd">
+                  <input class="form-control" size="16" type="text" name="endDate" readonly>
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="">1.上周计划做什么</label>
+                <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="LPlan"></textarea>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="">2.今周完成了什么</label>
+                <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="Done"></textarea>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="">3.今周有什么总结</label>
+                <div id="div1" style="border: 1px solid #ccc; border-bottom:0px; background:#f5f5f5;"></div>
+                <div id="div2" style="border: 1px solid #ccc; border-top:0px; height:300px; color: #555; background-color: #fff;"></div>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="">4.下周计划做什么</label>
+                <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="NPlan"></textarea>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="">5.今周阅读了什么</label>
+                <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="LRead"></textarea>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="">6.下周计划阅读什么</label>
+                <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="NRead"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>关闭</button>
+            <button type="button" class="btn btn-primary" id="btn_add"><i class="fa fa-save"></i>保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--编辑操作模态框-->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="">编辑</h4>
+          </div>
+          <div class="modal-body">
+            <form class="" action="index.html" method="post">
+              <!-- TODO: -->
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>关闭</button>
+            <button type="button" class="btn btn-primary" id="btn_save"><i class="fa fa-save"></i>保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--删除操作模态框-->
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="editModalLabel">删除</h4>
+          </div>
+          <div class="modal-body">
+            <strong id="removeText"></strong>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button id="removeBtn" type="button" class="btn btn-danger">删除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--
+      <div class="container" style="margin-top:80px;margin-bottom:80px">
+        <h1 class="text-horizonal-center">本周工作汇报</h1><br><br>
+        <form class="form-horizontal col-md-12">
+    			<div class="form-group col-md-6">
+            <label for="dtp_input1" class="control-label col-md-4">起始日期</label>
+            <div class="input-group form_date date col-md-8" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1" data-link-format="yyyy-mm-dd">
+              <input class="form-control" size="16" type="text" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+    					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <input type="hidden" id="dtp_input1" value="" /><br/>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="dtp_input2" class="control-label col-md-4">终止日期</label>
+            <div class="input-group date form_date col-md-8" data-date="" data-date-format="yyyy-MM-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+              <input class="form-control" size="16" type="text" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <input type="hidden" id="dtp_input2" value="" /><br/>
+          </div>
+        </form>
+      </div>
+-->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="../Static/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../Static/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="../Static/js/report.js"></script>
+    <script src="../Static/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../Static/wangEditor-3.1.0/wangEditor.min.js"></script>
+    <script src="../Static/bootstrapvalidator/bootstrapValidator.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      //初始化表格
+      var oWRTble = new WRTable();
+      oWRTble.Init();
+      //创建TimePicker
+      InitTimePicker();
+      //创建Editor
+      InitEditor();
+      //表单验证
+      validate();
+
+    });
+
+    var WRTable = function () {
+        var oTableInit = new Object();
+        oTableInit.Init = function () {
+            $('#td_WR').bootstrapTable({
+                url: "data.json",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+                method: "get",                      //请求方式（*）
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                //responseHandler:responseHandler自定义来生成total和row字段
+                //dataField:"data",设置接口返回值中用于填充表格数据的字段
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                columns: [ {
+                    field: "term",
+                    title: "学期"
+                }, {
+                    field: "week",
+                    title: "周数"
+                }, {
+                    field: "submit",
+                    title: "是否提交",
+                    formatter:function(value, row, index){
+                      // TODO:
+                    }
+                }, {
+                  field:"operation",
+                  title:"编辑",
+                  formatter: function(value, row, index) {
+                    var ret = "<button class='btn btn-primary' id='editTable' style='margin-left:10px'>编辑</button>"+
+                    "<button class='btn btn-danger' id='removeTable' style='margin-left:10px'>删除</button>";
+                    return ret;
+                  },
+                  //这里是一个监听对象，描述发生一定动作后执行的操作，这里是click动作生成模态框
+                  events:{
+                    'click #editTable':function(e, value, row, index){
+                      $('#inputName').attr("value",row.name); //TODO:$('#saveBtn').function(){};编辑操作。其它属性读取
+                      $('#editModal').modal({
+                        remote: "" //controller
+                      });
+                    },
+                    'click #removeTable':function(e, value, row, index){
+                      $('#removeText').text("是否删除" + row.week + "周报");
+                      $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
+                        $('#td_user').bootstrapTable('remove',{
+                          field:'week',                             //根据name字段删除
+                          values:row.week                           //name的值
+                        });
+                        $('#removeModal').modal('hide');             //$('#td_signCol').bootstrapTable('refresh');
+                      });
+                     $('#removeModal').modal();
+                    }
+                  }
+                },
+                ],
+            });
+        };
+        return oTableInit;
+    };
+
+    //创建TimePicker
+    function InitTimePicker(){
+      $('.form_date').datetimepicker({
+        format: 'yyyy-mm-dd',
+        todayHighlight: 1,
+        minView: "month",
+        startView:2,
+        forceParse: 0,
+        showMeridian: 1,
+        autoclose: 1
+      });
+    };
+
+    //创建富文本编辑器
+    function InitEditor(){
+      var E = window.wangEditor;
+      var editor = new E('#div1', '#div2'); // 两个参数也可以传入 elem 对象，class 选择器
+      // 或者 var editor = new E( document.getElementById('editor') )
+      editor.customConfig.uploadImgServer = '/upload' ; // 上传图片到服务器
+      editor.customConfig.menus = [
+        'head',  // 标题
+        'bold',  // 粗体
+        'fontSize',  // 字号
+        'foreColor',  // 文字颜色
+        'italic',  // 斜体
+        'underline',  // 下划线
+        'strikeThrough',  // 删除线
+        'image',  // 插入图片
+        'list',  // 列表
+        'justify',  // 对齐方式
+        'table',  // 表格
+        'code',  // 插入代码
+      ];
+      editor.create();
+      //editor.txt.html('<ul><li><p></p></li></ul>')
+    };
+
+    //表单验证
+    function validate(){
+      $('#reportForm').bootstrapValidator({
+        fields:{
+          week:{
+            trigger:'change',
+            validators:{
+              notEmpty: {//检测非空,radio也可用
+                message: '必须选择'
+              },
+              callback: function(value, validator){
+                if (value == 0) {
+                  return false;
+                } else {
+                  return true;
+                }
+              }
+            }
+          },
+          startDate:{
+            trigger:'change',
+            validators:{
+              notEmpty: {//检测非空,radio也可用
+                message: '必须选择'
+              }
+            }
+          },
+          endDate:{
+            trigger:'change',
+            validators:{
+              notEmpty: {//检测非空,radio也可用
+                message: '必须选择'
+              }
+            }
+          },
+          LPlan:{
+            validators:{
+              notEmpty: {//检测非空,radio也可用
+                message: '必须输入'
+              }
+            }
+          },
+          Done:{
+            validators:{
+              notEmpty: {//检测非空,radio也可用
+                message: '必须输入'
+              }
+            }
+          },
+          NPlan:{
+            validators:{
+              notEmpty: {//检测非空,radio也可用
+                message: '必须输入'
+              }
+            }
+          },
+          LRead:{
+            validators:{
+              notEmpty: {//检测非空,radio也可用
+                message: '必须输入'
+              }
+            }
+          },
+          NRead:{
+            validators:{
+              notEmpty: {//检测非空,radio也可用
+                message: '必须输入'
+              }
+            }
+          }
+        }
+      });
+    };
+
+    //按钮事件绑定
+
+    $("#btn_add").click(function () {
+        //进行表单验证
+        var bv = $('#reportForm').data('bootstrapValidator');
+        bv.validate();
+        if (bv.isValid()) {
+          $('#td_WR').bootstrapTable('append',{});
+          //表单提交的方法、比如ajax提交 TODO:
+          $("#reportForm").find('textarea,select,input').each(function() {
+            $(this).val('');
+
+          });
+          editor.txt.html('');
+          $('#newModal').modal('hide');
+        };
+    });
+
+    $('#btn_save').click(function(){
+      // TODO:
+      $('#editModal').modal('hide');
+    });
+
+    //模态框隐藏后删除验证信息并重新加载验证
+    $('#newModal').on('hidden.bs.modal', function(){
+      $("#reportForm").data('bootstrapValidator').destroy();
+      $("#reportForm").data('bootstrapValidator',null);
+      validate();
+    });
+
+    </script>
+  </body>
+</html>

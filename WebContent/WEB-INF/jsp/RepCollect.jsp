@@ -1,0 +1,357 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<% String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"; %>
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <base href=" <%=basePath%>">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="#">
+
+    <title>WeeklyReport</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+		<%-- <!--Font Awesome CSS-->
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> --%>
+
+    <!-- Custom styles for this project -->
+    <link href="wr/Static/css/style.css" rel="stylesheet">
+
+    <!--Wang Editor CSS-->
+    <link rel="stylesheet" href="wr/Static/wangEditor-3.1.0/wangEditor.min.css">
+
+    <!--datetimepicker CSS-->
+    <link href="wr/Static/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+    <!--Bootstrap table-->
+    <link rel="stylesheet" href="wr/Static/bootstrap-table/bootstrap-table.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+  </head>
+
+  <body>
+      <div class="container col-md-10 col-md-offset-1"  style="margin-top:50px;">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">周报汇总</h3>
+          </div>
+          <div class="panel-body">
+            <div class="col-md-10 col-md-offset-1">
+              <table id="td_RC"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal fade" id="repModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" style="width:800px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="">本周汇报</h4>
+            </div>
+            <div class="modal-body col-md-12">
+              <form class="col-md-12" id="reportForm" name="reportForm">
+                <div class="form-group col-md-4">
+                  <label for="dtp_input1" class="control-label">起始日期</label>
+                  <div class="input-group form_date date" data-date="" data-date-format="yyyy-MM-dd">
+                    <input class="form-control" size="16" type="text" name="startDate" id="startDate" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                  </div>
+                </div>
+                <div class="form-group col-md-4 pull-right">
+                  <label for="dtp_input2" class="control-label">终止日期</label>
+                  <div class="input-group date form_date" data-date="" data-date-format="yyyy-MM-dd">
+                    <input class="form-control" size="16" type="text" name="endDate" id="endDate" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="">1.上周计划做什么</label>
+                  <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="LPlan" id="LPlan"></textarea>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="">2.今周完成了什么</label>
+                  <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="Done" id="Done"></textarea>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="">3.今周有什么总结</label>
+                  <div id="div1" style="border: 1px solid #ccc; border-bottom:0px; background:#f5f5f5;"></div>
+                  <div id="div2" style="border: 1px solid #ccc; border-top:0px; height:300px; color: #555; background-color: #fff;"></div>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="">4.下周计划做什么</label>
+                  <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="NPlan" id="NPlan"></textarea>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="">5.今周阅读了什么</label>
+                  <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="LRead" id="LRead"></textarea>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="">6.下周计划阅读什么</label>
+                  <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="NRead" id="NRead"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>关闭</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
+    <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="wr/Static/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="wr/Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+    <script src="wr/Static/wangEditor-3.1.0/wangEditor.min.js"></script>
+    <script type="text/javascript">
+
+    var nownw;
+    var nowterm;
+
+    $(function(){
+      initTime();
+      InitEditor();
+      initTable();
+    });
+
+    function initTime(){
+      $.ajax({
+        url:"wr/function/gettime",
+        type:"get",
+        async: false,
+        success:function(data){
+          nownw = data[0].nw;
+          nowterm = data[0].term;
+        }
+      });
+    };
+
+    var editor;
+    function InitEditor(){
+      var E = window.wangEditor;
+      editor = new E('#div1', '#div2'); // 两个参数也可以传入 elem 对象，class 选择器
+      // 或者 var editor = new E( document.getElementById('editor') )
+      // editor.customConfig.uploadImgServer = '/upload' ; // 上传图片到服务器
+      editor.customConfig.showLinkImg = false;
+      editor.customConfig.uploadImgShowBase64 = true ;
+      editor.customConfig.menus = [
+        'head',  // 标题
+        'bold',  // 粗体
+        'fontSize',  // 字号
+        'foreColor',  // 文字颜色
+        'italic',  // 斜体
+        'underline',  // 下划线
+        'strikeThrough',  // 删除线
+        'image',  // 插入图片
+        'list',  // 列表
+        'justify',  // 对齐方式
+        'table',  // 表格
+        'code',  // 插入代码
+      ];
+      editor.create();
+    }
+
+          function initTable(){
+            var head = nowterm + "第" + nownw + "周周报汇总表";
+            $('#td_RC').bootstrapTable({
+              url: "wr/function/getweekrepbygroup", //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+              method: "get",                      //请求方式（*）
+              cache: true,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+              pagination: true,                   //是否显示分页（*）
+              sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+              contentType: "application/x-www-form-urlencoded",
+              pageNumber: 1,                       //初始化加载第一页，默认第一页
+              pageSize: 10,                       //每页的记录行数（*）
+              uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+              columns: [
+                [{
+                  title: head,
+                  align: "center",
+                  valign: "middle",
+                  colspan: 6
+                }],
+                [{
+                    field: "name",
+                    title: "姓名",
+                    align: "center",
+                    valign: "middle",
+                    colspan: 1,
+                    rowspan: 1
+                },{
+                    field: "term",
+                    title: "学期",
+                    align: "center",
+                    valign: "middle",
+                    colspan: 1,
+                    rowspan: 1
+                },
+                {
+                    field: "nw",
+                    title: "周数",
+                    align: "center",
+                    valign: "middle",
+                    colspan: 1,
+                    rowspan: 1
+                },{
+                    field: "upload",
+                    title: "附件",
+                    align: "center",
+                    valign: "middle",
+                    colspan: 1,
+                    rowspan: 1,
+                    formatter: function(value, row, index){
+                        var ret = "";
+                        $.ajax({
+                          url:'wr/function/getfilelist',
+                          type: 'post',
+                          data: {
+                            term: row.term,
+                            nw: row.nw,
+                            name: row.name
+                          },
+                          async:false,
+                          success:function(data){
+                            if(data != ""){
+                              for (var i = 0; i < data.length; i++) {
+                                ret = ret + '<a href="javascript:void(0)" style="overflow:hidden" class = "dl">' + data[i] +'</a><br/>';
+                              }
+                            } else {
+                              ret = "无附件";
+                            }
+                          }
+                        });
+                        return ret;
+                    },
+                    events:{
+                      'click .dl':function(e, value, row, index){
+
+                        var form = $("<form>");
+                        form.attr("style","display:none");
+                        form.attr("target","");
+                        form.attr("method","post");
+                        form.attr("action","wr/function/downloadsinglefile");
+
+                        var input1 = $("<input>");
+                        input1.attr("type","hidden");
+                        input1.attr("name","term");
+                        input1.attr("value",row.term);
+
+                        var input2 = $("<input>");
+                        input2.attr("type","hidden");
+                        input2.attr("name","nw");
+                        input2.attr("value",row.nw);
+
+                        var input3 = $("<input>");
+                        input3.attr("type","hidden");
+                        input3.attr("name","name");
+                        input3.attr("value",row.name);
+
+                        var input4 = $("<input>");
+                        input4.attr("type","hidden");
+                        input4.attr("name","filename");
+                        input4.attr("value",e.target.innerHTML);
+
+                        $('body').append(form);
+                        form.prepend(input1);
+                        form.prepend(input2);
+                        form.prepend(input3);
+                        form.prepend(input4);
+                        form.submit();
+                        form.remove();
+                        }
+                      }
+                    },
+                  {
+                  field:"check",
+                  title:"查看",
+                  align: "center",
+                  valign: "middle",
+                  colspan: 1,
+                  rowspan: 1,
+                  formatter: function(value, row, index) {
+                    var ret = "<button class='btn btn-info' id='editTable' style='margin-left:10px'><i class='fa fa-edit'>查看</i></button>";
+                    return ret;
+                  },
+                  //这里是一个监听对象，描述发生一定动作后执行的操作，这里是click动作生成模态框
+                  events:{
+                    'click #editTable':function(e, value, row, index){
+                      $.ajax({
+                        url: "wr/function/getmemberrep",
+                        type: "post",
+                        data:{
+                          nw: row.nw,
+                          term: row.term,
+                          name: row.name
+                        },
+                        contentType:"application/x-www-form-urlencoded",
+                        async: true,
+                        success:function(data){
+                          $('#startDate').val(data[0].sdate);
+                          $('#endDate').val(data[0].edate);
+                          $('#LPlan').val(data[0].lplan);
+                          $('#Done').val(data[0].done);
+                          editor.txt.html(data[0].summary);
+                          $('#LRead').val(data[0].lread);
+                          $('#NPlan').val(data[0].nplan);
+                          $('#NRead').val(data[0].nread);
+                          $('#repModal').modal();
+                        },
+                        error:function(){
+                          alert("网络错误");
+                        }
+                      });
+                    }
+                  }
+                },{
+                    field: "qualify",
+                    title: "审核状态",
+                    align: "center",
+                    valign: "middle",
+                    colspan: 1,
+                    rowspan: 1,
+                    formatter: function(value, row, index){
+                      if (row.qualify == 0) {
+                        return "未审核";
+                      }
+                      if(row.qualify == 1){
+                        return "通过";
+                      }
+                      if (row.qualify == 2) {
+                        return "未通过";
+                      }
+                    }
+                }
+                ]
+              ]
+          });
+        };
+
+    </script>
+
+
+  </body>
+</html>

@@ -1,0 +1,49 @@
+html,body{
+  height: auto;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.navbar-brand {
+  font-size: 25px;
+  font-family: "Segoe UI","Helvetica Neue","Helvetica",Arial,sans-serif;
+}
+
+.navbar-default {
+  background: translate;
+  border: none;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.navbar-static-top {
+  margin-bottom: 20px;
+}
+
+.navigation_h {
+  height: 50px;
+  min-width: 920px;
+  background-color: black;
+  margin-bottom: auto;
+}
+
+.wrap {
+  margin: 100px, auto;
+  width: 70%;
+  padding: 0;
+}
+
+.text-horizonal-center {
+  text-align: center;
+}
+
+.container.clock {
+  margin-top:200px
+}
+
+
+.profile {
+  width: 18px;
+  height:18px;
+  border-radius: 50%;
+}
