@@ -33,14 +33,11 @@ public class SystemTime {
 		cal.setFirstDayOfWeek(Calendar.SUNDAY);
 		
 		this.year = nowYear();
-		this.month = nowMonth();
+		this.month = nowMonth() + 1;
 		
 		this.week = nowWeek();
 		this.now_NW_of_Year = now_NW_of_Year();
 		
-		
-
-		System.out.println(term + start_NW_of_Term);
 		Timer timer = new Timer();
 		Task task = new Task();
 		timer.schedule(task, 1000,10000);

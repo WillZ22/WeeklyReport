@@ -125,4 +125,14 @@ public class PageController {
 	public String reportReview() {
 		return "RepReview";
 	}
+	
+	@RequestMapping(value = "/signreview")
+	public String signReview() {
+		return "SignReview";
+	}
+	
+	@RequestMapping(value = "/summaryexport")
+	public String summaryExport() {
+		return "SummaryExport";
+	}
 }

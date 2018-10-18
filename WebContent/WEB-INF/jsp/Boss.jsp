@@ -148,6 +148,16 @@
       })
     }
 
+    function se(){
+      $.ajax({
+        url:"wr/page/summaryexport",
+        type:"get",
+        success:function(data){
+          $("#content").html(data);
+        }
+      })
+    }
+
     </script>
   </body>
 </html>

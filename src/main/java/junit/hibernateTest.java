@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.wr.dao.UserDao;
 import com.wr.dao.impl.ReportDaoImpl;
+import com.wr.dao.impl.SignDaoImpl;
 import com.wr.dao.impl.UserDaoImpl;
 import com.wr.model.Report;
 import com.wr.model.Sign;
@@ -40,6 +41,9 @@ public class hibernateTest {
 	@Autowired 
 	SignService signservice;
 	
+	@Autowired
+	SignDaoImpl signdao;
+	
 	@Test
 	public void test() throws Exception {
 //		userservice.addUser("teacher", "teacher", "teacher", "teacher", null);
@@ -57,8 +61,12 @@ public class hibernateTest {
 //		JSONArray jsonArray = JSONArray.fromObject(report);
 //		System.out.println(jsonArray.toString());
 //		SystemTime systemTime = new SystemTime();
-//		systemTime.start("2018上半年", 1);
-		userservice.getStudentNames();
+//		systemTime.start("2018上半年", 	
+		List<Sign> signs = signdao.getMonthSign(2018, 9, "2");
+		for(Sign sign:signs) {
+			int string = sign.getDayoff();
+			System.out.println(string);
+		}
 		
 	}
 		

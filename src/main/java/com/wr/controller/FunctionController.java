@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Null;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
@@ -382,6 +384,9 @@ public class FunctionController {
 		int dayoff = Integer.parseInt(request.getParameter("dayoff"));
 		int totalTime = Integer.parseInt(request.getParameter("totaltime"));  
 		
+		
+
+
 		Sign sign = signSerivce.getSign(username, term, nw);
 		if (sign == null) {
 			signSerivce.addSign(username, term, nw, late, dayoff, totalTime, 
@@ -392,15 +397,54 @@ public class FunctionController {
 					thur_am_in, thur_am_out, thur_pm_in, thur_pm_out, thur_eve_in, thur_eve_out, 
 					fri_am_in, fri_am_out, fri_pm_in, fri_pm_out, fri_eve_in, fri_eve_out, note, year, month);
 		} else {
-			signSerivce.updateSign(username, term, nw, late, dayoff, totalTime, 
-					sun_am_in, sun_am_out, sun_pm_in, sun_pm_out, sun_eve_in, sun_eve_out, 
-					mon_am_in, mon_am_out, mon_pm_in, mon_pm_out, mon_eve_in, mon_eve_out, 
-					tues_am_in, tues_am_out, tues_pm_in, tues_pm_out, tues_eve_in, tues_eve_out, 
-					wed_am_in, wed_am_out, wed_pm_in, wed_pm_out, wed_eve_in, wed_eve_out, 
-					thur_am_in, thur_am_out, thur_pm_in, thur_pm_out, thur_eve_in, thur_eve_out, 
-					fri_am_in, fri_am_out, fri_pm_in, fri_pm_out, fri_eve_in, fri_eve_out, note);
+			sign.setDayoff(dayoff);
+			sign.setLate(late);
+			sign.setTotalTime(totalTime);
+			sign.setSun_am_in(sun_am_in);
+			sign.setSun_am_out(sun_am_out);
+			sign.setSun_pm_in(sun_pm_in);
+			sign.setSun_pm_out(sun_pm_out);
+			sign.setSun_eve_in(sun_eve_in);
+			sign.setSun_eve_out(sun_eve_out);
+			
+			sign.setMon_am_in(mon_am_in);
+			sign.setMon_am_out(mon_am_out);
+			sign.setMon_pm_in(mon_pm_in);
+			sign.setMon_pm_out(mon_pm_out);
+			sign.setMon_eve_in(mon_eve_in);
+			sign.setMon_eve_out(mon_eve_out);
+			
+			sign.setTues_am_in(tues_am_in);
+			sign.setTues_am_out(tues_am_out);
+			sign.setTues_pm_in(tues_pm_in);
+			sign.setTues_pm_out(tues_pm_out);
+			sign.setTues_eve_in(tues_eve_in);
+			sign.setTues_eve_out(tues_eve_out);
+			
+			sign.setWed_am_in(wed_am_in);
+			sign.setWed_am_out(wed_am_out);
+			sign.setWed_pm_in(wed_pm_in);
+			sign.setWed_pm_out(wed_pm_out);
+			sign.setWed_eve_in(wed_eve_in);
+			sign.setWed_eve_out(wed_eve_out);
+			
+			sign.setThur_am_in(thur_am_in);
+			sign.setThur_am_out(thur_am_out);
+			sign.setThur_pm_in(thur_pm_in);
+			sign.setThur_pm_out(thur_pm_out);
+			sign.setThur_eve_in(thur_eve_in);
+			sign.setThur_eve_out(thur_eve_out);
+			
+			sign.setFri_am_in(fri_am_in);
+			sign.setFri_am_out(fri_am_out);
+			sign.setFri_pm_in(fri_pm_in);
+			sign.setFri_pm_out(fri_pm_out);
+			sign.setFri_eve_in(fri_eve_in);
+			sign.setFri_eve_out(fri_eve_out);
+			
+			sign.setNote(note);
+			signSerivce.updateSign(sign);
 		}
-		
 		return "success";
 	}
 	
@@ -578,7 +622,66 @@ public class FunctionController {
 		return "success";
 	}
 	
+	
+	@RequestMapping(value = "/reviewsign", method =RequestMethod.POST)
+	@ResponseBody
+	public String reviewSign(HttpServletRequest request) {
+		String name = request.getParameter("name");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String term = request.getParameter("term");
+		int qualify = Integer.parseInt(request.getParameter("qualify"));
+		Sign sign = signSerivce.getSignByName(name, term, nw);
+		sign.setQualify(qualify);
+		signSerivce.updateSign(sign);
+		return "success";
+	}
 	/******************************* Teacher *************************************/
+	
+	@RequestMapping(value = "/exportmonthreport", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<byte[]> exportmonthreport(HttpServletRequest request) {
+		return null;
+		
+	}
+	
+	@RequestMapping(value = "/exportmonthsign", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<byte[]> exportmonthsign(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int year = Integer.parseInt(request.getParameter("year"));
+		int month = Integer.parseInt(request.getParameter("month"));
+		HSSFWorkbook hssfWorkbook = signSerivce.monthsummary(year, month);
+		
+		String filename = year + " " +month + ".xls" ;
+		String filePath = request.getServletContext().getRealPath("/") + "monthsign/";
+		
+		File file = new File(filePath,filename);
+		FileOutputStream outputStream = new FileOutputStream(file);
+		hssfWorkbook.write(outputStream);
+		outputStream.flush();   
+		outputStream.close();   
+		
+		File downloadfile = new File(filePath + filename);
+		HttpHeaders headers = new HttpHeaders();
+		filename = new String(filename.getBytes("utf-8"),"iso-8859-1");
+		headers.setContentDispositionFormData("attachment", filename);
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(downloadfile),headers,HttpStatus.CREATED);
+	}
+	
+	
+	@RequestMapping(value = "/exportyearreport", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<byte[]> exportYearReport(HttpServletRequest request) {
+		return null;
+		
+	}
+	
+	@RequestMapping(value = "/exportyearsign", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<byte[]> exportYearsign(HttpServletRequest request) {
+		return null;
+	}
+	
 	//
 	@RequestMapping(value = "/getmembersign", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
@@ -635,6 +738,7 @@ public class FunctionController {
 		String result = jsonArray.toString();
 		return result;
 	}
+	
 	
 	/******************************* Admin **************************************/
 	

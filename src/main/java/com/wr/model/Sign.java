@@ -68,6 +68,8 @@ public class Sign {
 	
 	private String note;
 	
+	private int qualify;
+	
 	private String name;
 	
 	@Column(nullable=false)
@@ -122,6 +124,14 @@ public class Sign {
 	}
 	public void setYear(int year) {
 		this.year = year;
+	}
+	
+	@Column(nullable=false)
+	public int getQualify() {
+		return qualify;
+	}
+	public void setQualify(int qualify) {
+		this.qualify = qualify;
 	}
 	
 	@Column(nullable=false)

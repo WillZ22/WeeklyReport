@@ -168,6 +168,10 @@ public class ReportService {
 			FileUtils.deleteDirectory(file);
 		}
 	}
+	
+	public String monthSummary() {
+		return null;
+	}
 
 }
  

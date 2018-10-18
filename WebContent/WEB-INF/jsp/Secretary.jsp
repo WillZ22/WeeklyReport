@@ -51,10 +51,8 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li id="writereport"><a href="JavaScript:void(0)" onclick="wr()">写周报</a></li>
-              <li id="signed"><a href="javascript:void(0)" onclick="ws();">考勤</a></li>
-              <li id="groupreport"><a href="javascript:void(0)" onclick="rc()">小组周报</a></li>
-              <li id="announcement"><a href="javascript:void(0)" onclick="an()">会议记录</a></li>
+              <li id="signed"><a href="javascript:void(0)" onclick="sr()">考勤审核</a></li>
+              <li id="announcement"><a href="javascript:void(0)" onclick="mn()">会议记录</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li>
@@ -93,26 +91,7 @@
     <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="wr/Static/js/time.js"></script>
     <script type="text/javascript">
-    function wr(){
-      $.ajax({
-        url:"wr/page/writereport",
-        type:"get",
-        success:function(data){
-          $("#content").html(data);
-        }
-      })
-    }
-
-    function ws(){
-        $.ajax({
-            url:"wr/page/writesign",
-            type:"get",
-            success:function(data){
-              $("#content").html(data);
-            }
-          })
-    }
-
+    
     function rc(){
         $.ajax({
             url:"wr/page/reportreview",
@@ -133,6 +112,17 @@
         }
       })
     }
+
+    function sr(){
+        $.ajax({
+            url:"wr/page/signreview",
+            type:"get",
+            success:function(data){
+              $("#content").html(data);
+            }
+          })
+    }
+
     </script>
   </body>
 </html>

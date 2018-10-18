@@ -297,7 +297,7 @@
                       title: head,
                       align: "center",
                       valign: "middle",
-                      colspan: 6
+                      colspan: 8
                     }],
                     [{
                         field: "name",
@@ -334,24 +334,6 @@
                       valign: "middle",
                       colspan: 1,
                       rowspan: 1
-                    },{
-                      field: "qualify",
-                      title: "是否达标",
-                      align: "center",
-                      valign: "middle",
-                      colspan: 1,
-                      rowspan: 1,
-                      formatter: function(value, row, index){
-                        if (row.qualify == 0) {
-                          return "未审核";
-                        }
-                        if(row.qualify == 1){
-                          return "达标";
-                        }
-                        if (row.qualify == 2) {
-                          return "未达标";
-                        }
-                      }
                     },{
                       field:"operation",
                       title:"编辑",
@@ -429,6 +411,70 @@
                               $('#checkmodal').modal();
                             }
                           });
+                        }
+                      }
+                    },{
+                      field: "review",
+                      title: "审阅",
+                      align: "center",
+                      valign: "middle",
+                      colspan: 1,
+                      rowspan: 1,
+                      formatter: function(value, row, index) {
+                        var ret = "<button class='btn btn-success' id='qualified' style='margin-left:10px'><i class='fa fa-edit'>达标</i></button>"+
+                        "<button class='btn btn-warning' id='unqualified' style='margin-left:10px'><i class='fa fa-edit'>未达标</i></button>";
+                        return ret;
+                      },
+                      events:{
+                        'click #qualified':function(e, value, row, index){
+                          $.ajax({
+                            url:'wr/function/reviewsign',
+                            type: 'post',
+                            data: {
+                              qualify: 1,
+                              nw: row.nw,
+                              term: row.term,
+                              name: row.name
+                            },
+                            async: true,
+                            success:function(data){
+                              $('#td_signCol').bootstrapTable('refresh');
+                            }
+                          })
+                        },
+                        'click #unqualified':function(e, value, row, index){
+                            $.ajax({
+                              url:'wr/function/reviewsign',
+                              type: 'post',
+                              data: {
+                                qualify: 2,
+                                nw: row.nw,
+                                term: row.term,
+                                name: row.name
+                              },
+                              async: true,
+                              success:function(data){
+                                $('#td_signCol').bootstrapTable('refresh');
+                              }
+                            })
+                        }
+                      }
+                    },{
+                      field: "qualify",
+                      title: "是否达标",
+                      align: "center",
+                      valign: "middle",
+                      colspan: 1,
+                      rowspan: 1,
+                      formatter: function(value, row, index){
+                        if (row.qualify == 0) {
+                          return "未审核";
+                        }
+                        if(row.qualify == 1){
+                          return "达标";
+                        }
+                        if (row.qualify == 2) {
+                          return "未达标";
                         }
                       }
                     }

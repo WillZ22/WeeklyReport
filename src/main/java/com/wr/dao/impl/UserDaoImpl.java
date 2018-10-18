@@ -75,8 +75,8 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	public List<User> getGroupUser() {
-		String hql = "from User user where user.role = ? or role = ? or role = ?";
-		List<User> users = (List<User>) hibernateTemplate.find(hql, "groupleader", "groupmember", "secretary");
+		String hql = "from User user where user.role = ? or role = ?";
+		List<User> users = (List<User>) hibernateTemplate.find(hql, "groupleader", "groupmember");
 		if (users.size() != 0) {
 			return users;
 		}else {
@@ -95,14 +95,14 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	public List<String> getGLNames() {
-		String hql = "select name from User user where role = ? or role = ?";
-		List<String> names =  (List<String>) hibernateTemplate.find(hql,"groupleader" ,"secretary");
+		String hql = "select name from User user where role = ?";
+		List<String> names =  (List<String>) hibernateTemplate.find(hql,"groupleader");
 		return names;
 	}
 	
 	public List<String> getStudentsNames(){
-		String hql = "select name from User user where role = ? or role = ? or role = ?";
-		List<String> names = (List<String>) hibernateTemplate.find(hql,"groupleader", "groupmember", "secretary");
+		String hql = "select name from User user where role = ? or role = ?";
+		List<String> names = (List<String>) hibernateTemplate.find(hql,"groupleader", "groupmember");
 		return names;
 	}
 }

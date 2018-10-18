@@ -53,7 +53,8 @@
             <ul class="nav navbar-nav">
               <li id="WriteReport"><a href="JavaScript:void(0)" onclick="wr()">写周报</a></li>
               <li id="signed"><a href="javascript:void(0)" onclick="ws();">考勤</a></li>
-              <li id="signed"><a href="javascript:void(0)" onclick="rc()">小组周报</a></li>
+              <li id="signed"><a href="javascript:void(0)" onclick="rr()">小组周报</a></li>
+
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li>
@@ -112,7 +113,7 @@
           })
     }
 
-    function rc(){
+    function rr(){
         $.ajax({
             url:"wr/page/reportreview",
             type:"get",
@@ -121,6 +122,8 @@
             }
           })
     }
+
+
 
     function cp(){
       $.ajax({
