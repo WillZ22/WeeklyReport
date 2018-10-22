@@ -99,100 +99,100 @@
                 <tr>
                   <th>上午</th>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="sun_am_in" name="sun_am_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="sun_am_out" name="sun_am_out">
+                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="sun_am_in" name="sun_am_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="sun_am_out" name="sun_am_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="mon_am_in" name="mon_am_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="mon_am_out" name="mon_am_out">
+                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="mon_am_in" name="mon_am_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="mon_am_out" name="mon_am_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="tues_am_in" name="tues_am_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="tues_am_out" name="tues_am_out">
+                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="tues_am_in" name="tues_am_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="tues_am_out" name="tues_am_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="wed_am_in" name="wed_am_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="wed_am_out" name="wed_am_out">
+                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="wed_am_in" name="wed_am_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="wed_am_out" name="wed_am_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="thur_am_in" name="thur_am_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="thur_am_out" name="thur_am_out">
+                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="thur_am_in" name="thur_am_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="thur_am_out" name="thur_am_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="fri_am_in" name="fri_am_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="fri_am_out" name="fri_am_out">
+                    <input class="inputtime form-control timepicker timepicker-default am_in" type="text" id="fri_am_in" name="fri_am_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default am_out" type="text" id="fri_am_out" name="fri_am_out" readonly>
                   </td>
                 </tr>
 
                 <tr>
                   <th>下午</th>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="sun_pm_in" name="sun_pm_in" ><br/>
-                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="sun_pm_out" name="sun_pm_out">
+                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="sun_pm_in" name="sun_pm_in"  readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="sun_pm_out" name="sun_pm_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="mon_pm_in" name="mon_pm_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="mon_pm_out" name="mon_pm_out">
+                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="mon_pm_in" name="mon_pm_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="mon_pm_out" name="mon_pm_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="tues_pm_in" name="tues_pm_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="tues_pm_out" name="tues_pm_out">
+                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="tues_pm_in" name="tues_pm_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="tues_pm_out" name="tues_pm_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="wed_pm_in" name="wed_pm_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="wed_pm_out" name="wed_pm_out">
+                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="wed_pm_in" name="wed_pm_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="wed_pm_out" name="wed_pm_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="thur_pm_in" name="thur_pm_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="thur_pm_out" name="thur_pm_out">
+                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="thur_pm_in" name="thur_pm_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="thur_pm_out" name="thur_pm_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="fri_pm_in" name="fri_pm_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="fri_pm_out" name="fri_pm_out">
+                    <input class="inputtime form-control timepicker timepicker-default pm_in" type="text" id="fri_pm_in" name="fri_pm_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default pm_out" type="text" id="fri_pm_out" name="fri_pm_out" readonly>
                   </td>
                 </tr>
 
                 <tr>
                   <th>晚间</th>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="sun_eve_in" name="sun_eve_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="sun_eve_out" name="sun_eve_out">
+                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="sun_eve_in" name="sun_eve_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="sun_eve_out" name="sun_eve_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="mon_eve_in" name="mon_eve_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="mon_eve_out" name="mon_eve_out">
+                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="mon_eve_in" name="mon_eve_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="mon_eve_out" name="mon_eve_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="tues_eve_in" name="tues_eve_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="tues_eve_out" name="tues_eve_out">
+                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="tues_eve_in" name="tues_eve_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="tues_eve_out" name="tues_eve_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="wed_eve_in" name="wed_eve_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="wed_eve_out" name="wed_eve_out">
+                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="wed_eve_in" name="wed_eve_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="wed_eve_out" name="wed_eve_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="thur_eve_in" name="thur_eve_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="thur_eve_out" name="thur_eve_out">
+                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="thur_eve_in" name="thur_eve_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="thur_eve_out" name="thur_eve_out" readonly>
                   </td>
                   <td>
-                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="fri_eve_in" name="fri_eve_in"><br/>
-                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="fri_eve_out" name="fri_eve_out">
+                    <input class="inputtime form-control timepicker timepicker-default eve_in" type="text" id="fri_eve_in" name="fri_eve_in" readonly><br/>
+                    <input class="inputtime form-control timepicker timepicker-default eve_out" type="text" id="fri_eve_out" name="fri_eve_out" readonly>
                   </td>
                 </tr>
 
                 <tr>
                   <th>请假:</th>
-                  <td><input class="form-control pull-right"  type="number" id="late" name="late" max="10" min="0"></td>
+                  <td><input class="form-control pull-right"  type="number" id="late" name="late" max="10" min="0" readonly></td>
                   <th>迟到:</th>
-                  <td><input class="form-control pull-right" type="number" id="dayoff" name="dayoff" max="10" min="0"></td>
+                  <td><input class="form-control pull-right" type="number" id="dayoff" name="dayoff" max="10" min="0" readonly></td>
                   <th colspan="2">请假:</th>
-                  <td><input class="form-control pull-right" type="number" id="totaltime" name="totaltime" max="100" min="0"></td>
+                  <td><input class="form-control pull-right" type="number" id="totaltime" name="totaltime" max="100" min="0" readonly></td>
                 </tr>
 
                 <tr>
                   <th>备注:</th>
                   <td colspan="6">
-                    <textarea name="note" class="form-control" style="width:100%;height:100%;resize:none;" id="note"></textarea>
+                    <textarea name="note" class="form-control" style="width:100%;height:100%;resize:none;" id="note" readonly></textarea>
                   </td>
                 </tr>
 

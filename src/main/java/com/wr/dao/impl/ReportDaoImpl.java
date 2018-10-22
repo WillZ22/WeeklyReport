@@ -1,9 +1,5 @@
 package com.wr.dao.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -11,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.wr.dao.ReportDao;
 import com.wr.model.Report;
-import com.wr.model.User;
+
 
 
 @Repository

@@ -35,6 +35,7 @@
 	  <mvc:interceptor>
 	    <!--拦截后台页面的请求-->
 	    <mvc:mapping path="/page/**"/>
+	    <mvc:mapping path="/function/**"/>
 	    <!--不拦截登录页和登录的请求-->
 	    <bean class="com.wr.Interceptor.CommonInterceptor"></bean>
 	  </mvc:interceptor>

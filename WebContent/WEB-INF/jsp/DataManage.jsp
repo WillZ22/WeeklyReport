@@ -51,6 +51,12 @@
             <li>
               <a href="#signManage" data-toggle="tab">签到管理</a>
             </li>
+            <li>
+              <a href="#NotificationManage" data-toggle="tab">公告管理</a>
+            </li>
+            <li>
+              <a href="#MeetingRecordManage" data-toggle="tab">会议记录管理</a>
+            </li>
           </ul>
           <div class="tab-content">
               <div class="tab-pane fade in active" id="reportManage">
@@ -146,6 +152,20 @@
                 </div>
 
                 <table id="td_sign"></table>
+              </div>
+
+
+              <div class="tab-pane fade" id="NotificationManage">
+                <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px; margin-top:15px">
+                  <table id="td_N"></table>
+                </div>
+              </div>
+
+
+              <div class="tab-pane fade" id="MeetingRecordManage">
+                <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px; margin-top:15px">
+                  <table id="td_MR"></table>
+                </div>
               </div>
           </div>
         </div>
@@ -253,6 +273,8 @@
         //加载周报管理表格
         var oreportTable = new ReportTable();
         oreportTable.Init();
+        initNTable();
+        initMRTable();
       })
 
       //表格初始化方法
@@ -401,6 +423,129 @@
           return oreportTableInit;
       };
 
+      function initNTable(){
+        $('#td_N').bootstrapTable({
+          url: "wr/function/getallnotications",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+          method: "get",                      //请求方式（*）
+          cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+          pagination: true,                   //是否显示分页（*）
+          sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+          contentType: "application/x-www-form-urlencoded",
+          pageNumber: 1,                       //初始化加载第一页，默认第一页
+          pageSize: 10,                       //每页的记录行数（*）
+          pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+          uniqueId: "ID",
+          columns: [ {
+              field: "title",
+              title: "标题"
+          },{
+              field: "id",
+              title: "ID"
+          },{
+              field: "year",
+              title: "年"
+          },{
+              field: "month",
+              title: "月"
+          },{
+              field: "day",
+              title: "日"
+          },{
+            field:"operation",
+            title:"编辑",
+            formatter: function(value, row, index) {
+              var ret = "<button class='btn btn-danger' id='removeTable' style='margin-left:10px'><i class='fa fa-remove'>删除</i></button>";
+              return ret;
+            },
+            //这里是一个监听对象，描述发生一定动作后执行的操作，这里是click动作生成模态框
+            events:{
+              //删除操作
+              'click #removeTable':function(e, value, row, index){
+                $('#removeText').text("是否删除");
+                $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
+                  $.ajax({
+                    url: "wr/function/deletenotification",
+                    type: "post",
+                    data:{
+                      id: row.id,
+                    },
+                    contentType:"application/x-www-form-urlencoded",
+                    async: true,
+                    success:function(){
+                      $('#removeModal').modal('hide');
+                      $("#td_report").bootstrapTable('refresh');
+                    },
+                    error:function(){
+                      alert("网络错误");
+                    }
+                  })
+                });
+               $('#removeModal').modal();
+              }
+            }
+          },
+          ],
+        })
+      };
+
+      function initMRTable(){
+        $('#td_MR').bootstrapTable({
+          url: "wr/function/getallmeetingrecords",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+          method: "get",                      //请求方式（*）
+          cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+          pagination: true,                   //是否显示分页（*）
+          sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+          contentType: "application/x-www-form-urlencoded",
+          pageNumber: 1,                       //初始化加载第一页，默认第一页
+          pageSize: 10,                       //每页的记录行数（*）
+          pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+          uniqueId: "ID",
+          columns: [ {
+              field: "id",
+              title: "ID"
+          },{
+              field: "year",
+              title: "年"
+          },{
+              field: "month",
+              title: "月"
+          },{
+            field:"operation",
+            title:"编辑",
+            formatter: function(value, row, index) {
+              var ret = "<button class='btn btn-danger' id='removeTable' style='margin-left:10px'><i class='fa fa-remove'>删除</i></button>";
+              return ret;
+            },
+            //这里是一个监听对象，描述发生一定动作后执行的操作，这里是click动作生成模态框
+            events:{
+              //删除操作
+              'click #removeTable':function(e, value, row, index){
+                $('#removeText').text("是否删除");
+                $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
+                  $.ajax({
+                    url: "wr/function/deletemeetingrecord",
+                    type: "post",
+                    data:{
+                      id:row.id
+                    },
+                    contentType:"application/x-www-form-urlencoded",
+                    async: true,
+                    success:function(){
+                      $('#removeModal').modal('hide');
+                      $("#td_report").bootstrapTable('refresh');
+                    },
+                    error:function(){
+                      alert("网络错误");
+                    }
+                  })
+                });
+               $('#removeModal').modal();
+              }
+            }
+          },
+          ],
+        })
+      };
 
 
       $('#nw1').change(function(){

@@ -44,85 +44,33 @@
           <h3 class="panel-title">本周签到信息</h3>
         </div>
         <div class="panel-body">
+
           <ul class="nav nav-tabs">
             <li class="active">
-              <a href="#signExport" data-toggle="tab">签到导出</a>
+              <a href="#se" data-toggle="tab">签到导出</a>
             </li>
             <li>
-              <a href="#reportExport" data-toggle="tab">周报导出</a>
+              <a href="#re" data-toggle="tab">周报导出</a>
             </li>
           </ul>
           <div class="tab-content">
+              <div class="tab-pane fade in active" id="se">
+                <div class="container col-md-12 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px; margin-top:15px">
+                    <form class="col-sm-12 col-xs-12" action="index.html" method="post">
+                      <div class="form-group">
+                        <label for="year2">学期</label>
+                        <select class="form-control" id="year2" onchange="function select();">
+                          <option>2018</option>
+                          <option>2019</option>
+                          <option>2020</option>
+                          <option>2021</option>
+                        </select>
+                      </div>
 
-            <div class="tab-pane fade" id="signexport">
-              <div class="container col-md-10 col-md-offset-1 col-sm-10 col-xs-10" style="margin-bottom:15px; margin-top:15px">
-                <div class="monthsignexport">
-                  <div class="col-md-2 col-sm-2 col-xs-2">
-                    <label for="term2">学期</label>
-                  </div>
-                  <div class="col-md-2 col-sm-2 col-xs-2">
-                    <select class="form-control" id="year2" onchange="function select();">
-                      <option>2018</option>
-                      <option>2019</option>
-                      <option>2020</option>
-                      <option>2021</option>
-                    </select>
-                  </div>
-                  <div class="col-md-2 col-sm-2 col-xs-2">
-                    <label for="month2">月份</label>
-                  </div>
-                  <div class="">
-                    <select class="form-control" id="month2" onchange="">
-                      <option value=""></option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
-                      <option>11</option>
-                      <option>12</option>
-                    </select>
-                  </div>
-                  <div class="col-md-2 col-sm-2 col-xs-2">
-                    <button type="button" name="button" id="sbutton" class="btn btn-default">导出</button>
-                  </div>
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="yearsignexport">
-
-                </div>
-
-                </div>
-            </div>
-
-<%--
-
-              <div class="tab-pane fade in active" id="reportExport">
-                <div class="container col-md-10 col-md-offset-1 col-sm-10 col-xs-10" style="margin-bottom:15px; margin-top:15px">
-                  <div id="monthreportexport">
-                    <div class="col-md-2 col-sm-2 col-xs-2">
-                      <label for="term1">学期</label>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3">
-                      <select class="form-control" id="year1" onchange="function select();">
-                        <option>2018</option>
-                        <option>2019</option>
-                        <option>2020</option>
-                        <option>2021</option>
-                      </select>
-                    </div>
-                    <div class="col-md-2 col-sm-2 col-xs-2">
-                      <label for="month1">月份</label>
-                    </div>
-                      <div class="col-md-3 col-sm-3 col-xs-3">
-                        <select class="form-control" id="month1" onchange="">
+                      <div class="form-group">
+                        <label for="month2">月份</label>
+                        <select class="form-control" id="month2" onchange="">
+                          <option value=""></option>
                           <option>1</option>
                           <option>2</option>
                           <option>3</option>
@@ -137,19 +85,57 @@
                           <option>12</option>
                         </select>
                       </div>
-                    <div class="col-md-2 col-sm-2 col-xs-2">
-                      <button type="button" name="button" id="rbutton" class="btn btn-default">导出</button>
-                    </div>
-                  </div>
-
-                  <div class="divider"></div>
-
-                  <div class="yearreportexport">
-
-                  </div>
+                      <div class="form-group">
+                        <button type="button" name="button" id="sbutton" class="btn btn-default">导出</button>
+                      </div>
+                    </form>
                 </div>
-              </div> --%>
+              </div>
+
+
+
+              <div class="tab-pane fade" id="re">
+                <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px; margin-top:15px">
+                  <form class="col-sm-12 col-xs-12" action="index.html" method="post">
+                    <div class="form-group">
+                      <label for="year1">年份</label>
+                      <select class="form-control" id="year1" onchange="function select();">
+                        <option>2018</option>
+                        <option>2019</option>
+                        <option>2020</option>
+                        <option>2021</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="month1">月份</label>
+                      <select class="form-control" id="month1" onchange="">
+                        <option value=""></option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <button type="button" name="button" id="1button" class="btn btn-default">导出</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
           </div>
+
+
+
         </div>
       </div>
     </div>

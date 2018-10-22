@@ -208,6 +208,8 @@
 
     <script type="text/javascript">
 
+    var nowweek;
+
       $(function(){
         initTime();
         initTimePicker()
@@ -273,6 +275,7 @@
                     success:function(data){
                       var nw = data[0].nw;
                       var term = data[0].term;
+                      nowweek = data[0].week;
                       $('#tablehead').text(term + "第" + nw + "周签到");
                     }
                   });
@@ -341,71 +344,74 @@
                 };
 
                 $('#submit').click(function(){
-                  var formData = new FormData();
 
-                  formData.append('sun_am_in',$('#sun_am_in').val());
-                  formData.append('sun_am_out',$('#sun_am_out').val());
-                  formData.append('sun_pm_in',$('#sun_pm_in').val());
-                  formData.append('sun_pm_out', $('#sun_pm_out').val());
-                  formData.append('sun_eve_in',$('#sun_eve_in').val());
-                  formData.append('sun_eve_out',$('#sun_eve_out').val());
+                  // if (nowweek == 5) {
+                    var formData = new FormData();
+                    formData.append('sun_am_in',$('#sun_am_in').val());
+                    formData.append('sun_am_out',$('#sun_am_out').val());
+                    formData.append('sun_pm_in',$('#sun_pm_in').val());
+                    formData.append('sun_pm_out', $('#sun_pm_out').val());
+                    formData.append('sun_eve_in',$('#sun_eve_in').val());
+                    formData.append('sun_eve_out',$('#sun_eve_out').val());
 
+                    formData.append('mon_am_in',$('#mon_am_in').val());
+                    formData.append('mon_am_out',$('#mon_am_out').val());
+                    formData.append('mon_pm_in',$('#mon_pm_out').val());
+                    formData.append('mon_pm_out', $('#mon_pm_out').val());
+                    formData.append('mon_eve_in',$('#mon_eve_in').val());
+                    formData.append('mon_eve_out',$('#mon_eve_out').val());
 
-                  formData.append('mon_am_in',$('#mon_am_in').val());
-                  formData.append('mon_am_out',$('#mon_am_out').val());
-                  formData.append('mon_pm_in',$('#mon_pm_out').val());
-                  formData.append('mon_pm_out', $('#mon_pm_out').val());
-                  formData.append('mon_eve_in',$('#mon_eve_in').val());
-                  formData.append('mon_eve_out',$('#mon_eve_out').val());
+                    formData.append('tues_am_in',$('#tues_am_in').val());
+                    formData.append('tues_am_out',$('#tues_am_out').val());
+                    formData.append('tues_pm_in',$('#tues_pm_in').val());
+                    formData.append('tues_pm_out', $('#tues_pm_out').val());
+                    formData.append('tues_eve_in',$('#tues_eve_in').val());
+                    formData.append('tues_eve_out',$('#tues_eve_out').val());
 
-                  formData.append('tues_am_in',$('#tues_am_in').val());
-                  formData.append('tues_am_out',$('#tues_am_out').val());
-                  formData.append('tues_pm_in',$('#tues_pm_in').val());
-                  formData.append('tues_pm_out', $('#tues_pm_out').val());
-                  formData.append('tues_eve_in',$('#tues_eve_in').val());
-                  formData.append('tues_eve_out',$('#tues_eve_out').val());
+                    formData.append('wed_am_in',$('#wed_am_in').val());
+                    formData.append('wed_am_out',$('#wed_am_out').val());
+                    formData.append('wed_pm_in',$('#wed_pm_in').val());
+                    formData.append('wed_pm_out', $('#wed_pm_out').val());
+                    formData.append('wed_eve_in',$('#wed_eve_in').val());
+                    formData.append('wed_eve_out',$('#wed_eve_out').val());
 
-                  formData.append('wed_am_in',$('#wed_am_in').val());
-                  formData.append('wed_am_out',$('#wed_am_out').val());
-                  formData.append('wed_pm_in',$('#wed_pm_in').val());
-                  formData.append('wed_pm_out', $('#wed_pm_out').val());
-                  formData.append('wed_eve_in',$('#wed_eve_in').val());
-                  formData.append('wed_eve_out',$('#wed_eve_out').val());
+                    formData.append('thur_am_in',$('#thur_am_in').val());
+                    formData.append('thur_am_out',$('#thur_am_out').val());
+                    formData.append('thur_pm_in',$('#thur_pm_in').val());
+                    formData.append('thur_pm_out', $('#thur_pm_out').val());
+                    formData.append('thur_eve_in',$('#thur_eve_in').val());
+                    formData.append('thur_eve_out',$('#thur_eve_out').val());
 
-                  formData.append('thur_am_in',$('#thur_am_in').val());
-                  formData.append('thur_am_out',$('#thur_am_out').val());
-                  formData.append('thur_pm_in',$('#thur_pm_in').val());
-                  formData.append('thur_pm_out', $('#thur_pm_out').val());
-                  formData.append('thur_eve_in',$('#thur_eve_in').val());
-                  formData.append('thur_eve_out',$('#thur_eve_out').val());
+                    formData.append('fri_am_in',$('#fri_am_in').val());
+                    formData.append('fri_am_out',$('#fri_am_out').val());
+                    formData.append('fri_pm_in',$('#fri_pm_in').val());
+                    formData.append('fri_pm_out', $('#fri_pm_out').val());
+                    formData.append('fri_eve_in',$('#fri_eve_in').val());
+                    formData.append('fri_eve_out',$('#fri_eve_out').val());
 
-                  formData.append('fri_am_in',$('#fri_am_in').val());
-                  formData.append('fri_am_out',$('#fri_am_out').val());
-                  formData.append('fri_pm_in',$('#fri_pm_in').val());
-                  formData.append('fri_pm_out', $('#fri_pm_out').val());
-                  formData.append('fri_eve_in',$('#fri_eve_in').val());
-                  formData.append('fri_eve_out',$('#fri_eve_out').val());
+                    formData.append('late', $('#late').val());
+                    formData.append('dayoff',$('#dayoff').val());
+                    formData.append('totaltime',$('#totaltime').val());
 
-                  formData.append('late', $('#late').val());
-                  formData.append('dayoff',$('#dayoff').val());
-                  formData.append('totaltime',$('#totaltime').val());
+                    formData.append('note',$('#note').val());
 
-                  formData.append('note',$('#note').val());
-
-                  $.ajax({
-                    url: "wr/function/submitsign",
-                    type: "post",
-                    contentType: "application/json",
-                    async: false,
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(){
-                      alert("提交成功");
-                      getStatus();
-                      initTable();
-                    }
+                    $.ajax({
+                      url: "wr/function/submitsign",
+                      type: "post",
+                      contentType: "application/json",
+                      async: false,
+                      data: formData,
+                      processData: false,
+                      contentType: false,
+                      success: function(){
+                        alert("提交成功");
+                        getStatus();
+                        initTable();
+                      }
                   })
+                // } else if (true) {
+                //   alert("不在规定时间内，不得提交");
+                // }
                 });
 
         </script>

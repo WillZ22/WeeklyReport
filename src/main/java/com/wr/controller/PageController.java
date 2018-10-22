@@ -135,4 +135,15 @@ public class PageController {
 	public String summaryExport() {
 		return "SummaryExport";
 	}
+	
+	@RequestMapping(value = "/meetingrecord")
+	public String meetingRecord() {
+		return "MeetingRecord";
+	}
+	
+	@RequestMapping(value = "/notification")
+	public String notification() {
+		return "Notification";
+	}
+	
 }

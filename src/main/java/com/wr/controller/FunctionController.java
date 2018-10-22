@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Null;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.maven.Maven;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -32,10 +33,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.wr.model.MeetingRecord;
+import com.wr.model.Notification;
 import com.wr.model.Report;
 import com.wr.model.Sign;
 import com.wr.model.User;
+import com.wr.service.MeetingRecordService;
+import com.wr.service.NotificationService;
 import com.wr.service.ReportService;
 import com.wr.service.SignService;
 import com.wr.service.UserService;
@@ -57,6 +63,44 @@ public class FunctionController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MeetingRecordService meetingRecordService;
+	
+	@Autowired
+	NotificationService notificationService;
+	
+	/****************************** Main Page *************************************/
+	@RequestMapping(value = "/njump", method = RequestMethod.POST)
+	public ModelAndView  nJump(HttpServletRequest request, HttpSession session) {
+		int nid = Integer.parseInt(request.getParameter("nid"));
+		Notification notification = notificationService.getNotification(nid);
+		String head = notification.getTitle();
+		String time = notification.getYear() + "年" + notification.getMonth() + "月" + notification.getDay() + "日";
+		String content = notification.getContent();
+		ModelAndView mav = new ModelAndView("NotificationShow");  
+		mav.addObject("head", head);
+		mav.addObject("content", content);
+		mav.addObject("time", time);
+		return mav;
+		
+	}
+	
+	
+	@RequestMapping(value = "/mjump", method = RequestMethod.POST)
+	public ModelAndView  mJump(HttpServletRequest request, HttpSession session) {
+		int mrid = Integer.parseInt(request.getParameter("mrid"));
+		MeetingRecord meetingRecord = meetingRecordService.getMeetingRecord(mrid);
+		String head = meetingRecord.getYear() + "年" + meetingRecord.getMonth() + "月" + meetingRecord.getDay() + "日会议记录";
+		String time = meetingRecord.getYear() + "年" + meetingRecord.getMonth() + "月" + meetingRecord.getDay() + "日";
+		String content = meetingRecord.getContent();
+		
+		ModelAndView mav = new ModelAndView("MeetingRecordShow");  
+		mav.addObject("head", head);
+		mav.addObject("content", content);
+		mav.addObject("time", time);
+		return mav;
+	}
 	
 	/****************** Group Member ************** Group Leader *****************/
 	@RequestMapping(value = "/reportsubmit", method = RequestMethod.POST)
@@ -637,6 +681,8 @@ public class FunctionController {
 	}
 	/******************************* Teacher *************************************/
 	
+
+	
 	@RequestMapping(value = "/exportmonthreport", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public ResponseEntity<byte[]> exportmonthreport(HttpServletRequest request) {
@@ -740,7 +786,75 @@ public class FunctionController {
 	}
 	
 	
+	
+	@RequestMapping(value = "/submitnotification", method =RequestMethod.POST)
+	@ResponseBody
+	public String submitNotification(HttpServletRequest request) {
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		Notification notification = new Notification();
+		notification.setContent(content);
+		notification.setTitle(title);
+		notification.setMonth(SystemTime.month);
+		notification.setYear(SystemTime.year);
+		notification.setDay(SystemTime.day);
+		notificationService.addNotification(notification);
+		return "success";
+	}
+	
+	/******************************* Secretary **************************************/
+	@RequestMapping(value = "/submitmeetingrecord", method =RequestMethod.POST)
+	@ResponseBody
+	public String submitMeetingRecord(HttpServletRequest request) {
+		String content = request.getParameter("content");
+		MeetingRecord meetingRecord = new MeetingRecord();
+		meetingRecord.setContent(content);
+		meetingRecord.setDay(SystemTime.day);
+		meetingRecord.setMonth(SystemTime.month);
+		meetingRecord.setYear(SystemTime.year);
+		meetingRecordService.addMeetingRecord(meetingRecord);
+		return "success";
+	}
+	
+	
 	/******************************* Admin **************************************/
+	
+	@RequestMapping(value = "/getallnotications", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getAllNotifications() {
+		List<Notification> notifications = notificationService.getAllNotifications();
+		JSONArray jsonArray = JSONArray.fromObject(notifications);
+		String result = jsonArray.toString();
+		return result;
+		
+	}
+	
+	@RequestMapping(value = "/getallmeetingrecords", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getAllMeetingRecords() {
+		List<MeetingRecord> meetingRecords = meetingRecordService.getAllMeetingRecords();
+		JSONArray jsonArray = JSONArray.fromObject(meetingRecords);
+		String result = jsonArray.toString();
+		return result;
+	}
+	
+	@RequestMapping(value = "/deletenotification", method =RequestMethod.POST)
+	@ResponseBody
+	public String deleteNotification(HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		notificationService.deleteNotification(id);
+		return "success";
+	}
+	
+	@RequestMapping(value = "/deletemeetingrecord", method =RequestMethod.POST)
+	@ResponseBody
+	public String deleteMeetingRecord(HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		meetingRecordService.deleteMeetingRecord(id);
+		return "success";
+	}
+	
+	
 	
 	@RequestMapping(value = "/getglnames", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
 	@ResponseBody
@@ -857,10 +971,12 @@ public class FunctionController {
 	public String getTime(HttpServletResponse response) {
 		int nw = SystemTime.start_NW_of_Term;
 		String term = SystemTime.term;
+		int week = SystemTime.week;
 		JSONObject jObject = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		jObject.put("nw", nw);
 		jObject.put("term", term);
+		jObject.put("week", week);
 		jsonArray.add(jObject);
 		String result = jsonArray.toString();
 		return result;
@@ -881,6 +997,7 @@ public class FunctionController {
 			userService.update(user.getUsername(), newPassword,user.getRole(), user.getName(), user.getBelong());	
 			session.invalidate();
 			return "success";
+			
 		}
 	}	
 	
@@ -895,4 +1012,54 @@ public class FunctionController {
 		systemTime.start(term, start_NW_of_Term);
 		return "sucesse";
 	}
+	
+	
+	/************************main page**********************/
+	@RequestMapping(value = "/getmeetingreportpagecutlist", method =RequestMethod.POST, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getMeetingReportPageCutList (HttpServletRequest request) {
+		int pagenum = Integer.parseInt(request.getParameter("pagenum"));
+		int pagecut = Integer.parseInt(request.getParameter("pagecut"));
+		int firstResult = (pagenum-1) * pagecut;
+		int offset = pagecut;
+		List<MeetingRecord> meetingRecords = meetingRecordService.getPageCuteMeetingRecords(firstResult, offset);
+		JSONArray jsonArray = JSONArray.fromObject(meetingRecords);
+		String result = jsonArray.toString();
+		return result;
+	}
+	
+	
+	@RequestMapping(value = "/getnotificationpagecutlist", method =RequestMethod.POST, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getNotificationPageCutList (HttpServletRequest request) {
+		int pagenum = Integer.parseInt(request.getParameter("pagenum"));
+		int pagecut = Integer.parseInt(request.getParameter("pagecut"));
+		int firstResult = (pagenum-1) * pagecut;
+		int offset = pagecut;
+		List<Notification> notifications = notificationService.getPageCuteNotification(firstResult, offset);
+		JSONArray jsonArray = JSONArray.fromObject(notifications);
+		String result = jsonArray.toString();
+		return result;
+		
+	}
+	
+	@RequestMapping(value = "/getnotificationsumpage", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getNotificationSumPage (HttpServletRequest request) {
+		int sumPage = notificationService.getSumPage(5);
+		JSONObject jObject = new JSONObject();
+		jObject.put("sumPage", sumPage);
+		return jObject.toString();
+	}
+	
+	@RequestMapping(value = "/getmeetingrecordsumpage", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getMeetingRecordSumPage (HttpServletRequest request) {
+		int sumPage = meetingRecordService.getSumPage(5);
+		JSONObject jObject = new JSONObject();
+		jObject.put("sumPage", sumPage);
+		return jObject.toString();
+		
+	}
+	
 }

@@ -282,6 +282,7 @@
     var nownw;
     var editterm;
     var editnw;
+    var nowweek;
 
     $(function(){
       //初始化表格
@@ -305,6 +306,7 @@
         success:function(data){
           nownw = data[0].nw;
           nowterm = data[0].term;
+          nowweek = data[0].week;
           $('#term').val(data[0].term);
         }
       });
@@ -477,9 +479,6 @@
                         });
                     },
                     'click #removeTable':function(e, value, row, index){
-                      if (row.qualify == 1) {
-                        alert('审核已通过，不可删除');
-                      } else {
                         $('#removeText').text("是否删除" + row.term + "第" + row.nw + "周周报");
                         $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
                           $.ajax({
@@ -501,7 +500,6 @@
                           })
                         });
                        $('#removeModal').modal();
-                      }
                    }
                   }
                 },
@@ -679,55 +677,62 @@
 
     //新添加周报按钮
     $('#btn_new').click(function(){
-      $('#newModal').modal('show');
+      if (nowweek == 5) {
+        $('#newModal').modal('show');
+      } else if (nowweek != 5) {
+        alert("不在规定时间内，不得提交");
+      }
     });
 
 
     //新建模态框保存
     $("#btn_add").click(function () {
         //进行表单验证
-        var bv = $('#reportForm').data('bootstrapValidator');
-        bv.validate();
-        if (bv.isValid()) {
-          var formData = new FormData();
-          var summary = editor1.txt.html();
 
-          formData.append('sdate',$('#startDate').val());
-          formData.append('edate',$('#endDate').val());
-          formData.append('lplan',$('#LPlan').val());
-          formData.append('done', $('#Done').val());
-          formData.append('summary', summary);
-          formData.append('nplan',$('#NPlan').val());
-          formData.append('lread',$('#LRead').val());
-          formData.append('nread',$('#NRead').val());
+          var bv = $('#reportForm').data('bootstrapValidator');
+          bv.validate();
+          if (bv.isValid()) {
+            var formData = new FormData();
+            var summary = editor1.txt.html();
+
+            formData.append('sdate',$('#startDate').val());
+            formData.append('edate',$('#endDate').val());
+            formData.append('lplan',$('#LPlan').val());
+            formData.append('done', $('#Done').val());
+            formData.append('summary', summary);
+            formData.append('nplan',$('#NPlan').val());
+            formData.append('lread',$('#LRead').val());
+            formData.append('nread',$('#NRead').val());
 
 
-          for(var i=0; i<$('#fileinput')[0].files.length;i++){
-          var file = $('#fileinput')[0].files[i];
-          formData.append('file', file);
-          }
-
-          $.ajax({
-            url:"wr/function/reportsubmit",
-            type:"post",
-            data:formData,
-            processData:false,
-            contentType:false,
-            async: true,
-            success:function(message){
-              $("#reportForm").find('textarea,select,input').each(function() {
-                $(this).val('');
-                editor1.txt.clear();
-              });
-
-              $("#td_WR").bootstrapTable('refresh');
-              $('#newModal').modal('hide');
-            } ,
-            error:function(){
-              alert("网络错误");
+            for(var i=0; i<$('#fileinput')[0].files.length;i++){
+            var file = $('#fileinput')[0].files[i];
+            formData.append('file', file);
             }
-          });
-        };
+
+            $.ajax({
+              url:"wr/function/reportsubmit",
+              type:"post",
+              data:formData,
+              processData:false,
+              contentType:false,
+              async: true,
+              success:function(message){
+                $("#reportForm").find('textarea,select,input').each(function() {
+                  $(this).val('');
+                  editor1.txt.clear();
+                });
+
+                $("#td_WR").bootstrapTable('refresh');
+                $('#newModal').modal('hide');
+              } ,
+              error:function(){
+                alert("网络错误");
+              }
+            });
+          };
+
+
     });
 
 

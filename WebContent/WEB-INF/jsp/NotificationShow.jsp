@@ -41,22 +41,18 @@
       <div class="container col-md-10 col-md-offset-1" style="margin-top:50px;">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">修改密码</h3>
+            <h3 class="panel-title">通知公告</h3>
           </div>
           <div class="panel-body">
             <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px">
+              <div class="mainhead">
+                <h1 style="text-align:center" id="head">${head}</h1>
+                <p style="text-align:center" id="time">${time}</p>
+              </div>
 
-              <form>
-                <div class="form-group">
-                  <label for="oldpw">原始密码</label>
-                  <input type="text" class="form-control" id="oldpw" >
-                </div>
-                <div class="form-group">
-                  <label for="newpw">新密码</label>
-                  <input type="text" class="form-control" id="newpw">
-                </div>
-                <button class="btn btn-default" id="change" type="button">确认</button>
-              </form>
+              <div class="maincontent">
+                <p id="content" style="line-height: 39px;text-indent: 32px;">${content}</p>
+              </div>
 
             </div>
           </div>
@@ -72,32 +68,6 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="wr/Static/js/custom.js"></script>
     <script type="text/javascript">
-
-    $('#change').click(function(){             //TODO:添加删除后台数据的方法
-      $.ajax({
-        url: "wr/function/changepw",
-        type: "post",
-        data:{
-          oldpw: $('#oldpw').val(),
-          newpw: $('#newpw').val()
-        },
-        contentType:"application/x-www-form-urlencoded",
-        async: true,
-        success:function(data){
-          if(data == "success"){
-            alert("修改成功");
-            window.location.href = "wr/loginpage";
-          }else if(data == "fail"){
-            alert("原密码错误");
-          }
-        },
-        error:function(){
-          alert("网络错误");
-        }
-      })
-    });
-
-
 
     </script>
   </body>

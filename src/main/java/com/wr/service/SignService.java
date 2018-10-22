@@ -174,10 +174,6 @@ public class SignService {
 		HSSFCellStyle style = workbook.createCellStyle();
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER); 
         style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-        style.setBorderTop(HSSFCellStyle.BORDER_DOTTED);//上边框
-        style.setBorderBottom(HSSFCellStyle.BORDER_THICK);//下边框
-        style.setBorderLeft(HSSFCellStyle.BORDER_DOUBLE);//左边框
-        style.setBorderRight(HSSFCellStyle.BORDER_SLANTED_DASH_DOT);//右边框
         HSSFFont font = workbook.createFont(); 
         font.setFontName("宋体");
         font.setFontHeightInPoints((short) 15);// 设置字体大小
@@ -185,10 +181,6 @@ public class SignService {
         
         
         HSSFCellStyle style1 = workbook.createCellStyle();
-        style1.setBorderTop(HSSFCellStyle.BORDER_DOTTED);//上边框
-        style1.setBorderBottom(HSSFCellStyle.BORDER_THICK);//下边框
-        style1.setBorderLeft(HSSFCellStyle.BORDER_DOUBLE);//左边框
-        style1.setBorderRight(HSSFCellStyle.BORDER_SLANTED_DASH_DOT);//右边框
         style1.setAlignment(HSSFCellStyle.ALIGN_CENTER); 
         style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
         HSSFFont font1 = workbook.createFont(); 

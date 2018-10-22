@@ -21,10 +21,10 @@
     <title>WeeklyReport</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
-		<!--Font Awesome CSS-->
-		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		<%-- <!--Font Awesome CSS-->
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> --%>
 
     <!-- Custom styles for this project -->
     <link href="wr/Static/css/style.css" rel="stylesheet">
@@ -41,23 +41,22 @@
       <div class="container col-md-10 col-md-offset-1" style="margin-top:50px;">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">修改密码</h3>
+            <h3 class="panel-title">发布公告</h3>
           </div>
           <div class="panel-body">
             <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px">
 
               <form>
                 <div class="form-group">
-                  <label for="oldpw">原始密码</label>
-                  <input type="text" class="form-control" id="oldpw" >
+                  <label for="title">标题</label>
+                  <input type="text" class="form-control" id="title" >
                 </div>
                 <div class="form-group">
-                  <label for="newpw">新密码</label>
-                  <input type="text" class="form-control" id="newpw">
+                  <label for="content">公告内容：</label>
+                  <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="cont" id="cont"></textarea>
                 </div>
-                <button class="btn btn-default" id="change" type="button">确认</button>
+                <button class="btn btn-default" id="submit" type="button">提交</button>
               </form>
-
             </div>
           </div>
         </div>
@@ -69,26 +68,22 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="wr/Static/js/custom.js"></script>
+    <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript">
 
-    $('#change').click(function(){             //TODO:添加删除后台数据的方法
+    $('#submit').click(function(){             //TODO:添加删除后台数据的方法
       $.ajax({
-        url: "wr/function/changepw",
+        url: "wr/function/submitnotification",
         type: "post",
         data:{
-          oldpw: $('#oldpw').val(),
-          newpw: $('#newpw').val()
+          content:$('#cont').val(),
+          title: $('#title').val()
         },
         contentType:"application/x-www-form-urlencoded",
-        async: true,
+        async: false,
         success:function(data){
           if(data == "success"){
-            alert("修改成功");
-            window.location.href = "wr/loginpage";
-          }else if(data == "fail"){
-            alert("原密码错误");
+            alert("发布成功");
           }
         },
         error:function(){

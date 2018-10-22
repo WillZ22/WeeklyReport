@@ -15,6 +15,7 @@ public class SystemTime {
 	public static int now_NW_of_Year = 0;
 	public static int year = 0;
 	public static int month = 0;
+	public static int day = 0;
 	private static Calendar cal ;
 	
 	private Timer timer ;
@@ -34,6 +35,7 @@ public class SystemTime {
 		
 		this.year = nowYear();
 		this.month = nowMonth() + 1;
+		this.day = nowDay();
 		
 		this.week = nowWeek();
 		this.now_NW_of_Year = now_NW_of_Year();
@@ -72,6 +74,9 @@ public class SystemTime {
 	 	term = null;
 		week = 0;
 		now_NW_of_Year = 0;
+		year = 0;
+		day = 0;
+		month = 0;
 	}
 	
 	//获取当前星期
@@ -95,6 +100,11 @@ public class SystemTime {
 	//获取日期所属周数
 	private int nowMonth() {
 		int month = cal.get(Calendar.MONTH);
+		return month;	
+	}
+	
+	private int nowDay() {
+		int month = cal.get(Calendar.DAY_OF_MONTH);
 		return month;	
 	}
 	

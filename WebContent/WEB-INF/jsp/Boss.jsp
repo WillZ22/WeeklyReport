@@ -47,7 +47,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Weekly Report</a>
+            <a class="navbar-brand" href="wr/page/teacher">Weekly Report</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -55,7 +55,7 @@
               <li><a href="javascript:void(0)" onclick="sc()">本周考勤</a></li>
               <li><a href="javascript:void(0)" onclick="rs()">周报查找</a></li>
               <li><a href="javascript:void(0)" onclick="se()">汇总导出</a></li>
-              <li><a href="javascript:void(0)" onclick="pa()">发布公告</a></li>
+              <li><a href="javascript:void(0)" onclick="rn()">发布公告</a></li>
               <li><a href="javascript:void(0)" onclick="um()">用户管理</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -79,12 +79,75 @@
       </nav>
 
 
-  <div id="content" class="container col-md-10 col-md-offset-1">
-	    <div id="content" class="container clock text-horizonal-center">
-			<h1 id="showweek"></h1>
-			<h2 id="showtime"></h2>
+      <div id="content" class="container col-md-10 col-md-offset-1" >
+        <div class="row" style="margin-top:50px;" class="col-md-10 col-md-offset-1">
+          <div class="container col-sm-7 rule">
+            <div class="">
+              <h1 id="systemtime"></h1>
+            </div>
+            <div class="introduction">
+              <h2>系统简介</h2><br/>
+              <p>一、组员：<br/>
+                 1.组员提供提交周报和考勤的功能。<br/>
+                 2.周报提交时间为周五。<br/>
+                 3.不在系统时间内只能对已提交周报进行编辑。<br/>
+                 4.审核未通过的周报必须重新提交，重新由组长审核。<br/>
+                 <br/><br/>
+                 二、组长：<br/>
+                 1.组长除提交周报和考勤的功能。<br/>
+                 2.组长提供周报审核功能，对于审核未通过的周报，组员重新提交后，组长需要重新审核。<br/><br/>
+                 三、科研秘书：<br/>
+                 1.科研秘书提供考勤审核功能，审核全体成员每周考勤。<br/>
+                 2.科研秘书提供会议记录功能。
+               </p>
+            </div>
+          </div>
+
+          <div class="container col-sm-4 col-sm-offset-1 panels">
+
+            <div class="panel panel-default" class="notify-module">
+              <div class="panel-heading">
+                <h3 class="panel-title">公告</h3>
+              </div>
+              <div class="panel-body">
+                  <div class="notify" >
+                    <ul id="notify">
+
+                    </ul>
+
+                  </div>
+                  <div class="" id="pageDivN">
+                    <ul class="pagination pagination-sm" id="NP">
+                    </ul>
+                  </div>
+              </div>
+              <div class="panel-footer">
+              </div>
+            </div>
+
+
+            <div class="panel panel-default" class="record-module">
+              <div class="panel-heading">
+                <h3 class="panel-title">会议记录</h3>
+              </div>
+              <div class="panel-body">
+                <div class="record" >
+                  <ul id="record">
+
+                  </ul>
+                </div>
+                <div class="">
+                  <ul class="pagination pagination-sm" id="MP">
+                  </ul>
+                </div>
+              </div>
+              <div class="panel-footer">
+              </div>
+            </div>
+
+          </div>
+        </div>
     	</div>
-	</div>
 
 
 
@@ -93,8 +156,122 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
     <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="wr/Static/js/time.js"></script>
     <script type="text/javascript">
+    var meetingRecordPage;
+    var notificationPage;
+
+    $(function(){
+      queryN(1);
+      queryM(1);
+      queryMeetingRecordPage();
+      queryNotificationPage();
+    });
+
+
+
+
+      function queryMeetingRecordPage(){
+        $.ajax({
+          url:"wr/function/getmeetingrecordsumpage",
+          type:"get",
+          async: false,
+          success:function(data){
+            meetingRecordPage = data.sumPage;
+            for (var i = 0; i < meetingRecordPage; i++) {
+              n = i+1;
+              $('#MP').append('<li><a href="javascript:void(0)" onclick="queryM('+n+')">'+ n +'</a></li>');
+            }
+          }
+        })
+      }
+
+      function queryNotificationPage(){
+        $.ajax({
+          url:"wr/function/getnotificationsumpage",
+          type:"get",
+          async: false,
+          success:function(data){
+            notificationPage = data.sumPage;
+            for (var i = 0; i < notificationPage; i++) {
+              n = i+1;
+              $('#NP').append('<li><a href="javascript:void(0)" onclick="queryN('+n+')">'+ n +'</a></li>');
+            }
+          }
+        })
+      }
+
+      function queryN(page){
+        $.ajax({
+          url:"wr/function/getnotificationpagecutlist",
+          type:"post",
+          async: false,
+          contentType:"application/x-www-form-urlencoded",
+          data:{
+            pagenum:page,
+            pagecut:5
+          },
+          success:function(data){
+            $('#notify').html(" ");
+            for (var i = 0; i < data.length; i++) {
+               var title = data[i].title;
+               var nid = data[i].id;
+               $('#notify').append('<a href="javascript:void(0)" dataid = "'+ nid +'" onclick = "njump('+nid+')">'+ title +'</a><br/>');
+            }
+          }
+        })
+      }
+
+      function queryM(page){
+        $.ajax({
+          url:"wr/function/getmeetingreportpagecutlist",
+          type:"post",
+          async: false,
+          contentType:"application/x-www-form-urlencoded",
+          data:{
+            pagenum:page,
+            pagecut:5
+          },
+          success:function(data){
+            $('#record').html(" ");
+            for (var i = 0; i < data.length; i++) {
+               var mrid = data[i].id ;
+               var year = data[i].year;
+               var month = data[i].month;
+               var day = data[i].day;
+               var title = year + "年" + month + "月" + day + "会议记录";
+               $('#record').append('<a href="javascript:void(0)" dataid = "'+ mrid +'" onclick = "mjump('+mrid+')">'+ title +'</a><br/>');
+            }
+          }
+        })
+      }
+
+      function njump(nid){
+        $.ajax({
+          url:"wr/function/njump",
+          type: "post",
+          data:{
+            nid:nid
+          },
+          contentType:"application/x-www-form-urlencoded",
+          success:function(data){
+            $("#content").html(data);
+          }
+        })
+      }
+
+      function mjump(mrid){
+        $.ajax({
+          url:"wr/function/mjump",
+          type: "post",
+          data:{
+            mrid:mrid
+          },
+          contentType:"application/x-www-form-urlencoded",
+          success:function(data){
+            $("#content").html(data);
+          }
+        })
+      }
 
     function rc(){
         $.ajax({
@@ -151,6 +328,16 @@
     function se(){
       $.ajax({
         url:"wr/page/summaryexport",
+        type:"get",
+        success:function(data){
+          $("#content").html(data);
+        }
+      })
+    }
+
+    function rn(){
+      $.ajax({
+        url:"wr/page/notification",
         type:"get",
         success:function(data){
           $("#content").html(data);
