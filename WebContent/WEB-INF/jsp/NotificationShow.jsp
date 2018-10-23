@@ -51,7 +51,7 @@
               </div>
 
               <div class="maincontent">
-                <p id="content" style="line-height: 39px;text-indent: 32px;">${content}</p>
+                <p id="content" style="line-height: 39px;">${content}</p>
               </div>
 
             </div>

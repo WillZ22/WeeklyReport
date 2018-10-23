@@ -217,6 +217,23 @@
         getStatus();
       });
 
+      function textareaTo(str){
+        var reg=new RegExp("\n","g");
+        var regSpace=new RegExp(" ","g");
+
+        str = str.replace(reg,"<br/>");
+        str = str.replace(regSpace,"&nbsp;");
+        return str;
+      };
+
+      function toTextarea(str){
+      var reg=new RegExp("<br/>","g");
+      var regSpace=new RegExp("&nbsp;","g");
+      str = str.replace(reg,"\n");
+      str = str.replace(regSpace," ");
+      return str;
+    };
+
       function getStatus(){
         $.ajax({
           url: "wr/function/signstatus",
@@ -281,6 +298,8 @@
                   });
                 };
 
+
+
                 function initTable(){
                   $.ajax({
                     url:"wr/function/getsign",
@@ -337,7 +356,9 @@
                         $('#dayoff').val(data.dayoff);
                         $('#totaltime').val(data.totalTime);
 
-                        $('#note').val(data.note);
+                        var str = data.note;
+                        str = toTextarea(str);
+                        $('#note').val(str);
                       }
                     }
                   });
@@ -393,7 +414,9 @@
                     formData.append('dayoff',$('#dayoff').val());
                     formData.append('totaltime',$('#totaltime').val());
 
-                    formData.append('note',$('#note').val());
+                    var str = $('#note').val();
+                    str = textareaTo(str);
+                    formData.append('note',str);
 
                     $.ajax({
                       url: "wr/function/submitsign",

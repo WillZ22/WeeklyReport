@@ -34,7 +34,9 @@
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style media="screen">
 
+    </style>
 
   </head>
 
@@ -67,12 +69,23 @@
     <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript">
 
+    function textareaTo(str){
+      var reg=new RegExp("\n","g");
+      var regSpace=new RegExp(" ","g");
+
+      str = str.replace(reg,"<br/>");
+      str = str.replace(regSpace,"&nbsp;");
+      return str;
+    }
+
     $('#submit').click(function(){             //TODO:添加删除后台数据的方法
+      var str = $('#cont').val();
+      str = textareaTo(str);
       $.ajax({
         url: "wr/function/submitmeetingrecord",
         type: "post",
         data:{
-          content:$('#cont').val()
+          content:str
         },
         contentType:"application/x-www-form-urlencoded",
         async: false,

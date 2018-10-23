@@ -34,11 +34,6 @@
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <style media="screen">
-
-    </style>
-
   </head>
 
   <body>
@@ -54,7 +49,7 @@
                 <p id="time" style="text-align:center">${time}</p>
               </div>
               <div class="maincontent">
-                <p id="content" style="line-height: 39px;text-indent: 32px;">${content}</p>
+                <p id="content" style="line-height: 39px;">${content}</p>
               </div>
             </div>
           </div>

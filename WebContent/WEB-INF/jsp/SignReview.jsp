@@ -227,6 +227,23 @@
         initTimePicker();
       })
 
+      function textareaTo(str){
+        var reg=new RegExp("\n","g");
+        var regSpace=new RegExp(" ","g");
+
+        str = str.replace(reg,"<br/>");
+        str = str.replace(regSpace,"&nbsp;");
+        return str;
+      };
+
+      function toTextarea(str){
+      var reg=new RegExp("<br/>","g");
+      var regSpace=new RegExp("&nbsp;","g");
+      str = str.replace(reg,"\n");
+      str = str.replace(regSpace," ");
+      return str;
+    };
+
 
       function initTimePicker(){
         $('.am_in').timepicker({
@@ -407,7 +424,7 @@
                               $('#late').val(data.late);
                               $('#dayoff').val(data.dayoff);
                               $('#totaltime').val(data.totalTime);
-                              $('#note').val(data.note);
+                              $('#note').val(toTextarea(data.note));
                               $('#checkmodal').modal();
                             }
                           });

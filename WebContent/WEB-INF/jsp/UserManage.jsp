@@ -70,7 +70,7 @@
                 <input type="text" class="form-control" id="iUsername" disabled>
               </div>
               <div class="form-group">
-                <label for="inputName">姓名</label>
+                <label for="iName">姓名</label>
                 <input type="text" class="form-control" id="iName">
               </div>
 
@@ -80,8 +80,7 @@
               </div>
               <div class="form-group">
                 <label for="">角色</label>
-                <select class="form-control" id="iRole">
-                  <option value=""></option>
+                <select class="form-control" id="iRole" onchange="iSelect();">
                   <option value="groupmember">组员</option>
                   <option value="groupleader">组长</option>
                   <option value="secretary">科研秘书</option>
@@ -91,7 +90,6 @@
               <div class="form-group">
                 <label for="">归属</label>
                 <select class="form-control" id="iBelong">
-                  <option value=""></option>
                 </select>
               </div>
             </form>
@@ -128,8 +126,7 @@
               </div>
               <div class="form-group">
                 <label for="">角色</label>
-                <select class="form-control" id="inputRole">
-                  <option value=""></option>
+                <select class="form-control" id="inputRole" onchange="inputSelect();">
                   <option value="groupmember">组员</option>
                   <option value="groupleader">组长</option>
                   <option value="secretary">科研秘书</option>
@@ -139,7 +136,6 @@
               <div class="form-group">
                 <label for="">归属（仅设置组员所属组长）</label>
                 <select class="form-control" id="inputBelong">
-                  <option value=""></option>
                 </select>
               </div>
             </form>
@@ -188,11 +184,13 @@
 
 
       function initIBelong(){
+        $('#iBelong').html("");
+        $('#iBelong').append('<option value = ""></option>');
         $.ajax({
           url:"wr/function/getglnames",
           type: "get",
           contentType:"application/json",
-          async: true,
+          async: false,
           success:function(data){
             for (var i = 0; i < data.length; i++) {
               var name = data[i];
@@ -202,12 +200,32 @@
         })
       }
 
+      function iSelect(){
+        if ($('#iRole').val() != "groupmember") {
+          $('#iBelong').val("");
+          $('#iBelong').attr("disabled","disabled");
+        } else {
+          $('#iBelong').removeAttr("disabled");
+        }
+      }
+
+      function inputSelect(){
+        if ($('#inputRole').val() != "groupmember"){
+          $('#inputBelong').val("");
+          $('#inputBelong').attr("disabled","disabled");
+        } else {
+          $('#inputBelong').removeAttr("disabled");
+        }
+      }
+
       function initInputBelong(){
+        $('#inputBelong').html("");
+        $('#inputBelong').append('<option value = ""></option>');
         $.ajax({
           url:"wr/function/getglnames",
           type: "get",
           contentType:"application/json",
-          async: true,
+          async: false,
           success:function(data){
             for (var i = 0; i < data.length; i++) {
               var name = data[i];
@@ -279,6 +297,11 @@
                         $('#iPW').val(row.password);
                         $("#iRole").val(row.role);
                         $('#iBelong').val(row.belong);
+                        if (row.role != "groupmember") {
+                          $('#iBelong').attr("disabled","disabled");
+                        } else {
+                          $('#iBelong').removeAttr("disabled");
+                        }
                         $('#editModal').modal();
                       },
                       'click #removeTable':function(e, value, row, index){
@@ -318,60 +341,71 @@
       });
 
       $('#btn_save').click(function(){
-        // TODO:
-        $.ajax({
-          url: "wr/function/saveuser",
-          type: "post",
-          data:{
-            username: $('#iUsername').val(),
-            name: $('#iName').val(),
-            password: $('#iPW').val(),
-            role: $('#iRole').val(),
-            belong: $('#iBelong').val(),
-          },
-          contentType:"application/x-www-form-urlencoded",
-          async: true,
-          success:function(message){
-            $('#iBelong').find("option").remove();
-            $("#newForm").find('select,input').each(function() {
-              $(this).val('');
-            });
-            $("#td_user").bootstrapTable('refresh');
-            $('#editModal').modal('hide');
-          },
-          error:function(){
-            alert("网络错误");
-          }
-        });
+        if ($('#iName').val() == "" || $('#iPW').val() == "" || $('#iUsername').val() == "") {
+          alert('请填写完整');
+        } else if ($('#iRole').val() == "groupmember" && $('#iBelong').val() == '') {
+          alert('选择组员所属组长');
+        }else {
+          // TODO:
+          $.ajax({
+            url: "wr/function/saveuser",
+            type: "post",
+            data:{
+              username: $('#iUsername').val(),
+              name: $('#iName').val(),
+              password: $('#iPW').val(),
+              role: $('#iRole').val(),
+              belong: $('#iBelong').val(),
+            },
+            contentType:"application/x-www-form-urlencoded",
+            async: true,
+            success:function(message){
+              $('#iBelong').find("option").remove();
+              $("#newForm").find('select,input').each(function() {
+                $(this).val('');
+              });
+              $("#td_user").bootstrapTable('refresh');
+              $('#editModal').modal('hide');
+            },
+            error:function(){
+              alert("网络错误");
+            }
+          });
+        }
       });
 
       $('#btn_submit').click(function(){
-        // TODO:
-        $.ajax({
-          url: "wr/function/newuser",
-          type: "post",
-          data:{
-            username: $('#inputUsername').val(),
-            name: $('#inputName').val(),
-            password: $('#inputPW').val(),
-            role: $('#inputRole').val(),
-            belong: $('#inputBelong').val(),
-          },
-          contentType:"application/x-www-form-urlencoded",
-          async: true,
-          success:function(){
-            $('#inputBelong').find("option").remove();
-            $("#newForm").find('select,input').each(function() {
-              $(this).val('');
-            });
-            $("#td_user").bootstrapTable('refresh');
-            $('#newModal').modal('hide');
-          },
-          error:function(){
-            alert("网络错误");
-          }
-        });
-
+        if ($('#inputName').val() == "" || $('#inputPW').val() == "" || $('#inputUsername').val() == "") {
+          alert('请填写完整');
+        } else if ($('#inputRole').val() == 'groupmember' && $('#inputBelong').val() == '') {
+          alert("选择组员所属组长");
+        }
+        else {
+          $.ajax({
+            url: "wr/function/newuser",
+            type: "post",
+            data:{
+              username: $('#inputUsername').val(),
+              name: $('#inputName').val(),
+              password: $('#inputPW').val(),
+              role: $('#inputRole').val(),
+              belong: $('#inputBelong').val(),
+            },
+            contentType:"application/x-www-form-urlencoded",
+            async: true,
+            success:function(){
+              $('#inputBelong').find("option").remove();
+              $("#newForm").find('select,input').each(function() {
+                $(this).val('');
+              });
+              $("#td_user").bootstrapTable('refresh');
+              $('#newModal').modal('hide');
+            },
+            error:function(){
+              alert("网络错误");
+            }
+          });
+        }
       });
     </script>
   </body>

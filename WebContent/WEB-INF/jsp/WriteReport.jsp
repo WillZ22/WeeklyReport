@@ -298,6 +298,23 @@
       InitFileInput();
     });
 
+    function textareaTo(str){
+      var reg=new RegExp("\n","g");
+      var regSpace=new RegExp(" ","g");
+
+      str = str.replace(reg,"<br/>");
+      str = str.replace(regSpace,"&nbsp;");
+      return str;
+    };
+
+    function toTextarea(str){
+    var reg=new RegExp("<br/>","g");
+    var regSpace=new RegExp("&nbsp;","g");
+    str = str.replace(reg,"\n");
+    str = str.replace(regSpace," ");
+    return str;
+  };
+
     function initTime(){
       $.ajax({
         url:"wr/function/gettime",
@@ -460,14 +477,14 @@
                           contentType:"application/x-www-form-urlencoded",
                           async: true,
                           success:function(data){
-                            $('#sdate').val(data[0].sdate);
-                            $('#edate').val(data[0].edate);
-                            $('#lplan').val(data[0].lplan);
-                            $('#done').val(data[0].done);
+                            $('#sdate').val(toTextarea(data[0].sdate));
+                            $('#edate').val(toTextarea(data[0].edate));
+                            $('#lplan').val(toTextarea(data[0].lplan));
+                            $('#done').val(toTextarea(data[0].done));
                             editor2.txt.html(data[0].summary);
-                            $('#nplan').val(data[0].nplan);
-                            $('#lread').val(data[0].lread);
-                            $('#nread').val(data[0].nread);
+                            $('#nplan').val(toTextarea(data[0].nplan));
+                            $('#lread').val(toTextarea(data[0].lread));
+                            $('#nread').val(toTextarea(data[0].nread));
 
                             $('#editModal').modal();
                             editterm = row.term;
@@ -695,14 +712,14 @@
             var formData = new FormData();
             var summary = editor1.txt.html();
 
-            formData.append('sdate',$('#startDate').val());
-            formData.append('edate',$('#endDate').val());
-            formData.append('lplan',$('#LPlan').val());
-            formData.append('done', $('#Done').val());
+            formData.append('sdate',textareaTo($('#startDate').val()));
+            formData.append('edate',textareaTo($('#endDate').val()));
+            formData.append('lplan',textareaTo($('#LPlan').val()));
+            formData.append('done', textareaTo($('#Done').val()));
             formData.append('summary', summary);
-            formData.append('nplan',$('#NPlan').val());
-            formData.append('lread',$('#LRead').val());
-            formData.append('nread',$('#NRead').val());
+            formData.append('nplan',textareaTo($('#NPlan').val()));
+            formData.append('lread',textareaTo($('#LRead').val()));
+            formData.append('nread',textareaTo($('#NRead').val()));
 
 
             for(var i=0; i<$('#fileinput')[0].files.length;i++){
@@ -746,14 +763,14 @@
         var formData = new FormData();
         var summary = editor2.txt.html();
 
-        formData.append('sdate',$('#sdate').val());
-        formData.append('edate',$('#edate').val());
-        formData.append('lplan',$('#lplan').val());
-        formData.append('done', $('#done').val());
+        formData.append('sdate',textareaTo($('#sdate').val()));
+        formData.append('edate',textareaTo($('#edate').val()));
+        formData.append('lplan',textareaTo($('#lplan').val()));
+        formData.append('done', textareaTo($('#done').val()));
         formData.append('summary', summary);
-        formData.append('nplan',$('#nplan').val());
-        formData.append('lread',$('#lread').val());
-        formData.append('nread',$('#nread').val());
+        formData.append('nplan',textareaTo($('#nplan').val()));
+        formData.append('lread',textareaTo($('#lread').val()));
+        formData.append('nread',textareaTo($('#nread').val()));
         formData.append('nw', editnw);
         formData.append('term', editterm);
 

@@ -55,6 +55,7 @@ import net.sf.json.JsonConfig;
 @RequestMapping("/function")
 public class FunctionController {
 	
+	
 	@Autowired
 	ReportService reportService;
 	
@@ -900,6 +901,7 @@ public class FunctionController {
 		System.out.println(belong);
 		userService.addUser(username, name, password, role, belong);
 		return "success";
+		
 	}
 	
 	@RequestMapping(value = "/deleteuser", method =RequestMethod.POST)

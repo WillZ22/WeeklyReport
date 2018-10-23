@@ -81,6 +81,23 @@
         oTable.Init();
       })
 
+      function textareaTo(str){
+        var reg=new RegExp("\n","g");
+        var regSpace=new RegExp(" ","g");
+
+        str = str.replace(reg,"<br/>");
+        str = str.replace(regSpace,"&nbsp;");
+        return str;
+      };
+
+      function toTextarea(str){
+      var reg=new RegExp("<br/>","g");
+      var regSpace=new RegExp("&nbsp;","g");
+      str = str.replace(reg,"\n");
+      str = str.replace(regSpace," ");
+      return str;
+    };
+
       //表格初始化方法
       var TableInit = function () {
           var oTableInit = new Object();

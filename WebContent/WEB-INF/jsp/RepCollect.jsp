@@ -138,6 +138,23 @@
       initTable();
     });
 
+    function textareaTo(str){
+      var reg=new RegExp("\n","g");
+      var regSpace=new RegExp(" ","g");
+
+      str = str.replace(reg,"<br/>");
+      str = str.replace(regSpace,"&nbsp;");
+      return str;
+    };
+
+    function toTextarea(str){
+    var reg=new RegExp("<br/>","g");
+    var regSpace=new RegExp("&nbsp;","g");
+    str = str.replace(reg,"\n");
+    str = str.replace(regSpace," ");
+    return str;
+  };
+
     function initTime(){
       $.ajax({
         url:"wr/function/gettime",
@@ -310,14 +327,14 @@
                         contentType:"application/x-www-form-urlencoded",
                         async: true,
                         success:function(data){
-                          $('#startDate').val(data[0].sdate);
-                          $('#endDate').val(data[0].edate);
-                          $('#LPlan').val(data[0].lplan);
-                          $('#Done').val(data[0].done);
+                          $('#startDate').val(toTextarea(data[0].sdate));
+                          $('#endDate').val(toTextarea(data[0].edate));
+                          $('#LPlan').val(toTextarea(data[0].lplan));
+                          $('#Done').val(toTextarea(data[0].done));
                           editor.txt.html(data[0].summary);
-                          $('#LRead').val(data[0].lread);
-                          $('#NPlan').val(data[0].nplan);
-                          $('#NRead').val(data[0].nread);
+                          $('#LRead').val(toTextarea(data[0].lread));
+                          $('#NPlan').val(toTextarea(data[0].nplan));
+                          $('#NRead').val(toTextarea(data[0].nread));
                           $('#repModal').modal();
                         },
                         error:function(){
