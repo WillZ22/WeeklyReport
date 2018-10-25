@@ -58,12 +58,7 @@ public class UserService {
 	 * 更新账户
 	 * 
 	 */
-	public void update(String username, String password, String role, String name, String belong) {
-		User user = userDao.getUserByUsername(username);
-		user.setName(name);
-		user.setPassword(password);
-		user.setRole(role);
-		user.setBelong(belong);
+	public void update(User user) {
 		userDao.updateUser(user);
 	}
 	   

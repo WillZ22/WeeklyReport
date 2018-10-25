@@ -24,6 +24,7 @@ public class User {
 	private String belong;
 	private Set<Report> reports;
 	private Set<Sign> signs;
+	private String email;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.EAGER)//急加载，因为获取set
 	public Set<Sign> getSigns() {
@@ -87,6 +88,16 @@ public class User {
 		this.name = name;
 	}
 	
+	
+	@Column(nullable=true)
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Column(name = "password", nullable=false)
 	//@Size(min = 6, message ="密码长度必须大于6")
 	public String getPassword() {

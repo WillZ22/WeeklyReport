@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.mchange.net.SmtpUtils;
 import com.wr.dao.UserDao;
 import com.wr.dao.impl.ReportDaoImpl;
 import com.wr.dao.impl.SignDaoImpl;
@@ -64,23 +65,6 @@ public class hibernateTest {
 //		userservice.addUser("2", "2", "1", "groupmember", "2");
 //		List<Report> reports = reportservice.getWeekAllReports("2018上半年", 1);
 		
-		Notification notification = new Notification();
-		notification.setContent("1");
-		notification.setDay(1);
-		notification.setMonth(10);
-		notification.setYear(2018);
-		for(int i = 0; i < 9 ; i++) {
-			notificationService.addNotification(notification);
-		}
-		
-		MeetingRecord meetingRecord = new MeetingRecord();
-		meetingRecord.setContent("1");
-		meetingRecord.setDay(1);
-		meetingRecord.setMonth(1);
-		meetingRecord.setYear(2017);
-		for(int i = 0; i < 9 ; i++) {
-			meetingRecordService.addMeetingRecord(meetingRecord);
-		}
 	}
 		
 }

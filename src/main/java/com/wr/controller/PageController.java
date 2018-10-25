@@ -146,4 +146,10 @@ public class PageController {
 		return "Notification";
 	}
 	
+	@RequestMapping(value = "/personalinfo")
+	public String personalInfo() {
+		return "PersonalInfo";
+	}
+	
+	
 }

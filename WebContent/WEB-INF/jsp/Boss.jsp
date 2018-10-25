@@ -69,6 +69,7 @@
                   <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="javascript:void(0)" onclick="cp()">修改密码</a></li>
+                  <li><a href="javascript:void(0)" onclick="pi()">个人信息</a></li>
                   <li class="divider"></li>
                   <li><a href="wr/loginpage/logout">退出</a></li>
                 </ul>
@@ -343,6 +344,16 @@
           $("#content").html(data);
         }
       })
+    }
+
+    function pi(){
+      $.ajax({
+          url:"wr/page/personalinfo",
+          type:"get",
+          success:function(data){
+            $("#content").html(data);
+          }
+        })
     }
 
     </script>

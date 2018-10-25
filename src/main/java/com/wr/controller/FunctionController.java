@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mchange.net.SmtpUtils;
 import com.wr.model.MeetingRecord;
 import com.wr.model.Notification;
 import com.wr.model.Report;
@@ -45,6 +46,7 @@ import com.wr.service.NotificationService;
 import com.wr.service.ReportService;
 import com.wr.service.SignService;
 import com.wr.service.UserService;
+import com.wr.utils.MailUtil;
 import com.wr.utils.SystemTime;
 
 import net.sf.json.JSONArray;
@@ -70,6 +72,8 @@ public class FunctionController {
 	
 	@Autowired
 	NotificationService notificationService;
+	
+
 	
 	/****************************** Main Page *************************************/
 	@RequestMapping(value = "/njump", method = RequestMethod.POST)
@@ -664,6 +668,26 @@ public class FunctionController {
 		Report report = reportService.getReportByName(name, term, nw);
 		report.setQualify(qualify);
 		reportService.updateReport(report);
+		
+		User user = userService.getUserByName(name);
+		String email = user.getEmail();
+		String qString = null;
+		if (qualify == 1) {
+			qString = "合格";
+		} else {
+			qString = "不合格";
+		}
+
+		String emailMessage = term + "第" + nw + "周周报" + "组长已审核。" + "审核结果为:" + qString;
+		MailUtil mailUtil = new MailUtil();
+		try {
+			
+			mailUtil.sendmail(emailMessage, email);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "success";
 	}
 	
@@ -885,7 +909,13 @@ public class FunctionController {
 		String password = request.getParameter("password");
 		String role = request.getParameter("role");
 		String belong = request.getParameter("belong");
-		userService.update(username, password, role, name, belong);
+		User user = userService.getUser(username);
+		user.setName(name);
+		user.setBelong(belong);
+		user.setName(name);
+		user.setPassword(password);
+		user.setRole(role);
+		userService.update(user);
 		return "success";
 	}
 	
@@ -996,7 +1026,8 @@ public class FunctionController {
 		}
 		else {
 			String newPassword = request.getParameter("newpw");
-			userService.update(user.getUsername(), newPassword,user.getRole(), user.getName(), user.getBelong());	
+			user.setPassword(newPassword);
+			userService.update(user);	
 			session.invalidate();
 			return "success";
 			
@@ -1062,6 +1093,34 @@ public class FunctionController {
 		jObject.put("sumPage", sumPage);
 		return jObject.toString();
 		
+	}
+	
+	@RequestMapping(value = "/changepersonalinfo", method =RequestMethod.POST)
+	@ResponseBody
+	public String changePersonalInfo (HttpServletRequest request, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		User user = userService.getUser(username);
+		user.setEmail(email);
+		user.setName(name);
+		userService.update(user);
+		return "success";
+		
+	}
+	
+	@RequestMapping(value = "/getpersonalinfo", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
+	@ResponseBody
+	public String getPersonalInfo(HttpServletRequest request, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		User user = userService.getUser(username);
+		String name = user.getName();
+		String email = user.getEmail();
+		JSONObject jObject = new JSONObject();
+		jObject.put("username", username);
+		jObject.put("name", name);
+		jObject.put("email", email);
+		return jObject.toString();
 	}
 	
 }
