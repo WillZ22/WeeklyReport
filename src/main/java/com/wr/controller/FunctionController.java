@@ -671,24 +671,26 @@ public class FunctionController {
 		
 		User user = userService.getUserByName(name);
 		String email = user.getEmail();
-		String qString = null;
-		if (qualify == 1) {
-			qString = "合格";
+		if (email.equals("")) {
+			return "false";
 		} else {
-			qString = "不合格";
-		}
+			String qString = null;
+			if (qualify == 1) {
+				qString = "合格";
+			} else {
+				qString = "不合格";
+			}
 
-		String emailMessage = term + "第" + nw + "周周报" + "组长已审核。" + "审核结果为:" + qString;
-		MailUtil mailUtil = new MailUtil();
-		try {
-			
-			mailUtil.sendmail(emailMessage, email);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String emailMessage = term + "第" + nw + "周周报" + "组长已审核。" + "审核结果为:" + qString;
+			MailUtil mailUtil = new MailUtil();
+			try {
+				mailUtil.sendmail(emailMessage, email);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "success";
 		}
-		
-		return "success";
 	}
 	
 	
