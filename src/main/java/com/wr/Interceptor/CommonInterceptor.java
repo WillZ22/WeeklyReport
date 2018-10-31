@@ -22,6 +22,7 @@ public class CommonInterceptor implements HandlerInterceptor{
 	@Override
 	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
 			throws Exception {
+		
 		// TODO Auto-generated method stub
 		
 	}

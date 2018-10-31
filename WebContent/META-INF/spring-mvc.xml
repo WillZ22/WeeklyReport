@@ -39,7 +39,6 @@
 	    <!--不拦截登录页和登录的请求-->
 	    <bean class="com.wr.Interceptor.CommonInterceptor"></bean>
 	  </mvc:interceptor>
-	  
 	</mvc:interceptors>
 	
 

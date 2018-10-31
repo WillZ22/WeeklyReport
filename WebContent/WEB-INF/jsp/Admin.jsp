@@ -56,7 +56,7 @@
               <ul class="nav navbar-nav">
                 <li><a href="javascript:void(0)" onclick="um()"><i class="fa fa-book">用户管理</i></a></li>
                 <li><a href="javascript:void(0)" onclick="dm()"><i class="fa fa-book">数据管理</i></a></li>
-                <li><a href="javascript:void(0)" onclick="si()"><i class="fa fa-book">签到导入</i></a></li>
+                <%-- <li><a href="javascript:void(0)" onclick="si()"><i class="fa fa-book">签到导入</i></a></li> --%>
                 <li><a href="javascript:void(0)" onclick="sc()"><i class="fa fa-book">系统控制</i></a></li>
               </ul>
 

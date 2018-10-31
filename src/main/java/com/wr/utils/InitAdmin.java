@@ -40,7 +40,7 @@ public class InitAdmin implements ServletContextListener {
     	     // TODO: handle exception
     	     UserService userService = WebApplicationContextUtils.getWebApplicationContext(context.getServletContext()).getBean(UserService.class);
     	     
-    	     userService.addUser("admin", "admin", "admin", "admin", null);
+    	     userService.addUser("admin", "admin", "admin123", "admin", null);
     	     System.out.println("================>[ServletContextListener]初始化结束");  
     	} catch (Exception e) {
 			// TODO: handle exception

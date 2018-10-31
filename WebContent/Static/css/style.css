@@ -3,47 +3,59 @@ html,body{
   min-height: 100%;
   margin: 0;
   padding: 0;
-}
-.navbar-brand {
-  font-size: 25px;
-  font-family: "Segoe UI","Helvetica Neue","Helvetica",Arial,sans-serif;
-}
-
-.navbar-default {
-  background: translate;
-  border: none;
-  margin-bottom: 0;
-  font-size: 14px;
+  background: #ebebeb;
 }
 
 .navbar-static-top {
   margin-bottom: 20px;
 }
 
-.navigation_h {
-  height: 50px;
-  min-width: 920px;
-  background-color: black;
-  margin-bottom: auto;
+.content{
+  margin-top: 10px;
 }
 
-.wrap {
-  margin: 100px, auto;
-  width: 70%;
-  padding: 0;
+.main-header{
+  background-image:url(http://static.ghostchina.com/image/6/d1/fcb3879e14429d75833a461572e64.jpg);
+  padding-top: 55px;
+  padding-bottom: 55px;
+  background-repeat: no-repeat;
+  background-position: center 20%;
+  -webkit-background-size: cover;
+  background-size: cover;
 }
 
-.text-horizonal-center {
-  text-align: center;
+.main-navigation{
+  color:black;
+  background: white;
 }
 
-.container.clock {
-  margin-top:200px
+a{
+  color: black !important;
 }
 
+.notification{
+  min-height:500px;
+  background:white;
+}
 
-.profile {
-  width: 18px;
-  height:18px;
-  border-radius: 50%;
+.panels{
+  max-height:500px;
+}
+.wrap{
+  margin: 20px auto;
+}
+.note{
+  height:250px;
+}
+
+.record-panel{
+  height:250px;
+}
+
+#record{
+  min-height: 200px;
+}
+
+#notify{
+  min-height: 200px;
 }

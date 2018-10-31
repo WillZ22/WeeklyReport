@@ -49,13 +49,10 @@
               <li><a href="javascript:void(0)" onclick="cs()">考勤</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li>
-                <a href="#"><i class="fa fa-info"></i></a>
-              </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <span class="profile"></span>
-                  User
+                  用户
                   <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="javascript:void(0)" onclick="cp()">修改密码</a></li>
@@ -262,6 +259,7 @@
           }
         })
       }
+      
       function wr(){
         $.ajax({
           url:"wr/page/writereport",
