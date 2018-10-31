@@ -1063,39 +1063,48 @@ public class FunctionController {
 		return result;
 	}
 	
-	
-	@RequestMapping(value = "/getnotificationpagecutlist", method =RequestMethod.POST, produces="application/json;charset=UTF-8" )
+	@RequestMapping(value = "/getfirstnotification", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
 	@ResponseBody
-	public String getNotificationPageCutList (HttpServletRequest request) {
-		int pagenum = Integer.parseInt(request.getParameter("pagenum"));
-		int pagecut = Integer.parseInt(request.getParameter("pagecut"));
-		int firstResult = (pagenum-1) * pagecut;
-		int offset = pagecut;
-		List<Notification> notifications = notificationService.getPageCuteNotification(firstResult, offset);
-		JSONArray jsonArray = JSONArray.fromObject(notifications);
-		String result = jsonArray.toString();
+	public String getFirstNotification(HttpServletRequest request) {
+		Notification notification = notificationService.getFirstNotification();
+		JSONObject jsonObject = JSONObject.fromObject(notification);
+		String result = jsonObject.toString();
 		return result;
 		
 	}
 	
-	@RequestMapping(value = "/getnotificationsumpage", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
-	@ResponseBody
-	public String getNotificationSumPage (HttpServletRequest request) {
-		int sumPage = notificationService.getSumPage(5);
-		JSONObject jObject = new JSONObject();
-		jObject.put("sumPage", sumPage);
-		return jObject.toString();
-	}
+//	@RequestMapping(value = "/getnotificationpagecutlist", method =RequestMethod.POST, produces="application/json;charset=UTF-8" )
+//	@ResponseBody
+//	public String getNotificationPageCutList (HttpServletRequest request) {
+//		int pagenum = Integer.parseInt(request.getParameter("pagenum"));
+//		int pagecut = Integer.parseInt(request.getParameter("pagecut"));
+//		int firstResult = (pagenum-1) * pagecut;
+//		int offset = pagecut;
+//		List<Notification> notifications = notificationService.getPageCuteNotification(firstResult, offset);
+//		JSONArray jsonArray = JSONArray.fromObject(notifications);
+//		String result = jsonArray.toString();
+//		return result;
+//		
+//	}
 	
-	@RequestMapping(value = "/getmeetingrecordsumpage", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
-	@ResponseBody
-	public String getMeetingRecordSumPage (HttpServletRequest request) {
-		int sumPage = meetingRecordService.getSumPage(5);
-		JSONObject jObject = new JSONObject();
-		jObject.put("sumPage", sumPage);
-		return jObject.toString();
-		
-	}
+//	@RequestMapping(value = "/getnotificationsumpage", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
+//	@ResponseBody
+//	public String getNotificationSumPage (HttpServletRequest request) {
+//		int sumPage = notificationService.getSumPage(5);
+//		JSONObject jObject = new JSONObject();
+//		jObject.put("sumPage", sumPage);
+//		return jObject.toString();
+//	}
+//	
+//	@RequestMapping(value = "/getmeetingrecordsumpage", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
+//	@ResponseBody
+//	public String getMeetingRecordSumPage (HttpServletRequest request) {
+//		int sumPage = meetingRecordService.getSumPage(5);
+//		JSONObject jObject = new JSONObject();
+//		jObject.put("sumPage", sumPage);
+//		return jObject.toString();
+//		
+//	}
 	
 	@RequestMapping(value = "/changepersonalinfo", method =RequestMethod.POST)
 	@ResponseBody

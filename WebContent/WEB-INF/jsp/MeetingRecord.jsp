@@ -68,6 +68,20 @@
     <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
     <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+    var nw;
+    var term;
+
+    function initTime(){
+      $.ajax({
+        url:"wr/function/gettime",
+        type:"get",
+        async: false,
+        success:function(data){
+          nw = data[0].nw;
+          term = data[0].term;
+        }
+      });
+    };
 
     function textareaTo(str){
       var reg=new RegExp("\n","g");
@@ -79,6 +93,10 @@
     }
 
     $('#submit').click(function(){             //TODO:添加删除后台数据的方法
+      if (nw == 0) {
+        alert("系统未开启");
+        return
+      }
       var str = $('#cont').val();
       str = textareaTo(str);
       $.ajax({

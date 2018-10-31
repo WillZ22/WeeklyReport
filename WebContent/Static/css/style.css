@@ -12,6 +12,7 @@ html,body{
 
 .content{
   margin-top: 10px;
+  min-height:600px;
 }
 
 .main-header{
@@ -34,28 +35,42 @@ a{
 }
 
 .notification{
-  min-height:500px;
-  background:white;
+  min-height: 600px;
 }
 
 .panels{
-  max-height:500px;
+  max-height:600px;
 }
 .wrap{
   margin: 20px auto;
 }
 .note{
-  height:250px;
+  height:350px;
 }
 
 .record-panel{
   height:250px;
 }
 
-#record{
-  min-height: 200px;
+#title{
+  font-size: 2.5em;
+  line-height: 1em;
+  text-align: center;
+  font-weight: 400;
+  color: #303030;
 }
 
-#notify{
-  min-height: 200px;
+#info{
+  text-align: center;
+  line-height: 1.75em
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  color: #959595;
+}
+
+#articleCotent{
+  margin-top: 50px;
+  margin-bottom: 1.46em;
+  font: 400 18px/1.62 "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
+  color: #444443;
 }

@@ -366,7 +366,7 @@
 
                 $('#submit').click(function(){
 
-                  // if (nowweek == 5) {
+                  if (nowweek == 5) {
                     var formData = new FormData();
                     formData.append('sun_am_in',$('#sun_am_in').val());
                     formData.append('sun_am_out',$('#sun_am_out').val());
@@ -432,9 +432,9 @@
                         initTable();
                       }
                   })
-                // } else if (true) {
-                //   alert("不在规定时间内，不得提交");
-                // }
+                } else if (true) {
+                  alert("不在规定时间内，不得提交");
+                }
                 });
 
         </script>

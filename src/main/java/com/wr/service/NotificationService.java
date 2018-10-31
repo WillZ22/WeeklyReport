@@ -46,5 +46,10 @@ public class NotificationService {
 		 int sumPage = (count/pagecut) + 1;
 		 return sumPage;
 	 }
+	 
+	 public Notification getFirstNotification() {
+		 Notification notification = notificationImpl.getFirstNotification();
+		 return notification;
+	 }
 
 }

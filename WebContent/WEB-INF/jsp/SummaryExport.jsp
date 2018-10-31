@@ -50,12 +50,12 @@
               <a href="#se" data-toggle="tab">签到导出</a>
             </li>
             <li>
-              <a href="#re" data-toggle="tab">周报导出</a>
+              <a href="#re" data-toggle="tab" disable>周报导出</a>
             </li>
           </ul>
           <div class="tab-content">
               <div class="tab-pane fade in active" id="se">
-                <div class="container col-md-12 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px; margin-top:15px">
+                <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px; margin-top:15px">
                     <form class="col-sm-12 col-xs-12" action="index.html" method="post">
                       <div class="form-group">
                         <label for="year2">学期</label>

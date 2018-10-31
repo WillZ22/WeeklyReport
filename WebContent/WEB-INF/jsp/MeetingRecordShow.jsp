@@ -44,13 +44,11 @@
           </div>
           <div class="panel-body">
             <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px">
-              <div class="mainhead">
-                <h1 id="head" style="text-align:center">${head}</h1>
-                <p id="time" style="text-align:center">${time}</p>
+              <h3 id="title">${head}</h1>
+              <div style="text-align: center">
+                <h id="info">${time}</h>
               </div>
-              <div class="maincontent">
-                <p id="content" style="line-height: 39px;">${content}</p>
-              </div>
+              <p id="articleCotent">${content}</p>
             </div>
           </div>
         </div>

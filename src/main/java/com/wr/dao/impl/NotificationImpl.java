@@ -53,6 +53,13 @@ public class NotificationImpl {
 		return results; 
 	}
 	
+	public Notification getFirstNotification(){ 
+		String hql="from Notification notification order by nid desc";  
+		List<Notification> results=(List<Notification>) hibernateTemplate.find(hql);
+		Notification result = results.get(0);
+		return result; 
+	}
+	
 	public int getRecordCount() {
 		String hql = "select count(*) from Notification notification";
 		Number number = (Number)hibernateTemplate.find(hql).listIterator().next();
