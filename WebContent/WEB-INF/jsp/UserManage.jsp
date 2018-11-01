@@ -307,7 +307,6 @@
                       'click #removeTable':function(e, value, row, index){
                         $('#removeText').text("是否删除用户" + row.name );
                         $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
-                          // TODO:
                           $.ajax({
                             url: "wr/function/deleteuser",
                             type: "post",
@@ -315,7 +314,7 @@
                               username: row.username,
                             },
                             contentType:"application/x-www-form-urlencoded",
-                            async: true,
+                            async: false,
                             success:function(){
                               $("#td_user").bootstrapTable('refresh');
                               $('#removeModal').modal('hide');

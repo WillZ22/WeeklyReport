@@ -61,7 +61,7 @@
               <li><a href="javascript:void(0)" onclick="um()"><i class="fa fa-book">用户管理</i></a></li>
               <li><a href="javascript:void(0)" onclick="dm()"><i class="fa fa-book">数据管理</i></a></li>
               <%-- <li><a href="javascript:void(0)" onclick="si()"><i class="fa fa-book">签到导入</i></a></li> --%>
-              <li><a href="javascript:void(0)" onclick="sc()"><i class="fa fa-book">系统控制</i></a></li>
+              <li><a href="javascript:void(0)" onclick="sysc()"><i class="fa fa-book">系统控制</i></a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <span class="profile"></span>
@@ -131,7 +131,7 @@
             </div>
           </div>
 
-          <div class="panel panel-default note">
+          <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">须知</h3>
             </div>

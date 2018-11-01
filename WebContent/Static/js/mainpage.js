@@ -150,7 +150,7 @@ $(function(){
     })
   }
 
-    function sc(){
+    function sysc(){
       $.ajax({
         url:"wr/page/systemcontrol",
         type:"get",
