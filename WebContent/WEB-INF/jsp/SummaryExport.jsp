@@ -143,8 +143,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <%-- <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> --%>
     <script src="wr/Static/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="wr/Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
 

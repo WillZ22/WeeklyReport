@@ -21,7 +21,7 @@
     <title>WeeklyReport</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
 		<!--Font Awesome CSS-->
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
@@ -167,7 +167,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
-    <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="wr/Static/js/mainpage.js"></script>
   </body>
 </html>

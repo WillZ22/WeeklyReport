@@ -63,6 +63,7 @@ $(function(){
       type:"get",
       async: true,
       success:function(data){
+        $.ajaxSetup ({ cache: false });
         $("#content").html(data);
       }
     })

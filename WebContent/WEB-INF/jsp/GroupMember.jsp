@@ -16,7 +16,7 @@
     <title>WeeklyReport</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
     <link href="wr/Static/css/style.css" rel="stylesheet">
@@ -43,7 +43,7 @@
           <div class="col-sm-12">
 
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+              <button type="button" class="navbar-toggle" data-target="#navbar" data-toggle="collapse">
                 <span class="sr-only">导航</span>
                 <span class="fa fa-bars"></span>
               </button>
@@ -156,7 +156,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
-    <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="wr/Static/js/mainpage.js"></script>
   </body>
 </html>

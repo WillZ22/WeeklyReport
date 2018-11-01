@@ -62,7 +62,7 @@
               <div class="tab-pane fade in active" id="reportManage">
                 <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px; margin-top:15px">
                   <div class="col-md-3 col-sm-3 col-xs-3">
-                    <select class="form-control" id="term1" onchange="function select();">
+                    <select class="form-control" id="term1">
                       <option>2018上半年</option>
                       <option>2018下半年</option>
                       <option>2019上半年</option>
@@ -72,7 +72,7 @@
                     </select>
                   </div>
                   <div class="col-md-3 col-sm-3 col-xs-3 pull-right">
-                    <select class="form-control" id="nw1" onchange="">
+                    <select class="form-control" id="nw1">
                       <option value=""></option>
                       <option>1</option>
                       <option>2</option>
@@ -257,8 +257,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <%-- <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> --%>
     <script src="wr/Static/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="wr/Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
 
@@ -490,7 +490,7 @@
                     async: true,
                     success:function(){
                       $('#removeModal').modal('hide');
-                      $("#td_report").bootstrapTable('refresh');
+                      $("#td_N").bootstrapTable('refresh');
                     },
                     error:function(){
                       alert("网络错误");
@@ -549,7 +549,7 @@
                     async: true,
                     success:function(){
                       $('#removeModal').modal('hide');
-                      $("#td_report").bootstrapTable('refresh');
+                      $("#td_MR").bootstrapTable('refresh');
                     },
                     error:function(){
                       alert("网络错误");

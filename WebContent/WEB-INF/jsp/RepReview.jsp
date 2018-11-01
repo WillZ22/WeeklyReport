@@ -19,8 +19,8 @@
     <!-- Bootstrap core CSS -->
     <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
-		<%-- <!--Font Awesome CSS-->
-		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> --%>
+		<!--Font Awesome CSS-->
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
     <link href="wr/Static/css/style.css" rel="stylesheet">
@@ -50,7 +50,8 @@
           </div>
           <div class="panel-body">
             <div class="col-md-10 col-md-offset-1">
-              <table id="td_RC"></table>
+              <button type="button" name="button" class="btn" onclick="refresh()"></button>
+              <table id="td_RR"></table>
             </div>
           </div>
         </div>
@@ -58,7 +59,7 @@
 
 
       <div class="modal fade" id="repModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" style="width:800px">
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -66,15 +67,15 @@
             </div>
             <div class="modal-body col-md-12">
               <form class="col-md-12" id="reportForm" name="reportForm">
-                <div class="form-group col-md-4">
-                  <label for="dtp_input1" class="control-label">起始日期</label>
+                <div class="form-group col-md-4 col-xs-12">
+                  <label for="dtp_input1">起始日期</label>
                   <div class="input-group form_date date" data-date="" data-date-format="yyyy-MM-dd">
                     <input class="form-control" size="16" type="text" name="startDate" id="startDate" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                   </div>
                 </div>
-                <div class="form-group col-md-4 pull-right">
-                  <label for="dtp_input2" class="control-label">终止日期</label>
+                <div class="form-group col-md-4 pull-right col-xs-12">
+                  <label for="dtp_input2">终止日期</label>
                   <div class="input-group date form_date" data-date="" data-date-format="yyyy-MM-dd">
                     <input class="form-control" size="16" type="text" name="endDate" id="endDate" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -120,8 +121,10 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+
+
     <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
-    <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <%-- <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> --%>
     <script src="wr/Static/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="wr/Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
     <script src="wr/Static/wangEditor-3.1.0/wangEditor.min.js"></script>
@@ -178,7 +181,6 @@
         'bold',  // 粗体
         'fontSize',  // 字号
         'foreColor',  // 文字颜色
-        'italic',  // 斜体
         'underline',  // 下划线
         'strikeThrough',  // 删除线
         'image',  // 插入图片
@@ -197,7 +199,7 @@
               var head = nowterm + "第" + nownw + "周周报汇总表";
             }
 
-            $('#td_RC').bootstrapTable({
+            $('#td_RR').bootstrapTable({
               url: "wr/function/getweekrepbygroup", //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
               method: "get",                      //请求方式（*）
               cache: true,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
@@ -369,11 +371,12 @@
                             term: row.term,
                             name: row.name
                           },
-                          async: true,
-                          success:function(data){
-                            $('#td_RC').bootstrapTable('refresh');
+                          async: false,
+                          success:function(){
+
                           }
                         })
+                        refresh();
                       },
                       'click #unqualified':function(e, value, row, index){
                         if(row.qualify == 0 || row.qualify == 2){
@@ -386,14 +389,15 @@
                               term: row.term,
                               name: row.name
                             },
-                            async: true,
-                            success:function(data){
-                              $('#td_RC').bootstrapTable('refresh');
+                            async: false,
+                            success:function(){
+
                             }
                           })
                         } else if (row.qualify == 1) {
                           alert("审核已通过，不得修改");
                         }
+                        refresh();
                       }
                     }
                 },{
@@ -419,6 +423,10 @@
               ]
           });
         };
+
+        function refresh(){
+          $('#td_RR').bootstrapTable('refresh');
+        }
 
     </script>
 

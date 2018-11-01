@@ -115,7 +115,7 @@
               <div class="form-group col-md-12 col-xs-12">
                 <table id="td_signCol"></table>
               </div>
-              
+
           </div>
         </div>
       </div>
@@ -259,8 +259,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
-    <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <%-- <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
+    <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> --%>
     <script src="wr/Static/timepicker/bootstrap-timepicker.min.js"></script>
     <script src="wr/Static/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="wr/Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
@@ -517,11 +517,11 @@
 
 
       $('#term').change(function(){
-            $("#td_RC").bootstrapTable('refresh');
+            $("#td_signCol").bootstrapTable('refresh');
       });
 
       $('#nw').change(function(){
-            $("#td_RC").bootstrapTable('refresh');
+            $("#td_signCol").bootstrapTable('refresh');
       });
     </script>
   </body>
