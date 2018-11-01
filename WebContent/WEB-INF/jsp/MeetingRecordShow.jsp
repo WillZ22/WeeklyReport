@@ -37,7 +37,7 @@
   </head>
 
   <body>
-      <div class="container col-md-10 col-md-offset-1" style="margin-top:50px;">
+      <div class="container col-md-10 col-md-offset-1 col-xs-12" style="margin-top:10px;">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">会议记录</h3>

@@ -50,7 +50,6 @@
           </div>
           <div class="panel-body">
             <div class="col-md-10 col-md-offset-1">
-              <button type="button" name="button" class="btn" onclick="refresh()"></button>
               <table id="td_RR"></table>
             </div>
           </div>

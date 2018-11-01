@@ -47,7 +47,7 @@
 
   </head>
 
-  <div class="container col-md-10 col-md-offset-1"  style="margin-top:50px;">
+  <div class="container col-md-10 col-md-offset-1 col-xs-12"  style="margin-top:10px;">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">周报</h3>
@@ -57,13 +57,13 @@
 
         <div class="container col-md-10 col-md-offset-1 col-xs-12" style="margin-bottom:15px">
 
-            <div class="form-group col-md-3 col-xs-3">
+            <div class="form-group col-md-3 col-xs-6">
               <button type="button" class="btn btn-primary" id="btn_new" ><i class="fa fa-plus"></i>新增</button>
             </div>
 
 
 
-            <div class="form-group col-md-3 col-xs-3 pull-right">
+            <div class="form-group col-md-3 col-xs-6">
               <select class="form-control" id="term">
                 <option>2018上半年</option>
                 <option>2018下半年</option>
