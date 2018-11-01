@@ -191,7 +191,12 @@
     }
 
           function initTable(){
-            var head = nowterm + "第" + nownw + "周周报汇总表";
+            if(nownw == 0){
+              var head = "系统未开启";
+            }else{
+              var head = nowterm + "第" + nownw + "周周报汇总表";
+            }
+
             $('#td_RC').bootstrapTable({
               url: "wr/function/getweekrepbygroup", //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
               method: "get",                      //请求方式（*）

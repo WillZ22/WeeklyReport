@@ -55,44 +55,36 @@
         <h3 class="panel-title">周报</h3>
       </div>
       <div class="panel-body">
-        <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px">
-          <div class="col-md-2 col-sm-3 col-xs-3">
-            <button type="button" class="btn btn-primary" id="btn_new" ><i class="fa fa-plus"></i>新增</button>
-          </div>
-          <div class="col-md-3 col-sm-3 col-xs-3 pull-right">
-            <select class="form-control" id="term">
-              <option value="0"></option>
-              <option>2018上半年</option>
-              <option>2018下半年</option>
-              <option>2019上半年</option>
-              <option>2019下半年</option>
-              <option>2020上半年</option>
-              <option>2020下半年</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-10 col-md-offset-1">
-          <table id="td_WR" ></table>
+
+
+        <div class="container col-md-10 col-md-offset-1 col-xs-12" style="margin-bottom:15px">
+
+            <div class="form-group col-md-3 col-xs-3">
+              <button type="button" class="btn btn-primary" id="btn_new" ><i class="fa fa-plus"></i>新增</button>
+            </div>
+
+
+
+            <div class="form-group col-md-3 col-xs-3 pull-right">
+              <select class="form-control" id="term">
+                <option>2018上半年</option>
+                <option>2018下半年</option>
+                <option>2019上半年</option>
+                <option>2019下半年</option>
+                <option>2020上半年</option>
+                <option>2020下半年</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-12 col-xs-12">
+              <table id="td_WR" ></table>
+            </div>
+
+
         </div>
       </div>
     </div>
   </div>
-
-  <script type="text/javascript">
-    function insertOP(){
-      var date = new Date();
-      var year = 2018;
-      if(date.getYear() > year){
-        year = date.getYear();
-        var op1 = year + "上半年";
-        var op2 = year + "下半年";
-        $('#term').prepend(op1);
-        $('#term').prepend(op2);
-      };
-    };
-    setInterval(insertOP, 1000);
-  </script>
-
 
     <!--写周报模态框-->
     <div class="modal fade" id="newModal" tabindex="-1" role="dialog">
@@ -280,9 +272,10 @@
 
     var nowterm;
     var nownw;
+    var nowweek;
     var editterm;
     var editnw;
-    var nowweek;
+
 
     $(function(){
       //初始化表格
@@ -694,10 +687,10 @@
 
     //新添加周报按钮
     $('#btn_new').click(function(){
-      if (nowweek == 5) {
-        $('#newModal').modal('show');
-      } else if (nowweek != 5) {
+      if (nowweek != 5) {
         alert("不在规定时间内，不得提交");
+      } else{
+        $('#newModal').modal('show');
       }
     });
 

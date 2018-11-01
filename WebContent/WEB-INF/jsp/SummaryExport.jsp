@@ -41,7 +41,7 @@
     <div class="container col-md-10 col-md-offset-1"  style="margin-top:50px;">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">本周签到信息</h3>
+          <h3 class="panel-title">汇总导出</h3>
         </div>
         <div class="panel-body">
 
@@ -49,9 +49,9 @@
             <li class="active">
               <a href="#se" data-toggle="tab">签到导出</a>
             </li>
-            <li>
+            <%-- <li>
               <a href="#re" data-toggle="tab" disable>周报导出</a>
-            </li>
+            </li> --%>
           </ul>
           <div class="tab-content">
               <div class="tab-pane fade in active" id="se">

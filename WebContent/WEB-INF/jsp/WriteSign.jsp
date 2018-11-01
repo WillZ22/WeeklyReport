@@ -73,8 +73,8 @@
                         <p2 id="pnw"></p2>
                       </div>
                       <div class="col-md-12 ">
-                        <form class="col-md-12 " id="form_sign">
-                          <table id="td_signed" class="table table-bordered table-responsive col-md-12 ">
+                        <form class="col-md-12" id="form_sign">
+                          <table id="td_signed" class="table table-bordered table-responsive col-md-12">
                             <tr colspan="7">
                               <th colspan="7" id="tablehead" style="font-size:25px"></th>
                             </tr>
@@ -192,7 +192,7 @@
                         </form>
                         <div class="col-md-12 col-sm-12 ">
                           <p id="status" class="col-md-3 col-sm-3 col-xs-3"></p>
-                          <button type="button" class="btn btn-primary col-md-2 col-sm-2 col-xs-2 pull-right" id="submit">提交</button>
+                          <button type="button" class="btn btn-success col-md-2 col-sm-2 pull-right" id="save">保存</button>
                         </div>
                       </div>
 
@@ -293,7 +293,11 @@
                       var nw = data[0].nw;
                       var term = data[0].term;
                       nowweek = data[0].week;
+                      if(data[0].nw == 0){
+                      $('#tablehead').text("系统未开启");
+                    } else{
                       $('#tablehead').text(term + "第" + nw + "周签到");
+                    }
                     }
                   });
                 };
@@ -364,9 +368,7 @@
                   });
                 };
 
-                $('#submit').click(function(){
-
-                  if (nowweek == 5) {
+                $('#save').click(function(){
                     var formData = new FormData();
                     formData.append('sun_am_in',$('#sun_am_in').val());
                     formData.append('sun_am_out',$('#sun_am_out').val());
@@ -432,9 +434,6 @@
                         initTable();
                       }
                   })
-                } else if (true) {
-                  alert("不在规定时间内，不得提交");
-                }
                 });
 
         </script>

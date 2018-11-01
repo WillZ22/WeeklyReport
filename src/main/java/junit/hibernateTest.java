@@ -54,7 +54,8 @@ public class hibernateTest {
 	
 	@Autowired
 	NotificationService notificationService;
-	
+	@Autowired
+	SignDaoImpl signDaoImpl;
 	@Test
 	public void test() throws Exception {
 //		userservice.addUser("teacher", "teacher", "teacher", "teacher", null);
@@ -64,6 +65,25 @@ public class hibernateTest {
 //		userservice.addUser("1", "1", "1", "groupmember", "2");
 //		userservice.addUser("2", "2", "1", "groupmember", "2");
 //		List<Report> reports = reportservice.getWeekAllReports("2018上半年", 1);
+		
+//		List<Integer> nws = signDaoImpl.getMonthNW(2018, 11);
+//		for(Integer integer:nws) {
+//			System.out.println(integer);
+//		}
+//	
+		ArrayList<Integer> integers = new ArrayList<>();
+		integers.add(1);
+		integers.add(1);
+		for (int i=0; i<integers.size(); i++) {
+			if(!integers.contains(integers.get(i))) {
+				
+				integers.remove(i);
+			}
+		}
+		
+		for(Integer i:integers) {
+			System.out.println(i);
+		}
 		
 	}
 		

@@ -288,7 +288,11 @@
           success:function(data){
             var nw = data[0].nw;
             var term = data[0].term;
-            head = term + "第" + nw + "周签到表";
+            if(nw == 0){
+              head = "系统未开启";
+            } else {
+              head = term + "第" + nw + "周签到表";
+            }
           }
         });
       };

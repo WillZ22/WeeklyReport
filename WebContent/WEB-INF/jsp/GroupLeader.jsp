@@ -23,8 +23,8 @@
     <!-- Bootstrap core CSS -->
     <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
-		<%-- <!--Font Awesome CSS-->
-		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> --%>
+		<!--Font Awesome CSS-->
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
     <link href="wr/Static/css/style.css" rel="stylesheet">
@@ -57,8 +57,8 @@
               <div id="navbar" class="navbar-collapse collapse" style="text-align: center;">
                 <ul class="nav navbar-nav" style="display: inline-block;float: none;">
                   <li><a href="wr/page/mainpage">首页</a></li>
-                  <li><a href="JavaScript:void(0)" onclick="wr()">写周报</a></li>
-                  <li><a href="javascript:void(0)" onclick="ws();">考勤</a></li>
+                  <li><a href="JavaScript:void(0)" onclick="wr()">提交周报</a></li>
+                  <li><a href="javascript:void(0)" onclick="ws();">提交考勤</a></li>
                   <li><a href="javascript:void(0)" onclick="rr()">小组周报</a></li>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

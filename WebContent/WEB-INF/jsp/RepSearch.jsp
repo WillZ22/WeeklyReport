@@ -50,31 +50,33 @@
           <h3 class="panel-title">周报查看</h3>
         </div>
         <div class="panel-body">
-          <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px">
-            <div class="col-md-3 col-sm-3 col-xs-3">
-              <select class="form-control" id="term" onchange="function select();">
-                <option value="0"></option>
-                <option value="2018上半年">2018上半年</option>
-                <option value="2018下半年">2018下半年</option>
-                <option value="2019上半年">2019上半年</option>
-                <option value="2019下半年">2019下半年</option>
-                <option value="2020上半年">2020上半年</option>
-                <option value="2020下半年">2020下半年</option>
-              </select>
-            </div>
+          <div class="container col-md-10 col-md-offset-1 col-xs-12" style="margin-bottom:15px">
 
-            <div class="col-md-3 col-sm-3 col-xs-3 col-md-offset-1">
-              <select class="form-control" id="name" onchange="function select();">
-                <option value="0"></option>
-              </select>
-            </div>
+              <div class="form-group col-md-3 col-xs-4">
+                <label for="term">学期</label>
+                <select class="form-control " id="term">
+                  <option value="2018上半年">2018上半年</option>
+                  <option value="2018下半年">2018下半年</option>
+                  <option value="2019上半年">2019上半年</option>
+                  <option value="2019下半年">2019下半年</option>
+                  <option value="2020上半年">2020上半年</option>
+                  <option value="2020下半年">2020下半年</option>
+                </select>
+              </div>
 
-            <div class="col-md-3 col-sm-3 col-xs-2 pull-right">
-              <button class="btn btn-primary" name="button" id="search">查询</button>
+              <div class="form-group col-md-3 col-xs-4">
+                <label for="">姓名</label>
+                <select class="form-control" id="name">
+                </select>
+              </div>
+
+            <div class="form-group col-md-3 col-xs-4 pull-right">
+              <label for=""></label>
+              <button class="btn btn-primary form-control" name="button" id="search">查询</button>
             </div>
 
           </div>
-          <div class="col-md-10 col-md-offset-1">
+          <div class="form-group col-md-10  col-xs-12 col-md-offset-1">
             <table id="td_SR"></table>
           </div>
         </div>
@@ -188,6 +190,7 @@
         async: false,
         success:function(data){
           $('#term').val(data[0].term);
+          $('#nw').val(data[0].nw);
         }
       });
     };

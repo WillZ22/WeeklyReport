@@ -23,8 +23,8 @@
     <!-- Bootstrap core CSS -->
     <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
-		<%-- <!--Font Awesome CSS-->
-		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> --%>
+		<!--Font Awesome CSS-->
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
     <link href="wr/Static/css/style.css" rel="stylesheet">

@@ -9,8 +9,8 @@ import javax.validation.constraints.Null;
 
 public class SystemTime {
 
-	public static int start_NW_of_Term = 0;//测试用
-	public static String term = null;//测试用
+	public static int start_NW_of_Term = 0;
+	public static String term = null;
 	public static int week = 0;
 	public static int now_NW_of_Year = 0;
 	public static int year = 0;

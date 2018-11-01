@@ -50,7 +50,7 @@
             <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px">
               <form>
                 <div class="form-group">
-                  <label for="content">内容：</label>
+                  <label for="cont">内容：</label>
                   <textarea class="form-control" rows="5" cols="7" style="resize: vertical" name="cont" id="cont"></textarea>
                 </div>
                 <button class="btn btn-default" id="submit" type="button" >提交</button>

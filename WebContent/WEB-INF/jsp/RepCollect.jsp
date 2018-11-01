@@ -51,8 +51,51 @@
             <h3 class="panel-title">周报汇总</h3>
           </div>
           <div class="panel-body">
-            <div class="col-md-10 col-md-offset-1">
-              <table id="td_RC"></table>
+            <div class="col-md-10 col-xs-12 col-md-offset-1">
+                <div class="form-group col-md-3 col-xs-6">
+                  <label for="term"></label>
+                  <select class="form-control" id="term">
+                    <option value="2018上半年">2018上半年</option>
+                    <option value="2018下半年">2018下半年</option>
+                    <option value="2019上半年">2019上半年</option>
+                    <option value="2019下半年">2019下半年</option>
+                    <option value="2020上半年">2020上半年</option>
+                    <option value="2020下半年">2020下半年</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3 col-xs-6 pull-right">
+                  <label for="nw"></label>
+                  <select class="form-control" id="nw">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-12 col-xs-12">
+                  <table id="td_RC"></table>
+                </div>
             </div>
           </div>
         </div>
@@ -163,6 +206,8 @@
         success:function(data){
           nownw = data[0].nw;
           nowterm = data[0].term;
+          $('#term').val(data[0].term);
+          $('#nw').val(data[0].nw);
         }
       });
     };
@@ -193,10 +238,10 @@
     }
 
           function initTable(){
-            var head = nowterm + "第" + nownw + "周周报汇总表";
+            var head = "周报汇总";
             $('#td_RC').bootstrapTable({
-              url: "wr/function/getweekrepbygroup", //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
-              method: "get",                      //请求方式（*）
+              url: "wr/function/getrepsbytermandnw", //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+              method: "post",                      //请求方式（*）
               cache: true,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
               pagination: true,                   //是否显示分页（*）
               sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
@@ -204,6 +249,13 @@
               pageNumber: 1,                       //初始化加载第一页，默认第一页
               pageSize: 10,                       //每页的记录行数（*）
               uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+              queryParams : function (params) {
+                var temp = {
+                  term: $('#term').val(),
+                  nw: $('#nw').val()
+                };
+                return temp;
+              },
               columns: [
                 [{
                   title: head,
@@ -366,6 +418,14 @@
               ]
           });
         };
+
+        $('#term').change(function(){
+              $("#td_RC").bootstrapTable('refresh');
+        });
+
+        $('#nw').change(function(){
+              $("#td_RC").bootstrapTable('refresh');
+        });
 
     </script>
 

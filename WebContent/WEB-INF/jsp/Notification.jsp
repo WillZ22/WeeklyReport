@@ -8,7 +8,7 @@
 
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
+  <%-- <head>
   	<base href=" <%=basePath%>">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,19 +21,7 @@
     <title>WeeklyReport</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-
-		<%-- <!--Font Awesome CSS-->
-		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> --%>
-
-    <!-- Custom styles for this project -->
-    <link href="wr/Static/css/style.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"> --%>
 
   </head>
 
@@ -48,8 +36,8 @@
 
               <form>
                 <div class="form-group">
-                  <label for="title">标题</label>
-                  <input type="text" class="form-control" id="title" >
+                  <label for="ntitle">标题</label>
+                  <input type="text" class="form-control" id="ntitle" >
                 </div>
                 <div class="form-group">
                   <label for="content">公告内容：</label>
@@ -95,7 +83,7 @@
         type: "post",
         data:{
           content:$('#cont').val(),
-          title: $('#title').val()
+          title: $('#ntitle').val()
         },
         contentType:"application/x-www-form-urlencoded",
         async: false,

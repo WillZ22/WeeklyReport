@@ -70,6 +70,8 @@ public class Sign {
 	
 	private int qualify;
 	
+
+	
 	private String name;
 	
 	@Column(nullable=false)
@@ -89,6 +91,7 @@ public class Sign {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 	
 	@Id	//设置为主键。不要再属性上注解，破坏其封装，在getter上注解
 	@Column(name = "sid")

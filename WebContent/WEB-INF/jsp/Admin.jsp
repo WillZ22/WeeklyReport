@@ -23,8 +23,8 @@
     <!-- Bootstrap core CSS -->
     <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
-	    <%-- <!--Font Awesome CSS-->
-	 <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> --%>
+	 <!--Font Awesome CSS-->
+	 <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
     <link href="wr/Static/css/style.css" rel="stylesheet">
@@ -60,7 +60,6 @@
               <li><a href="wr/page/mainpage">首页</a></li>
               <li><a href="javascript:void(0)" onclick="um()"><i class="fa fa-book">用户管理</i></a></li>
               <li><a href="javascript:void(0)" onclick="dm()"><i class="fa fa-book">数据管理</i></a></li>
-              <%-- <li><a href="javascript:void(0)" onclick="si()"><i class="fa fa-book">签到导入</i></a></li> --%>
               <li><a href="javascript:void(0)" onclick="sysc()"><i class="fa fa-book">系统控制</i></a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

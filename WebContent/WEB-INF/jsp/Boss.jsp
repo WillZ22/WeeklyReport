@@ -23,8 +23,8 @@
     <!-- Bootstrap core CSS -->
     <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
-		<%-- <!--Font Awesome CSS-->
-		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> --%>
+		<!--Font Awesome CSS-->
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
     <link href="wr/Static/css/style.css" rel="stylesheet">
@@ -58,14 +58,14 @@
               <div id="navbar" class="navbar-collapse collapse" style="text-align: center;">
                 <ul class="nav navbar-nav" style="display: inline-block;float: none;">
                   <li><a href="wr/page/mainpage">首页</a></li>
-                  <li><a href="javascript:void(0)" onclick="rc()">本周周报</a></li>
-                  <li><a href="javascript:void(0)" onclick="sc()">本周考勤</a></li>
+                  <li><a href="javascript:void(0)" onclick="rc()">周报</a></li>
+                  <li><a href="javascript:void(0)" onclick="sc()">考勤</a></li>
                   <li><a href="javascript:void(0)" onclick="rs()">周报查找</a></li>
                   <li><a href="javascript:void(0)" onclick="se()">汇总导出</a></li>
                   <li><a href="javascript:void(0)" onclick="rn()">发布公告</a></li>
                   <li><a href="javascript:void(0)" onclick="um()">用户管理</a></li>
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                       <span class="profile"></span>
                       用户
                       <span class="caret"></span></a>

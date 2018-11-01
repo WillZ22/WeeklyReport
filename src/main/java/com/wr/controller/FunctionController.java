@@ -107,7 +107,10 @@ public class FunctionController {
 		return mav;
 	}
 	
+	
 	/****************** Group Member ************** Group Leader *****************/
+	
+	/****************************** 周报功能 *********************************/
 	@RequestMapping(value = "/reportsubmit", method = RequestMethod.POST)
 	@ResponseBody
 	public String submitReport(@RequestParam(value = "file", required = false)MultipartFile[] files, HttpServletRequest request, HttpSession session) {
@@ -289,27 +292,7 @@ public class FunctionController {
 		return "success";
 	}
 	
-	@RequestMapping(value = "/download", method =RequestMethod.POST)
-	public ResponseEntity<byte[]> downLoadFile(HttpServletRequest request, HttpSession session) throws IOException  {
-		String username = (String) session.getAttribute("username");
-		String term = request.getParameter("term");
-		int nw = Integer.parseInt(request.getParameter("nw"));
-		String name = request.getParameter("name");
-		String filename = request.getParameter("filename");
-		Report report = reportService.getReport(username, term, nw);
-		String upload = report.getUpload();
-		String filePath = upload + "/" + filename;
-		File file = new File(filePath);	
-		if (file.isFile()) {
-			HttpHeaders headers = new HttpHeaders();
-			filename = new String(filename.getBytes("utf-8"),"iso-8859-1");
-			headers.setContentDispositionFormData("attachment", filename);
-			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-			return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers,HttpStatus.CREATED);
-		} else {
-			return null;
-		}
-	}
+	
 
 	@RequestMapping(value = "/getuserfilelist", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
@@ -341,6 +324,28 @@ public class FunctionController {
 		jsonArray = JSONArray.fromObject(fileList);
 
 		return jsonArray.toString();
+	}
+	
+	@RequestMapping(value = "/download", method =RequestMethod.POST)
+	public ResponseEntity<byte[]> downLoadFile(HttpServletRequest request, HttpSession session) throws IOException  {
+		String username = (String) session.getAttribute("username");
+		String term = request.getParameter("term");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		String name = request.getParameter("name");
+		String filename = request.getParameter("filename");
+		Report report = reportService.getReport(username, term, nw);
+		String upload = report.getUpload();
+		String filePath = upload + "/" + filename;
+		File file = new File(filePath);	
+		if (file.isFile()) {
+			HttpHeaders headers = new HttpHeaders();
+			filename = new String(filename.getBytes("utf-8"),"iso-8859-1");
+			headers.setContentDispositionFormData("attachment", filename);
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+			return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers,HttpStatus.CREATED);
+		} else {
+			return null;
+		}
 	}
 
 	@RequestMapping(value = "/getsign", method =RequestMethod.GET, produces="application/json;charset=UTF-8")
@@ -432,9 +437,6 @@ public class FunctionController {
 		int late = Integer.parseInt(request.getParameter("late"));
 		int dayoff = Integer.parseInt(request.getParameter("dayoff"));
 		int totalTime = Integer.parseInt(request.getParameter("totaltime"));  
-		
-		
-
 
 		Sign sign = signSerivce.getSign(username, term, nw);
 		if (sign == null) {
@@ -532,45 +534,6 @@ public class FunctionController {
 	}
 	
 	
-	//获取成员周报
-	@RequestMapping(value = "/getweekrepbygroup", method =RequestMethod.GET, produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public String getWeekRepByGroup(HttpServletRequest request, HttpSession session) {
-		String role = (String) session.getAttribute("role");
-		String username = (String) session.getAttribute("username");
-		
-		String term = SystemTime.term;
-		int nw = SystemTime.start_NW_of_Term;
-
-		String belong = username;
-		String result = null;
-		if (role.equals("groupleader") || role.equals("secretary")) {
-			List<Report> reports = reportService.getWeekGroupReports(term, nw, belong);
-			JSONArray jsonArray = new JSONArray();
-			for(Report rep:reports) {
-				JsonConfig jsonConfig = new JsonConfig();
-				jsonConfig.setExcludes(new String[] {"user", "id","sdate", "edate", "lplan", "done",
-						"summary", "nplan", "lread", "nread"});
-				JSONObject jObject = JSONObject.fromObject(rep,jsonConfig);
-				jObject.put("name", rep.getUser().getName());
-				jsonArray.add(jObject);
-			}
-			result = jsonArray.toString();
-		} else if (role.equals("teacher")) {
-			List<Report> reports = reportService.getWeekAllReports(term, nw);
-			JSONArray jsonArray = new JSONArray();
-			for(Report rep:reports) {
-				JsonConfig jsonConfig = new JsonConfig();
-				jsonConfig.setExcludes(new String[] {"user", "id","sdate", "edate", "lplan", "done",
-						"summary", "nplan", "lread", "nread"});
-				JSONObject jObject = JSONObject.fromObject(rep,jsonConfig);
-				jObject.put("name", rep.getUser().getName());
-				jsonArray.add(jObject);
-			}
-			result = jsonArray.toString();
-		}
-		return result;
-	}
 	@RequestMapping(value = "/downloadsinglefile", method =RequestMethod.POST)
 	public ResponseEntity<byte[]> downloadSingleFile (HttpServletRequest request, HttpSession session) throws IOException{
 		String term = request.getParameter("term");
@@ -590,8 +553,7 @@ public class FunctionController {
 		} else {
 			return null;
 		}
-	} 
-	
+	}
 	
 	
 	@RequestMapping(value = "/downloadmemberfile", method =RequestMethod.POST)
@@ -641,6 +603,49 @@ public class FunctionController {
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers,HttpStatus.CREATED);
 	}
 	
+	
+	
+	//获取成员周报列表
+	@RequestMapping(value = "/getweekrepbygroup", method =RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getWeekRepByGroup(HttpServletRequest request, HttpSession session) {
+		String role = (String) session.getAttribute("role");
+		String username = (String) session.getAttribute("username");
+		
+		String term = SystemTime.term;
+		int nw = SystemTime.start_NW_of_Term;
+
+		String belong = username;
+		String result = null;
+		if (role.equals("groupleader") || role.equals("secretary")) {
+			List<Report> reports = reportService.getWeekGroupReports(term, nw, belong);
+			JSONArray jsonArray = new JSONArray();
+			for(Report rep:reports) {
+				JsonConfig jsonConfig = new JsonConfig();
+				jsonConfig.setExcludes(new String[] {"user", "id","sdate", "edate", "lplan", "done",
+						"summary", "nplan", "lread", "nread"});
+				JSONObject jObject = JSONObject.fromObject(rep,jsonConfig);
+				jObject.put("name", rep.getUser().getName());
+				jsonArray.add(jObject);
+			}
+			result = jsonArray.toString();
+		} else if (role.equals("teacher")) {
+			List<Report> reports = reportService.getWeekAllReports(term, nw);
+			JSONArray jsonArray = new JSONArray();
+			for(Report rep:reports) {
+				JsonConfig jsonConfig = new JsonConfig();
+				jsonConfig.setExcludes(new String[] {"user", "id","sdate", "edate", "lplan", "done",
+						"summary", "nplan", "lread", "nread"});
+				JSONObject jObject = JSONObject.fromObject(rep,jsonConfig);
+				jObject.put("name", rep.getUser().getName());
+				jsonArray.add(jObject);
+			}
+			result = jsonArray.toString();
+		}
+		return result;
+	}
+
+	//获取成员周报
 	@RequestMapping(value = "/getmemberrep", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String getMemberRep(HttpServletRequest request) {
@@ -706,17 +711,34 @@ public class FunctionController {
 		signSerivce.updateSign(sign);
 		return "success";
 	}
+	
+	
+	
 	/******************************* Teacher *************************************/
 	
 
 	
-	@RequestMapping(value = "/exportmonthreport", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public ResponseEntity<byte[]> exportmonthreport(HttpServletRequest request) {
-		return null;
-		
-	}
+//	@RequestMapping(value = "/exportmonthreport", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+//	@ResponseBody
+//	public ResponseEntity<byte[]> exportmonthreport(HttpServletRequest request) {
+//		return null;
+//		
+//	}
 	
+//	@RequestMapping(value = "/exportyearreport", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+//	@ResponseBody
+//	public ResponseEntity<byte[]> exportYearReport(HttpServletRequest request) {
+//		return null;
+//		
+//	}
+//	
+//	@RequestMapping(value = "/exportyearsign", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+//	@ResponseBody
+//	public ResponseEntity<byte[]> exportYearsign(HttpServletRequest request) {
+//		return null;
+//	}
+	
+	//导出月签到汇总
 	@RequestMapping(value = "/exportmonthsign", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public ResponseEntity<byte[]> exportmonthsign(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -727,11 +749,15 @@ public class FunctionController {
 		String filename = year + " " +month + ".xls" ;
 		String filePath = request.getServletContext().getRealPath("/") + "monthsign/";
 		
+		if (!new File(filePath).exists() && !new File(filePath).isDirectory()) {
+			new File(filePath).mkdir(); 
+		}
+		
 		File file = new File(filePath,filename);
 		FileOutputStream outputStream = new FileOutputStream(file);
 		hssfWorkbook.write(outputStream);
 		outputStream.flush();   
-		outputStream.close();   
+		outputStream.close();
 		
 		File downloadfile = new File(filePath + filename);
 		HttpHeaders headers = new HttpHeaders();
@@ -741,21 +767,44 @@ public class FunctionController {
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(downloadfile),headers,HttpStatus.CREATED);
 	}
 	
-	
-	@RequestMapping(value = "/exportyearreport", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	//老师获取签到报表
+	@RequestMapping(value = "/getsignsbytermandnw",method =RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public ResponseEntity<byte[]> exportYearReport(HttpServletRequest request) {
-		return null;
+	public String getSignsByTermAndNw(HttpServletRequest request) {
+		String term = request.getParameter("term");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		List<Sign> signs = signSerivce.getAllSignByNW(nw, term);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"user", "id"});
+		JSONArray jsonArray = JSONArray.fromObject(signs,jsonConfig);
+		return jsonArray.toString();
+	}
+	
+	//老师获取周报报表
+	@RequestMapping(value = "/getrepsbytermandnw",method =RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getRepsByTermAndNw(HttpServletRequest request) {
+		String term = request.getParameter("term");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		JSONArray jsonArray = new JSONArray();
 		
+		List<Report> reports = reportService.getWeekAllReports(term, nw);
+
+		for(Report rep:reports) {
+			JsonConfig jsonConfig = new JsonConfig();
+			jsonConfig.setExcludes(new String[] {"user", "id","sdate", "edate", "lplan", "done",
+					"summary", "nplan", "lread", "nread"});
+			JSONObject jObject = JSONObject.fromObject(rep,jsonConfig);
+			jObject.put("name", rep.getUser().getName());
+			jsonArray.add(jObject);
+		}
+		
+		String result = jsonArray.toString();
+		return result;
+
 	}
 	
-	@RequestMapping(value = "/exportyearsign", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public ResponseEntity<byte[]> exportYearsign(HttpServletRequest request) {
-		return null;
-	}
-	
-	//
+	//获取成员签到
 	@RequestMapping(value = "/getmembersign", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String getMemberSign(HttpServletRequest request) {
@@ -770,19 +819,7 @@ public class FunctionController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/getweeksigns",method =RequestMethod.GET, produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public String getWeekSign() {
-		String term = SystemTime.term;
-		int nw = SystemTime.start_NW_of_Term;
-		List<Sign> signs = signSerivce.getAllSignByNW(nw, term);
-		JsonConfig jsonConfig = new JsonConfig();
-		jsonConfig.setExcludes(new String[] {"user", "id"});
-		JSONArray jsonArray = JSONArray.fromObject(signs, jsonConfig);
-		String result = jsonArray.toString();
-		return result;
-	}
-	
+	//获取学生姓名更新input
 	@RequestMapping(value = "/getstudentnames",method =RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String getStudentNames() {
@@ -792,6 +829,7 @@ public class FunctionController {
 		return result;
 	}
 	
+	//查找周报
 	@RequestMapping(value = "/searchreport",method =RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String searchReport(HttpServletRequest request, HttpSession session) {
@@ -812,8 +850,7 @@ public class FunctionController {
 		return result;
 	}
 	
-	
-	
+	//发布公告
 	@RequestMapping(value = "/submitnotification", method =RequestMethod.POST)
 	@ResponseBody
 	public String submitNotification(HttpServletRequest request) {
@@ -829,6 +866,7 @@ public class FunctionController {
 		return "success";
 	}
 	
+	
 	/******************************* Secretary **************************************/
 	@RequestMapping(value = "/submitmeetingrecord", method =RequestMethod.POST)
 	@ResponseBody
@@ -841,6 +879,20 @@ public class FunctionController {
 		meetingRecord.setYear(SystemTime.year);
 		meetingRecordService.addMeetingRecord(meetingRecord);
 		return "success";
+	}
+	
+	
+	@RequestMapping(value = "/getweeksigns",method =RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getWeekSign() {
+		String term = SystemTime.term;
+		int nw = SystemTime.start_NW_of_Term;
+		List<Sign> signs = signSerivce.getAllSignByNW(nw, term);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"user", "id"});
+		JSONArray jsonArray = JSONArray.fromObject(signs, jsonConfig);
+		String result = jsonArray.toString();
+		return result;
 	}
 	
 	

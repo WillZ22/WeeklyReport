@@ -3,6 +3,7 @@ package com.wr.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -149,7 +150,17 @@ public class SignService {
 	
 	public HSSFWorkbook monthsummary(int year, int month) {
 		
-		List<Integer> nws = signDaoImpl.getMonthNW(year, month);
+		List<Integer> integers = signDaoImpl.getMonthNW(year, month);
+		
+		ArrayList<Integer> nws = new ArrayList<>();
+		
+	    Iterator it = integers.iterator();              //2,根据传入的集合(老集合)获取迭代器
+	    while(it.hasNext()) {                  //3,遍历老集合
+	      Integer integer = (Integer) it.next();                //记录住每一个元素
+	      if(!nws.contains(integer)) {            //如果新集合中不包含老集合中的元素
+	    	  nws.add(integer);                //将该元素添加
+	      }
+	    }  
 		
 		for(int i=0;i<nws.size()-1;i++){
 			for(int j=0;j<nws.size()-1-i;j++){
@@ -171,6 +182,7 @@ public class SignService {
 		
 		HSSFRow row0 = sheet.createRow(0);
 		row0.setHeightInPoints(35);
+		
 		HSSFCellStyle style = workbook.createCellStyle();
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER); 
         style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
@@ -186,10 +198,12 @@ public class SignService {
         HSSFFont font1 = workbook.createFont(); 
         font1.setFontName("宋体");
         font1.setFontHeightInPoints((short) 10);// 设置字体大小
- 
+        
         for(int i=0;i<nws.size();i++) {
-            HSSFCell cell = row0.createCell(i+1);
+        	int x = i * 2 + 1;
+            HSSFCell cell = row0.createCell(x);
             String nw = "第" + nws.get(i) + "周";
+            System.out.println(nw);
             cell.setCellValue(nw);
             cell.setCellStyle(style);
         }
@@ -235,8 +249,7 @@ public class SignService {
 					        cell2.setCellValue("迟到："+ "(" + sign.getLate() + ")" + "." + "请假：" + "(" + sign.getDayoff() + ")");
 					        cell2.setCellStyle(style1);
 					        sheet.setColumnWidth(colnum, 20 * 256);
-						} else if (sign.getNw() != nw) {
-							continue;
+					        colnum++;
 						}
 					}
 				}   	

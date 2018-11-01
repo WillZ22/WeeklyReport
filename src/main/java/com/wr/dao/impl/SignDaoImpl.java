@@ -54,7 +54,7 @@ public class SignDaoImpl implements SignDao{
 	}
 	
 	public List<Integer> getMonthNW(int year, int month) {
-		String hql = "select nw from Sign sign where month = ? and year = ? ";
+		String hql = "select nw from Sign sign where month = ? and year = ?";
 		List<Integer> nws =  (List<Integer>) hibernateTemplate.find(hql, month, year);
 		return nws;
 	}
