@@ -110,7 +110,7 @@
               <div class="tab-pane fade" id="signManage">
                 <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px; margin-top:15px">
                   <div class="col-md-3 col-sm-3 col-xs-3">
-                    <select class="form-control" id="term2" onchange="function select();">
+                    <select class="form-control" id="term2">
                       <option>2018上半年</option>
                       <option>2018下半年</option>
                       <option>2019上半年</option>
@@ -120,7 +120,7 @@
                     </select>
                   </div>
                   <div class="col-md-3 col-sm-3 col-xs-3 pull-right">
-                    <select class="form-control" id="nw2" onchange="">
+                    <select class="form-control" id="nw2">
                       <option value=""></option>
                       <option>1</option>
                       <option>2</option>
@@ -301,7 +301,7 @@
               $('#td_sign').bootstrapTable({
                   url: "wr/function/getallusersign",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
                   method: "post",                      //请求方式（*）
-                  cache: true,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                  cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                   pagination: true,                   //是否显示分页（*）
                   sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
                   //responseHandler:responseHandler自定义来生成total和row字段
@@ -357,7 +357,26 @@
                       //删除操作
                       'click #removeTable':function(e, value, row, index){
                           $('#removeText').text("是否删除" + row.name + "本周签到数据？");
-                          //// TODO:
+                          $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
+                            $.ajax({
+                              url: "wr/function/deletesign",
+                              type: "post",
+                              data:{
+                                name: row.name,
+                                nw: row.nw,
+                                term: row.term
+                              },
+                              contentType:"application/x-www-form-urlencoded",
+                              async: true,
+                              success:function(){
+                                $('#removeModal').modal('hide');
+                                $("#td_sign").bootstrapTable('refresh');
+                              },
+                              error:function(){
+                                alert("网络错误");
+                              }
+                            })
+                          });
                           $('#removeModal').modal();
                       }
                     }

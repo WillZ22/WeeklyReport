@@ -49,12 +49,20 @@ $(function(){
       async: false,
       success:function(data){
         $('#title').html(data.title);
-        $('#articleCotent').html(data.content);
+        var con = toTextarea(data.content);
+        $('#articleCotent').html(con);
         $('#info').html(data.year + "年" + data.month + "月" + data.day + "日");
       }
     })
   }
-
+  
+  function toTextarea(str){
+      var reg=new RegExp("<br/>","g");
+      var regSpace=new RegExp("&nbsp;","g");
+      str = str.replace(reg,"\n");
+      str = str.replace(regSpace," ");
+      return str;
+  };
 
 
   function wr(){

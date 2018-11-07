@@ -71,19 +71,7 @@ public class hibernateTest {
 //			System.out.println(integer);
 //		}
 //	
-		ArrayList<Integer> integers = new ArrayList<>();
-		integers.add(1);
-		integers.add(1);
-		for (int i=0; i<integers.size(); i++) {
-			if(!integers.contains(integers.get(i))) {
-				
-				integers.remove(i);
-			}
-		}
-		
-		for(Integer i:integers) {
-			System.out.println(i);
-		}
+
 		
 	}
 		

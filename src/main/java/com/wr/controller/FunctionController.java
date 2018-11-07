@@ -694,6 +694,7 @@ public class FunctionController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			return "success";
 		}
 	}
@@ -1049,6 +1050,16 @@ public class FunctionController {
 		return "success";
 	}
 	
+	@RequestMapping(value = "/deletesign", method =RequestMethod.POST)
+	@ResponseBody
+	public String deleteSign(HttpServletRequest request) throws IOException {
+		String name = request.getParameter("name");
+		String term = request.getParameter("term");
+		int nw = Integer.parseInt(request.getParameter("nw"));
+		Sign sign = signSerivce.getSignByName(name, term, nw);
+		signSerivce.deleteSign(sign);
+		return "success";
+	}
 	
 	
 	/************************System function**********************/

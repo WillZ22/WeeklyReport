@@ -148,6 +148,10 @@ public class SignService {
 		signDaoImpl.updateSign(sign);
 	}
 	
+	public void deleteSign(Sign sign) {
+		signDaoImpl.deleteSign(sign);
+	}
+	
 	public HSSFWorkbook monthsummary(int year, int month) {
 		
 		List<Integer> integers = signDaoImpl.getMonthNW(year, month);

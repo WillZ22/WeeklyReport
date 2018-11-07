@@ -1,5 +1,6 @@
 package com.wr.utils;
 
+import java.time.DayOfWeek;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -33,39 +34,39 @@ public class SystemTime {
 		cal.setTime(date);
 		cal.setFirstDayOfWeek(Calendar.SUNDAY);
 		
-		this.year = nowYear();
-		this.month = nowMonth() + 1;
-		this.day = nowDay();
+		this.year = cal.get(Calendar.YEAR);
+
+		this.month = cal.get(Calendar.MONTH) + 1;
+
+		this.day = cal.get(Calendar.DAY_OF_MONTH);
+
 		
-		this.week = nowWeek();
-		this.now_NW_of_Year = now_NW_of_Year();
+		this.week = cal.get(Calendar.DAY_OF_WEEK) - 1;
+
+		this.now_NW_of_Year = cal.get(Calendar.WEEK_OF_YEAR);
+
 		
 		Timer timer = new Timer();
 		Task task = new Task();
 		timer.schedule(task, 1000,10000);
-		
-		//任务结束后，重置时间
-		
 	}	
 	
 	
 	class Task extends TimerTask {
-
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			SystemTime.week = nowWeek();
-			if (now_NW_of_Year == now_NW_of_Year() -1) {
-				start_NW_of_Term = start_NW_of_Term + 1;
-				now_NW_of_Year = now_NW_of_Year + 1;
-
+			SystemTime.week =  cal.get(Calendar.DAY_OF_WEEK) - 1;
+			if (SystemTime.now_NW_of_Year < cal.get(Calendar.WEEK_OF_YEAR)) {
+				SystemTime.start_NW_of_Term += 1;
+				SystemTime.now_NW_of_Year = cal.get(Calendar.WEEK_OF_YEAR);
 			}
-			if (start_NW_of_Term >= 25) {
+			System.out.println(SystemTime.start_NW_of_Term);
+			if (SystemTime.start_NW_of_Term >= 25) {
 				cancel();
 				reset();
 			}
-		}	  
-		
+		}	  	
 	}
 	
 	
@@ -78,36 +79,6 @@ public class SystemTime {
 		day = 0;
 		month = 0;
 	}
-	
-	//获取当前星期
-	private int nowWeek() {
-	    int week = cal.get(Calendar.DAY_OF_WEEK) - 1;
-	    return week;
-	}
-	
-	//获取日期所属周数
-	private int now_NW_of_Year() {
-		int now_NW_of_Year = cal.get(Calendar.WEEK_OF_YEAR);
-		return now_NW_of_Year;	
-	}
-	
-	//获取日期所属周数
-	private int nowYear() {
-		int year = cal.get(Calendar.YEAR);
-		return year;	
-	}
-	
-	//获取日期所属周数
-	private int nowMonth() {
-		int month = cal.get(Calendar.MONTH);
-		return month;	
-	}
-	
-	private int nowDay() {
-		int month = cal.get(Calendar.DAY_OF_MONTH);
-		return month;	
-	}
-	
 	
 	public static void main(String[] args) {
 		SystemTime systemTime = new SystemTime();

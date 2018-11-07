@@ -73,16 +73,26 @@
       });
     };
 
+    function textareaTo(str){
+      var reg=new RegExp("\n","g");
+      var regSpace=new RegExp(" ","g");
+
+      str = str.replace(reg,"<br/>");
+      str = str.replace(regSpace,"&nbsp;");
+      return str;
+    }
+
     $('#submit').click(function(){             //TODO:添加删除后台数据的方法
       if (nw == 0) {
         alert("系统未开启");
         return
       }
+      var c = textareaTo($('#cont').val());
       $.ajax({
         url: "wr/function/submitnotification",
         type: "post",
         data:{
-          content:$('#cont').val(),
+          content:c,
           title: $('#ntitle').val()
         },
         contentType:"application/x-www-form-urlencoded",
