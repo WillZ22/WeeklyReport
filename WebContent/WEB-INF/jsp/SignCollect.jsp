@@ -235,7 +235,7 @@
                   <td><input class="form-control pull-right"  type="number" id="late" name="late" max="10" min="0"></td>
                   <th>迟到:</th>
                   <td><input class="form-control pull-right" type="number" id="dayoff" name="dayoff" max="10" min="0"></td>
-                  <th colspan="2">请假:</th>
+                  <th colspan="2">总时间:</th>
                   <td><input class="form-control pull-right" type="number" id="totaltime" name="totaltime" max="100" min="0"></td>
                 </tr>
 
@@ -465,35 +465,35 @@
                               $('#mon_am_in').val(data.mon_am_in);
                               $('#mon_am_out').val(data.mon_am_out);
                               $('#mon_pm_in').val(data.mon_pm_in);
-                              $('#mon_pm_out').val(data.sun_pm_out);
+                              $('#mon_pm_out').val(data.mon_pm_out);
                               $('#mon_eve_in').val(data.mon_eve_in);
                               $('#mon_eve_out').val(data.mon_eve_out);
 
                               $('#tues_am_in').val(data.tues_am_in);
                               $('#tues_am_out').val(data.tues_am_out);
                               $('#tues_pm_in').val(data.tues_pm_in);
-                              $('#tues_pm_out').val(data.sun_pm_out);
+                              $('#tues_pm_out').val(data.tues_pm_out);
                               $('#tues_eve_in').val(data.tues_eve_in);
                               $('#tues_eve_out').val(data.tues_eve_out);
 
                               $('#wed_am_in').val(data.wed_am_in);
                               $('#wed_am_out').val(data.wed_am_out);
                               $('#wed_pm_in').val(data.wed_pm_in);
-                              $('#wed_pm_out').val(data.sun_pm_out);
+                              $('#wed_pm_out').val(data.wed_pm_out);
                               $('#wed_eve_in').val(data.wed_eve_in);
                               $('#wed_eve_out').val(data.wed_eve_out);
 
                               $('#thur_am_in').val(data.thur_am_in);
                               $('#thur_am_out').val(data.thur_am_out);
                               $('#thur_pm_in').val(data.thur_pm_in);
-                              $('#thur_pm_out').val(data.sun_pm_out);
+                              $('#thur_pm_out').val(data.thur_pm_out);
                               $('#thur_eve_in').val(data.thur_eve_in);
                               $('#thur_eve_out').val(data.thur_eve_out);
 
                               $('#fri_am_in').val(data.fri_am_in);
                               $('#fri_am_out').val(data.fri_am_out);
                               $('#fri_pm_in').val(data.fri_pm_in);
-                              $('#fri_pm_out').val(data.sun_pm_out);
+                              $('#fri_pm_out').val(data.fri_pm_out);
                               $('#fri_eve_in').val(data.fri_eve_in);
                               $('#fri_eve_out').val(data.fri_eve_out);
 

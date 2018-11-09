@@ -391,42 +391,42 @@ public class FunctionController {
 		int month = SystemTime.month;
 		String sun_am_in = request.getParameter("sun_am_in");
 		String sun_am_out = request.getParameter("sun_am_out");
-		String sun_pm_in = request.getParameter("sun_am_in");
+		String sun_pm_in = request.getParameter("sun_pm_in");
 		String sun_pm_out = request.getParameter("sun_pm_out");
 		String sun_eve_in = request.getParameter("sun_eve_in");
 		String sun_eve_out = request.getParameter("sun_eve_out");
 		
 		String mon_am_in = request.getParameter("mon_am_in");
 		String mon_am_out = request.getParameter("mon_am_out");
-		String mon_pm_in = request.getParameter("mon_am_in");
+		String mon_pm_in = request.getParameter("mon_pm_in");
 		String mon_pm_out = request.getParameter("mon_pm_out");
 		String mon_eve_in = request.getParameter("mon_eve_in");
 		String mon_eve_out = request.getParameter("mon_eve_out");
 		
 		String tues_am_in = request.getParameter("tues_am_in");
 		String tues_am_out = request.getParameter("tues_am_out");
-		String tues_pm_in = request.getParameter("tues_am_in");
+		String tues_pm_in = request.getParameter("tues_pm_in");
 		String tues_pm_out = request.getParameter("tues_pm_out");
 		String tues_eve_in = request.getParameter("tues_eve_in");
 		String tues_eve_out = request.getParameter("tues_eve_out");
 		
 		String wed_am_in = request.getParameter("wed_am_in");
 		String wed_am_out = request.getParameter("wed_am_out");
-		String wed_pm_in = request.getParameter("wed_am_in");
+		String wed_pm_in = request.getParameter("wed_pm_in");
 		String wed_pm_out = request.getParameter("wed_pm_out");
 		String wed_eve_in = request.getParameter("wed_eve_in");
 		String wed_eve_out = request.getParameter("wed_eve_out");
 		
 		String thur_am_in = request.getParameter("thur_am_in");
 		String thur_am_out = request.getParameter("thur_am_out");
-		String thur_pm_in = request.getParameter("thur_am_in");
+		String thur_pm_in = request.getParameter("thur_pm_in");
 		String thur_pm_out = request.getParameter("thur_pm_out");
 		String thur_eve_in = request.getParameter("thur_eve_in");
 		String thur_eve_out = request.getParameter("thur_eve_out");
 		
 		String fri_am_in = request.getParameter("fri_am_in");
 		String fri_am_out = request.getParameter("fri_am_out");
-		String fri_pm_in = request.getParameter("fri_am_in");
+		String fri_pm_in = request.getParameter("fri_pm_in");
 		String fri_pm_out = request.getParameter("fri_pm_out");
 		String fri_eve_in = request.getParameter("fri_eve_in");
 		String fri_eve_out = request.getParameter("fri_eve_out");

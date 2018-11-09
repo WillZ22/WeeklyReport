@@ -76,7 +76,7 @@
 
               <div class="form-group">
                 <label for="iPW">密码</label>
-                <input type="text" class="form-control" id="iPW">
+                <input type="password" class="form-control" id="iPW">
               </div>
               <div class="form-group">
                 <label for="">角色</label>
@@ -122,7 +122,7 @@
               </div>
               <div class="form-group">
                 <label for="inputPW">密码</label>
-                <input type="text" class="form-control" id="inputPW">
+                <input type="password" class="form-control" id="inputPW">
               </div>
               <div class="form-group">
                 <label for="">角色</label>

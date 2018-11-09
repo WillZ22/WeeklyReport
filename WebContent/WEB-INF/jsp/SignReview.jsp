@@ -185,7 +185,7 @@
                   <td><input class="form-control pull-right"  type="number" id="late" name="late" max="10" min="0" readonly></td>
                   <th>迟到:</th>
                   <td><input class="form-control pull-right" type="number" id="dayoff" name="dayoff" max="10" min="0" readonly></td>
-                  <th colspan="2">请假:</th>
+                  <th colspan="2">总时间:</th>
                   <td><input class="form-control pull-right" type="number" id="totaltime" name="totaltime" max="100" min="0" readonly></td>
                 </tr>
 
