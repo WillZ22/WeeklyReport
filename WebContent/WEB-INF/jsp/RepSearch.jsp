@@ -260,41 +260,66 @@
             align: "center",
             valign: "middle",
             formatter: function(value, row, index){
-              var ret = "<button class='btn btn-primary' id='downLoad' style='margin-left:10px'><i class='fa fa-download'>下载</i></button>";
-              return ret;
+                var ret = "";
+                $.ajax({
+                  url:'wr/function/getfilelist',
+                  type: 'post',
+                  data: {
+                    term: row.term,
+                    nw: row.nw,
+                    name: row.name
+                  },
+                  async:false,
+                  success:function(data){
+                    if(data != ""){
+                      for (var i = 0; i < data.length; i++) {
+                        ret = ret + '<a href="javascript:void(0)" style="overflow:hidden" class = "dl">' + data[i] +'</a><br/>';
+                      }
+                    } else {
+                      ret = "无附件";
+                    }
+                  }
+                });
+                return ret;
             },
             events:{
-              'click #downLoad':function(e, value, row, index){
+              'click .dl':function(e, value, row, index){
 
-               var form = $("<form>");
-               form.attr("style","display:none");
-               form.attr("target","");
-               form.attr("method","post");
-               form.attr("action","wr/function/downloadmemberfile");
+                var form = $("<form>");
+                form.attr("style","display:none");
+                form.attr("target","");
+                form.attr("method","post");
+                form.attr("action","wr/function/downloadsinglefile");
 
-               var input1 = $("<input>");
-               input1.attr("type","hidden");
-               input1.attr("name","term");
-               input1.attr("value",row.term);
+                var input1 = $("<input>");
+                input1.attr("type","hidden");
+                input1.attr("name","term");
+                input1.attr("value",row.term);
 
-               var input2 = $("<input>");
-               input2.attr("type","hidden");
-               input2.attr("name","nw");
-               input2.attr("value",row.nw);
+                var input2 = $("<input>");
+                input2.attr("type","hidden");
+                input2.attr("name","nw");
+                input2.attr("value",row.nw);
 
-               var input3 = $("<input>");
-               input3.attr("type","hidden");
-               input3.attr("name","name");
-               input3.attr("value",row.name);
+                var input3 = $("<input>");
+                input3.attr("type","hidden");
+                input3.attr("name","name");
+                input3.attr("value",row.name);
 
-               $('body').append(form);
-               form.prepend(input1);
-               form.prepend(input2);
-               form.prepend(input3);
-               form.submit();
-               form.remove();
-             }
-           }
+                var input4 = $("<input>");
+                input4.attr("type","hidden");
+                input4.attr("name","filename");
+                input4.attr("value",e.target.innerHTML);
+
+                $('body').append(form);
+                form.prepend(input1);
+                form.prepend(input2);
+                form.prepend(input3);
+                form.prepend(input4);
+                form.submit();
+                form.remove();
+                }
+              }
           },
           {
           field:"check",

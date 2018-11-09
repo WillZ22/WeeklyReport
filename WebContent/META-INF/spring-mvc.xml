@@ -37,6 +37,7 @@
 	    <mvc:mapping path="/function/*"/> 
 	    <mvc:mapping path="/page/personalinfo"/>
 	    <mvc:mapping path="/page/changepw"/>
+	    <mvc:mapping path="/page/mainpage"/>
 	    <!--不拦截登录页和登录的请求-->
 	    <mvc:exclude-mapping path="/function/getmeetingreportpagecutlist"/>
 	    <bean class="com.wr.Interceptor.CommonInterceptor"></bean>
