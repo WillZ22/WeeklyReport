@@ -181,9 +181,9 @@
 
                 <tr>
                   <th>请假:</th>
-                  <td><input class="form-control pull-right"  type="number" id="late" name="late" max="10" min="0" readonly></td>
+                  <td><input class="form-control pull-right"  type="number" id="dayoff" name="late" max="10" min="0" readonly></td>
                   <th>迟到:</th>
-                  <td><input class="form-control pull-right" type="number" id="dayoff" name="dayoff" max="10" min="0" readonly></td>
+                  <td><input class="form-control pull-right" type="number" id="late" name="dayoff" max="10" min="0" readonly></td>
                   <th colspan="2">总时间:</th>
                   <td><input class="form-control pull-right" type="number" id="totaltime" name="totaltime" max="100" min="0" readonly></td>
                 </tr>
@@ -362,7 +362,7 @@
                       colspan: 1,
                       rowspan: 1,
                       formatter: function(value, row, index) {
-                        var ret = "<button class='btn btn-primary' id='editTable' style='margin-left:10px'><i class='fa fa-edit'>查看</i></button>";
+                        var ret = "<button class='btn btn-primary' id='editTable' style='margin-left:10px'><i class='fa fa-list'>查看</i></button>";
                         return ret;
                       },
                       //这里是一个监听对象，描述发生一定动作后执行的操作，这里是click动作生成模态框
@@ -435,14 +435,14 @@
                       }
                     },{
                       field: "review",
-                      title: "审阅",
+                      title: "是否达标",
                       align: "center",
                       valign: "middle",
                       colspan: 1,
                       rowspan: 1,
                       formatter: function(value, row, index) {
-                        var ret = "<button class='btn btn-success' id='qualified' style='margin-left:10px'><i class='fa fa-edit'>达标</i></button>"+
-                        "<button class='btn btn-warning' id='unqualified' style='margin-left:10px'><i class='fa fa-edit'>未达标</i></button>";
+                        var ret = "<button class='btn btn-success' id='qualified' style='margin-left:10px'><i class='fa fa-circle-thin'>是</i></button>"+
+                        "<button class='btn btn-warning' id='unqualified' style='margin-left:10px'><i class='fa fa-close'>否</i></button>";
                         return ret;
                       },
                       events:{

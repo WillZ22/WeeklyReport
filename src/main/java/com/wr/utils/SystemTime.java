@@ -61,7 +61,6 @@ public class SystemTime {
 				SystemTime.start_NW_of_Term += 1;
 				SystemTime.now_NW_of_Year = cal.get(Calendar.WEEK_OF_YEAR);
 			}
-			System.out.println(SystemTime.start_NW_of_Term);
 			if (SystemTime.start_NW_of_Term >= 25) {
 				cancel();
 				reset();
@@ -80,8 +79,8 @@ public class SystemTime {
 		month = 0;
 	}
 	
-	public static void main(String[] args) {
-		SystemTime systemTime = new SystemTime();
-		systemTime.start("2018上半年", 1);
-	}
+//	public static void main(String[] args) {
+//		SystemTime systemTime = new SystemTime();
+//		systemTime.start("2018上半年", 1);
+//	}
 }

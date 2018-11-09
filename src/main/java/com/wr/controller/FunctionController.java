@@ -275,8 +275,10 @@ public class FunctionController {
 		report.setNread(nread);
 		report.setSdate(sdate);
 		report.setSummary(summary);
-		report.setQualify(0);
-		
+		String role = (String) session.getAttribute("role");
+		if (role.equals("groupmember")) {
+			report.setQualify(0);
+		}
 		reportService.updateReport(report);
 		return "success";
 	}
@@ -742,7 +744,7 @@ public class FunctionController {
 	//导出月签到汇总
 	@RequestMapping(value = "/exportmonthsign", method =RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public ResponseEntity<byte[]> exportmonthsign(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public ResponseEntity<byte[]> exportMonthSign(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int year = Integer.parseInt(request.getParameter("year"));
 		int month = Integer.parseInt(request.getParameter("month"));
 		HSSFWorkbook hssfWorkbook = signSerivce.monthsummary(year, month);
@@ -1127,11 +1129,17 @@ public class FunctionController {
 	@RequestMapping(value = "/getfirstnotification", method =RequestMethod.GET, produces="application/json;charset=UTF-8" )
 	@ResponseBody
 	public String getFirstNotification(HttpServletRequest request) {
-		Notification notification = notificationService.getFirstNotification();
+		Notification notification = new Notification();
+		try {
+			notification = notificationService.getFirstNotification();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return "";
+		}
 		JSONObject jsonObject = JSONObject.fromObject(notification);
 		String result = jsonObject.toString();
 		return result;
-		
 	}
 	
 //	@RequestMapping(value = "/getnotificationpagecutlist", method =RequestMethod.POST, produces="application/json;charset=UTF-8" )

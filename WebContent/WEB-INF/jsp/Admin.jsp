@@ -58,9 +58,9 @@
           <div id="navbar" class="navbar-collapse collapse" style="text-align: center;">
             <ul class="nav navbar-nav" style="display: inline-block;float: none;">
               <li><a href="wr/page/mainpage">首页</a></li>
-              <li><a href="javascript:void(0)" onclick="um()"><i class="fa fa-book">用户管理</i></a></li>
-              <li><a href="javascript:void(0)" onclick="dm()"><i class="fa fa-book">数据管理</i></a></li>
-              <li><a href="javascript:void(0)" onclick="sysc()"><i class="fa fa-book">系统控制</i></a></li>
+              <li><a href="javascript:void(0)" onclick="um()">用户管理</a></li>
+              <li><a href="javascript:void(0)" onclick="dm()">数据管理</a></li>
+              <li><a href="javascript:void(0)" onclick="sysc()">系统控制</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <span class="profile"></span>
@@ -142,7 +142,7 @@
                  1.提交周报时间为周五全天，不在时间段内不可提交。<br/>
                  2.历史周报不可修改只能查阅。<br/>
                  3.每周周报由组长审核，审核结果通过邮件通知。<br/>
-                 4.审核未通过的周报必须重新提交，由组长重新审核。<br/><br/>
+                 4.审核未通过的周报须重新提交，由组长重新审核。<br/><br/>
                  二、组长：<br/>
                  1.组长可审核本周组员周报，下载附件。<br/>
                  2.对于审核未通过的周报，组员重新提交后，组长需要重新审核。<br/><br/>

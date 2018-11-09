@@ -174,9 +174,9 @@
 
                             <tr>
                               <th>请假:</th>
-                              <td><input class="form-control pull-right"  type="number" id="late" name="late" max="10" min="0"></td>
+                              <td><input class="form-control pull-right"  type="number" id="dayoff" name="late" max="10" min="0"></td>
                               <th>迟到:</th>
-                              <td><input class="form-control pull-right" type="number" id="dayoff" name="dayoff" max="10" min="0"></td>
+                              <td><input class="form-control pull-right" type="number" id="late" name="dayoff" max="10" min="0"></td>
                               <th colspan="2">总时间:</th>
                               <td><input class="form-control pull-right" type="number" id="totaltime" name="totaltime" max="100" min="0"></td>
                             </tr>

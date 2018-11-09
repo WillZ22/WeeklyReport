@@ -437,7 +437,7 @@
                   valign: "middle",
                   formatter: function(value, row, index) {
                     if (row.nw < nownw || row.term != nowterm) {
-                      ret = "<button class='btn btn-primary' id='editTable' style='margin-left:10px'><i class='fa fa-edit'>查看</i></button>";
+                      ret = "<button class='btn btn-primary' id='editTable' style='margin-left:10px'><i class='fa fa-list'>查看</i></button>";
                       return ret;
                     }else if(row.nw == nownw && row.term == nowterm){
                       var ret = "<button class='btn btn-primary' id='editTable' style='margin-left:10px'><i class='fa fa-edit'>编辑</i></button>"+
@@ -529,7 +529,7 @@
       $("#fileinput").fileinput({
         theme: 'explorer-fa',
         language: 'zh', //设置语言
-        allowedFileExtensions: ['jpg', 'gif', 'png','docx','doc','xlsx'],//接收的文件后缀
+        allowedFileExtensions: ['jpg', 'gif', 'png','docx','doc','xlsx','xls','jpeg','ppt','pptx','bmp'],//接收的文件后缀
         showUpload: false, //是否显示上传按钮
         showCaption: false,//是否显示标题
         showPreview :true,//是否显示预览
@@ -544,7 +544,7 @@
       $("#finput").fileinput({
         theme: 'explorer-fa',
         language: 'zh', //设置语言
-        allowedFileExtensions: ['jpg', 'gif', 'png','docx','doc','xlsx'],//接收的文件后缀
+        allowedFileExtensions: ['jpg', 'gif', 'png','docx','doc','xlsx','xls','jpeg','ppt','pptx','bmp'],//接收的文件后缀
         showUpload: false, //是否显示上传按钮
         showCaption: false,//是否显示标题
         showPreview :true,//是否显示预览

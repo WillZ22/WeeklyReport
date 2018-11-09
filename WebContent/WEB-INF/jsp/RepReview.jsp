@@ -175,19 +175,7 @@
       // editor.customConfig.uploadImgServer = '/upload' ; // 上传图片到服务器
       editor.customConfig.showLinkImg = false;
       editor.customConfig.uploadImgShowBase64 = true ;
-      editor.customConfig.menus = [
-        'head',  // 标题
-        'bold',  // 粗体
-        'fontSize',  // 字号
-        'foreColor',  // 文字颜色
-        'underline',  // 下划线
-        'strikeThrough',  // 删除线
-        'image',  // 插入图片
-        'list',  // 列表
-        'justify',  // 对齐方式
-        'table',  // 表格
-        'code',  // 插入代码
-      ];
+      editor.customConfig.menus = [];
       editor.create();
     }
 
@@ -313,7 +301,7 @@
                   colspan: 1,
                   rowspan: 1,
                   formatter: function(value, row, index) {
-                    var ret = "<button class='btn btn-info' id='editTable' style='margin-left:10px'><i class='fa fa-edit'>查看</i></button>";
+                    var ret = "<button class='btn btn-info' id='editTable' style='margin-left:10px'><i class='fa fa-list'>查看</i></button>";
                     return ret;
                   },
                   //这里是一个监听对象，描述发生一定动作后执行的操作，这里是click动作生成模态框
@@ -349,14 +337,14 @@
                 },
                 {
                     field: "review",
-                    title: "审核",
+                    title: "是否通过",
                     align: "center",
                     valign: "middle",
                     colspan: 1,
                     rowspan: 1,
                     formatter: function(value, row, index) {
-                      var ret = "<button class='btn btn-success' id='qualified' style='margin-left:10px'><i class='fa fa-edit'>通过</i></button>"+
-                      "<button class='btn btn-warning' id='unqualified' style='margin-left:10px'><i class='fa fa-edit'>不通过</i></button>";
+                      var ret = "<button class='btn btn-success' id='qualified' style='margin-left:10px'><i class='fa fa-circle-thin'>是</i></button>"+
+                      "<button class='btn btn-warning' id='unqualified' style='margin-left:10px'><i class='fa fa-close'>否</i></button>";
                       return ret;
                     },
                     events:{
