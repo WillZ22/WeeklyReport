@@ -370,7 +370,7 @@
 
                 $('#save').click(function(){
                     if ($('#late').val() == '' || $('#dayoff').val() == '' || $('#totaltime').val() == '') {
-                      alert("请填写完整");
+                      alert("请填写迟到，早退，总时间");
                       return;
                     }
                     var formData = new FormData();

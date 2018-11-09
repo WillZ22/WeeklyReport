@@ -72,7 +72,7 @@
     </div>
 
     <!--动态操作模态框-->
-    <div class="modal fade" id="checkmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal fade" id="checkmodal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -80,7 +80,6 @@
             <h4 class="modal-title" id="editModalLabel">编辑</h4>
           </div>
           <div class="modal-body">
-
             <form class="col-md-12 " id="form_sign">
               <table id="td_signed" class="table table-bordered table-responsive col-md-12 ">
                 <tr colspan="7">
@@ -200,7 +199,7 @@
             </form>
           </div>
           <div class="modal-footer">
-
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
           </div>
         </div>
       </div>

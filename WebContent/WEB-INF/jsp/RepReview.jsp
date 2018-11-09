@@ -122,7 +122,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
 
 
-    <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
+    <%-- <script src="wr/Static/js/jquery-3.3.1.min.js"></script> --%>
     <%-- <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> --%>
     <script src="wr/Static/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="wr/Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
@@ -328,7 +328,7 @@
                           name: row.name
                         },
                         contentType:"application/x-www-form-urlencoded",
-                        async: true,
+                        async: false,
                         success:function(data){
                           $('#startDate').val(toTextarea(data[0].sdate));
                           $('#endDate').val(toTextarea(data[0].edate));

@@ -615,7 +615,7 @@ public class FunctionController {
 		String term = SystemTime.term;
 		int nw = SystemTime.start_NW_of_Term;
 
-		String belong = username;
+		String belong = userService.getUser(username).getName();
 		String result = null;
 		if (role.equals("groupleader") || role.equals("secretary")) {
 			List<Report> reports = reportService.getWeekGroupReports(term, nw, belong);
@@ -982,8 +982,6 @@ public class FunctionController {
 		String role = request.getParameter("role");
 		String password = request.getParameter("password");
 		String belong = request.getParameter("belong");
-		System.out.println(role);
-		System.out.println(belong);
 		userService.addUser(username, name, password, role, belong);
 		return "success";
 		

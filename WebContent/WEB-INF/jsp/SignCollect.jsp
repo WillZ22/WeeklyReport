@@ -122,7 +122,7 @@
     </div>
 
     <!--动态操作模态框-->
-    <div class="modal fade" id="checkmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal fade" id="checkmodal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
