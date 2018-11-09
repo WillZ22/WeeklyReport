@@ -843,7 +843,8 @@ public class FunctionController {
 		
 		for(Report rep:reports) {  
 			JsonConfig jsonConfig = new JsonConfig();
-			jsonConfig.setExcludes(new String[] {"user", "id"});
+			jsonConfig.setExcludes(new String[] {"id", "user", "sdate", "edate", "lplan", "done",
+					"summary", "nplan", "lread", "nread", "qualify"});
 			JSONObject jObject = JSONObject.fromObject(rep,jsonConfig);
 			jObject.put("name", rep.getUser().getName());
 			jsonArray.add(jObject);
@@ -905,7 +906,9 @@ public class FunctionController {
 	@ResponseBody
 	public String getAllNotifications() {
 		List<Notification> notifications = notificationService.getAllNotifications();
-		JSONArray jsonArray = JSONArray.fromObject(notifications);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] {"content"});
+		JSONArray jsonArray = JSONArray.fromObject(notifications,jsonConfig);
 		String result = jsonArray.toString();
 		return result;
 		
@@ -1005,7 +1008,8 @@ public class FunctionController {
 		List<Report> reports = reportService.getWeekAllReports(term, nw);
 		
 		JsonConfig jsonConfig = new JsonConfig();
-		jsonConfig.setExcludes(new String[] {"id", "user"});
+		jsonConfig.setExcludes(new String[] {"id", "user", "sdate", "edate", "lplan", "done",
+				"summary", "nplan", "lread", "nread", "qualify"});
 		
 		JSONArray jsonArray = new JSONArray();
 		for(Report rep:reports) {
@@ -1028,7 +1032,15 @@ public class FunctionController {
 		List<Sign> signs = signSerivce.getAllSignByNW(nw, term);
 		
 		JsonConfig jsonConfig = new JsonConfig();
-		jsonConfig.setExcludes(new String[] {"id", "user"});
+		jsonConfig.setExcludes(new String[] {"id", "user","sun_am_in", "sun_am_out", "sun_pm_in", "sun_pm_out", "sun_eve_in", "sun_eve_out",
+				"mon_am_in", "mon_am_out", "mon_pm_in", "mon_pm_out", "mon_eve_in", "mon_eve_out",
+				"tues_am_in", "tues_am_out", "tues_pm_in", "tues_pm_out", "tues_eve_in", "tues_eve_out",
+				"wed_am_in", "wed_am_out", "wed_pm_in", "wed_pm_out", "wed_eve_in", "wed_eve_out",
+				"thur_am_in", "thur_am_out", "thur_pm_in", "thur_pm_out", "thur_eve_in", "thur_eve_out",
+				"fri_am_in", "fri_am_out", "fri_pm_in", "fri_pm_out", "fri_eve_in", "fri_eve_out"});
+
+		
+	
 		
 		JSONArray jsonArray = new JSONArray();
 		for(Sign s:signs) {
