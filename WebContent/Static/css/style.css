@@ -16,11 +16,11 @@ html,body{
 }
 
 .main-header{
-  background-image:url(http://static.ghostchina.com/image/6/d1/fcb3879e14429d75833a461572e64.jpg);
+  background-image:url(http://assets.youzhan.org/img/d/dd/2de797545de56274f03a5920eb3a1.jpg);
   padding-top: 55px;
   padding-bottom: 55px;
   background-repeat: no-repeat;
-  background-position: center 20%;
+  background-position: top;
   -webkit-background-size: cover;
   background-size: cover;
 }

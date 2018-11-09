@@ -55,7 +55,7 @@ $(function(){
       }
     })
   }
-  
+
   function toTextarea(str){
       var reg=new RegExp("<br/>","g");
       var regSpace=new RegExp("&nbsp;","g");
@@ -149,15 +149,15 @@ $(function(){
     })
   }
 
-  function si(){
-    $.ajax({
-      url:"wr/page/signinput",
-      type:"get",
-      success:function(data){
-        $("#content").html(data);
-      }
-    })
-  }
+  // function si(){
+  //   $.ajax({
+  //     url:"wr/page/signinput",
+  //     type:"get",
+  //     success:function(data){
+  //       $("#content").html(data);
+  //     }
+  //   })
+  // }
 
     function sysc(){
       $.ajax({

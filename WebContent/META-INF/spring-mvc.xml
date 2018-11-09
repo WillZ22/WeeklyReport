@@ -24,7 +24,7 @@
 	<mvc:interceptors>
 
 	  <!-- 配置登陆拦截器 -->
-	  	<mvc:interceptor>
+	  <mvc:interceptor>
 	    <!--拦截登陆页-->
 	    <mvc:mapping path="/loginpage"/>
 	    <!--不拦截登录验证-->
@@ -34,21 +34,53 @@
 	  
 	  <mvc:interceptor>
 	    <!--拦截后台页面的请求-->
-	    <mvc:mapping path="/page/**"/>
-	    <mvc:mapping path="/function/**"/>
+	    <mvc:mapping path="/function/*"/>
+	    <mvc:mapping path="/page/personalinfo"/>
+	    <mvc:mapping path="/page/changepw"/>
 	    <!--不拦截登录页和登录的请求-->
 	    <bean class="com.wr.Interceptor.CommonInterceptor"></bean>
 	  </mvc:interceptor>
 	  
 	  
 	  <mvc:interceptor>
-	    <mvc:mapping path="/page/**"/>
-	    <mvc:mapping path="/function/**"/>
-	    <!--不拦截登录页和登录的请求-->
-	    <bean class="com.wr.Interceptor.CommonInterceptor"></bean>
+	    <mvc:mapping path="/page/reportreview"/>
+	    <!--组长-->
+	    <bean class="com.wr.Interceptor.GLInterceptor"></bean>
 	  </mvc:interceptor>
+	  
+	  <mvc:interceptor>
+	    <mvc:mapping path="/page/writereport"/>
+	    <mvc:mapping path="/page/writesign"/>
+	    <!--组员和组长-->
+	    <bean class="com.wr.Interceptor.GMAndGLInterceptor"></bean>
+	  </mvc:interceptor>
+	  
+	  
+	  <mvc:interceptor>
+	    <mvc:mapping path="/page/reportcollect"/>
+	    <mvc:mapping path="/page/signcollect"/>
+	    <mvc:mapping path="/page/reportsearch"/>
+	    <mvc:mapping path="/page/summaryexport"/>
+	    <mvc:mapping path="/page/notification"/>
+	    <!--导师-->
+	    <bean class="com.wr.Interceptor.TInterceptor"></bean>
+	  </mvc:interceptor>
+	  
+	  <mvc:interceptor>
+	    <mvc:mapping path="/page/signreview"/>
+	    <mvc:mapping path="/page/meetingrecord"/>
+	    <!--秘书-->
+	    <bean class="com.wr.Interceptor.SInterceptor"></bean>
+	  </mvc:interceptor>
+	  
+	  <mvc:interceptor>
+	    <mvc:mapping path="/page/usermanage"/>
+	    <mvc:mapping path="/page/datamanage"/>
+	    <mvc:mapping path="/page/systemcontrol"/>
+	    <!--管理员-->
+	    <bean class="com.wr.Interceptor.AInterceptor"></bean>
+	  </mvc:interceptor>
+	  
 	</mvc:interceptors>
-	
-
 	
 </beans>
