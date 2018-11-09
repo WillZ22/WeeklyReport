@@ -34,10 +34,11 @@
 	  
 	  <mvc:interceptor>
 	    <!--拦截后台页面的请求-->
-	    <mvc:mapping path="/function/*"/>
+	    <mvc:mapping path="/function/*"/> 
 	    <mvc:mapping path="/page/personalinfo"/>
 	    <mvc:mapping path="/page/changepw"/>
 	    <!--不拦截登录页和登录的请求-->
+	    <mvc:exclude-mapping path="/function/getmeetingreportpagecutlist"/>
 	    <bean class="com.wr.Interceptor.CommonInterceptor"></bean>
 	  </mvc:interceptor>
 	  

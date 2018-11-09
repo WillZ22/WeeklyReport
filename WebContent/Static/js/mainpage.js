@@ -48,6 +48,9 @@ $(function(){
       type: "get",
       async: false,
       success:function(data){
+        if(data == ""){
+          return;
+        }
         $('#title').html(data.title);
         var con = toTextarea(data.content);
         $('#articleCotent').html(con);

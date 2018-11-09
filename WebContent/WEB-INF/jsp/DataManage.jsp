@@ -268,6 +268,7 @@
     <script type="text/javascript">
       $(function(){
         //加载签到管理表格
+        initTime();
         var osignTable = new SignTableInit();
         osignTable.Init();
         //加载周报管理表格
@@ -276,6 +277,23 @@
         initNTable();
         initMRTable();
       })
+
+
+      function initTime(){
+        $.ajax({
+          url:"wr/function/gettime",
+          type:"get",
+          async: false,
+          success:function(data){
+            nownw = data[0].nw;
+            nowterm = data[0].term;
+            $('#term1').val(data[0].term);
+            $('#nw1').val(data[0].nw);
+            $('#term2').val(data[0].term);
+            $('#nw2').val(data[0].nw);
+          }
+        });
+      };
 
       function textareaTo(str){
         var reg=new RegExp("\n","g");

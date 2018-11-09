@@ -63,7 +63,6 @@
                   <li><a href="javascript:void(0)" onclick="rs()">周报查找</a></li>
                   <li><a href="javascript:void(0)" onclick="se()">汇总导出</a></li>
                   <li><a href="javascript:void(0)" onclick="rn()">发布公告</a></li>
-                  <li><a href="javascript:void(0)" onclick="um()">用户管理</a></li>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                       <span class="profile"></span>

@@ -37,7 +37,6 @@
   </head>
 
   <body>
-
     <div class="container col-md-10 col-md-offset-1 col-xs-12"  style="margin-top:10px;">
       <div class="panel panel-default">
         <div class="panel-heading">

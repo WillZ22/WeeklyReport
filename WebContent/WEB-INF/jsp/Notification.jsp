@@ -23,6 +23,9 @@
     <!-- Bootstrap core CSS -->
     <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom styles for this project -->
+    <link href="wr/Static/css/style.css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -33,7 +36,6 @@
           </div>
           <div class="panel-body">
             <div class="container col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="margin-bottom:15px">
-
               <form>
                 <div class="form-group">
                   <label for="ntitle">标题</label>
