@@ -448,7 +448,7 @@
                   //这里是一个监听对象，描述发生一定动作后执行的操作，这里是click动作生成模态框
                   events:{
                     'click #editTable':function(e, value, row, index){
-                        if (row.nw < nownw || row.term != nowterm || nownw == 0 || row.qualify == 1) {
+                        if (row.nw < nownw || row.term != nowterm || nownw == 0) {
                           $('#btn_save').attr('disabled',"true");
                         } else {
                           //// TODO: 回复保存按钮
