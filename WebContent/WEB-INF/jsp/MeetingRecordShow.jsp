@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath() +"/";
 %>
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
-    <link href="wr/Static/css/style.css" rel="stylesheet">
+    <link href="Static/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -61,7 +61,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <%-- <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> --%>
-    <script src="wr/Static/js/custom.js"></script>
+    <script src="Static/js/custom.js"></script>
     <script type="text/javascript">
 
 

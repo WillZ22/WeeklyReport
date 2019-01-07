@@ -2,14 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
-%>
-
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-  	<base href=" <%=basePath%>">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,7 +22,7 @@
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
-    <link href="wr/Static/css/style.css" rel="stylesheet">
+    <link href="Static/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -70,12 +65,12 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <%-- <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> --%>
-    <script src="wr/Static/js/custom.js"></script>
+    <script src="Static/js/custom.js"></script>
     <script type="text/javascript">
 
     $('#change').click(function(){             //TODO:添加删除后台数据的方法
       $.ajax({
-        url: "wr/function/changepw",
+        url: "function/changepw",
         type: "post",
         data:{
           oldpw: $('#oldpw').val(),
@@ -86,7 +81,7 @@
         success:function(data){
           if(data == "success"){
             alert("修改成功");
-            window.location.href = "wr/loginpage";
+            window.location.href = "loginpage";
           }else if(data == "fail"){
             alert("原密码错误");
           }

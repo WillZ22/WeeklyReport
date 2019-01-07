@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<% String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"; %>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <base href="<%=basePath%>">
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,10 +23,10 @@
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
-    <link href="wr/Static/css/style.css" rel="stylesheet">
+    <link href="Static/css/style.css" rel="stylesheet">
 
     <!--Bootstrap Table CSS-->
-    <link rel="stylesheet" href="wr/Static/bootstrap-table/bootstrap-table.min.css">
+    <link rel="stylesheet" href="Static/bootstrap-table/bootstrap-table.min.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -172,8 +172,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <%-- <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
     <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> --%>
-    <script src="wr/Static/bootstrap-table/bootstrap-table.min.js"></script>
-    <script src="wr/Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+    <script src="Static/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
     <script type="text/javascript">
 
 
@@ -187,7 +187,7 @@
         $('#iBelong').html("");
         $('#iBelong').append('<option value = ""></option>');
         $.ajax({
-          url:"wr/function/getglnames",
+          url:"function/getglnames",
           type: "get",
           contentType:"application/json",
           async: false,
@@ -222,7 +222,7 @@
         $('#inputBelong').html("");
         $('#inputBelong').append('<option value = ""></option>');
         $.ajax({
-          url:"wr/function/getglnames",
+          url:"function/getglnames",
           type: "get",
           contentType:"application/json",
           async: false,
@@ -241,7 +241,7 @@
           var oTableInit = new Object();
           oTableInit.Init = function () {
               $('#td_user').bootstrapTable({
-                  url: "wr/function/getalluser",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+                  url: "function/getalluser",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
                   method: "get",                      //请求方式（*）
                   cache: true,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                   pagination: true,                   //是否显示分页（*）
@@ -308,7 +308,7 @@
                         $('#removeText').text("是否删除用户" + row.name );
                         $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
                           $.ajax({
-                            url: "wr/function/deleteuser",
+                            url: "function/deleteuser",
                             type: "post",
                             data:{
                               username: row.username,
@@ -347,7 +347,7 @@
         }else {
           // TODO:
           $.ajax({
-            url: "wr/function/saveuser",
+            url: "function/saveuser",
             type: "post",
             data:{
               username: $('#iUsername').val(),
@@ -381,7 +381,7 @@
         }
         else {
           $.ajax({
-            url: "wr/function/newuser",
+            url: "function/newuser",
             type: "post",
             data:{
               username: $('#inputUsername').val(),

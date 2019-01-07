@@ -28,7 +28,7 @@ public class GLInterceptor implements HandlerInterceptor{
 		String islogin = (String) request.getSession().getAttribute("isLogin");
 		String role = (String) request.getSession().getAttribute("role");
 		if (islogin == null) {
-			response.sendRedirect("/wr/loginpage");
+			response.sendRedirect(request.getContextPath()+"/loginpage");
 			return false;
 		} else if (!role.equals("groupleader")) {
 			return false;

@@ -31,7 +31,7 @@ public class CommonInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
 		String str = (String) request.getSession().getAttribute("isLogin");
 		if (str == null) {
-			response.sendRedirect("/wr/loginpage");
+			response.sendRedirect(request.getContextPath()+"/loginpage");
 			return false;
 		}
 		return true;

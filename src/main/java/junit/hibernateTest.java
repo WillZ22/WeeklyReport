@@ -36,43 +36,23 @@ import net.sf.json.JSONObject;
 //不要在测试类里直接用dao层，无效
 public class hibernateTest {
 	
-	@Autowired
-	UserService userservice;
-	@Autowired
-	UserDaoImpl userdao;
+
 	
 	@Autowired
 	ReportService reportservice;
-	@Autowired 
-	SignService signservice;
 	
-	@Autowired
-	SignDaoImpl signdao;
-	
-	@Autowired
-	MeetingRecordService meetingRecordService;
-	
-	@Autowired
-	NotificationService notificationService;
-	@Autowired
-	SignDaoImpl signDaoImpl;
 	@Test
-	public void test() throws Exception {
-//		userservice.addUser("teacher", "teacher", "teacher", "teacher", null);
-////		userservice.addUser("admin", "admin", "admin", "admin", null);
-////		userservice.update("1", "1", "1", "1", "1");
-////		userservice.delete("1");
-//		userservice.addUser("1", "1", "1", "groupmember", "2");
-//		userservice.addUser("2", "2", "1", "groupmember", "2");
-//		List<Report> reports = reportservice.getWeekAllReports("2018上半年", 1);
-		
-//		List<Integer> nws = signDaoImpl.getMonthNW(2018, 11);
-//		for(Integer integer:nws) {
-//			System.out.println(integer);
-//		}
-//	
+	public void test() {
 
-		
+		JSONObject jsonObject = new JSONObject();
+		List<String> list = new ArrayList<>();
+		list.add("1");
+		list.add("2");
+		jsonObject.put("xx", list);
+
+		System.out.println(jsonObject.toString());
 	}
+		
+	
 		
 }

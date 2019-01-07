@@ -19,7 +19,7 @@ public class Sign {
 	private int nw;
 	private int late;
 	private int dayoff;
-	private int totalTime;
+	private String totalTime;
 	
 	private String sun_am_in;
 	private String sun_am_out;
@@ -62,6 +62,13 @@ public class Sign {
 	private String fri_pm_out;
 	private String fri_eve_in;
 	private String fri_eve_out;
+	
+	private String sat_am_in;
+	private String sat_am_out;
+	private String sat_pm_in;
+	private String sat_pm_out;
+	private String sat_eve_in;
+	private String sat_eve_out;
 	
 	private int year;
 	private int month;
@@ -177,10 +184,10 @@ public class Sign {
 	@Column(nullable=false) 
 //	@NotEmpty(message = "总时间不能为空")
 	//@Range(min=0, max=200, message="超出验证范围") 
-	public int getTotalTime() {
+	public String getTotalTime() {
 		return totalTime;
 	}
-	public void setTotalTime(int totalTime) {
+	public void setTotalTime(String totalTime) {
 		this.totalTime = totalTime;
 	}
 	
@@ -472,7 +479,74 @@ public class Sign {
 		this.fri_eve_out = fri_eve_out;
 	}
 	
+	@Column(nullable=true)
+	public String getSat_am_in() {
+		return sat_am_in;
+	}
+	public void setSat_am_in(String sat_am_in) {
+		this.sat_am_in = sat_am_in;
+	}
+	
+	@Column(nullable=true)
+	public String getSat_am_out() {
+		return sat_am_out;
+	}
+	public void setSat_am_out(String sat_am_out) {
+		this.sat_am_out = sat_am_out;
+	}
+	
+	@Column(nullable=true)
+	public String getSat_pm_in() {
+		return sat_pm_in;
+	}
+	public void setSat_pm_in(String sat_pm_in) {
+		this.sat_pm_in = sat_pm_in;
+	}
+	
+	@Column(nullable=true)
+	public String getSat_pm_out() {
+		return sat_pm_out;
+	}
+	public void setSat_pm_out(String sat_pm_out) {
+		this.sat_pm_out = sat_pm_out;
+	}
+	
+	@Column(nullable=true)
+	public String getSat_eve_in() {
+		return sat_eve_in;
+	}
+	public void setSat_eve_in(String sat_eve_in) {
+		this.sat_eve_in = sat_eve_in;
+	}
+	
+	@Column(nullable=true)
+	public String getSat_eve_out() {
+		return sat_eve_out;
+	}
+	public void setSat_eve_out(String sat_eve_out) {
+		this.sat_eve_out = sat_eve_out;
+	}
 	
 	
-	
+	@Override
+	public String toString() {
+		return "Sign [id=" + id + ", term=" + term + ", nw=" + nw + ", late=" + late + ", dayoff=" + dayoff
+				+ ", totalTime=" + totalTime + ", sun_am_in=" + sun_am_in + ", sun_am_out=" + sun_am_out
+				+ ", sun_pm_in=" + sun_pm_in + ", sun_pm_out=" + sun_pm_out + ", sun_eve_in=" + sun_eve_in
+				+ ", sun_eve_out=" + sun_eve_out + ", mon_am_in=" + mon_am_in + ", mon_am_out=" + mon_am_out
+				+ ", mon_pm_in=" + mon_pm_in + ", mon_pm_out=" + mon_pm_out + ", mon_eve_in=" + mon_eve_in
+				+ ", mon_eve_out=" + mon_eve_out + ", tues_am_in=" + tues_am_in + ", tues_am_out=" + tues_am_out
+				+ ", tues_pm_in=" + tues_pm_in + ", tues_pm_out=" + tues_pm_out + ", tues_eve_in=" + tues_eve_in
+				+ ", tues_eve_out=" + tues_eve_out + ", wed_am_in=" + wed_am_in + ", wed_am_out=" + wed_am_out
+				+ ", wed_pm_in=" + wed_pm_in + ", wed_pm_out=" + wed_pm_out + ", wed_eve_in=" + wed_eve_in
+				+ ", wed_eve_out=" + wed_eve_out + ", thur_am_in=" + thur_am_in + ", thur_am_out=" + thur_am_out
+				+ ", thur_pm_in=" + thur_pm_in + ", thur_pm_out=" + thur_pm_out + ", thur_eve_in=" + thur_eve_in
+				+ ", thur_eve_out=" + thur_eve_out + ", fri_am_in=" + fri_am_in + ", fri_am_out=" + fri_am_out
+				+ ", fri_pm_in=" + fri_pm_in + ", fri_pm_out=" + fri_pm_out + ", fri_eve_in=" + fri_eve_in
+				+ ", fri_eve_out=" + fri_eve_out + ", sat_am_in=" + sat_am_in + ", sat_am_out=" + sat_am_out
+				+ ", sat_pm_in=" + sat_pm_in + ", sat_pm_out=" + sat_pm_out + ", sat_eve_in=" + sat_eve_in
+				+ ", sat_eve_out=" + sat_eve_out + ", year=" + year + ", month=" + month + ", note=" + note
+				+ ", qualify=" + qualify + ", name=" + name + ", user=" + user + "]";
+	}
+
 }

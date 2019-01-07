@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<% String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"; %>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <base href=" <%=basePath%>">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,10 +22,10 @@
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
-    <link href="wr/Static/css/style.css" rel="stylesheet">
+    <link href="Static/css/style.css" rel="stylesheet">
 
     <!--Bootstrap table-->
-    <link rel="stylesheet" href="wr/Static/bootstrap-table/bootstrap-table.min.css">
+    <link rel="stylesheet" href="Static/bootstrap-table/bootstrap-table.min.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -259,8 +258,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <%-- <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> --%>
-    <script src="wr/Static/bootstrap-table/bootstrap-table.min.js"></script>
-    <script src="wr/Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+    <script src="Static/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
 
 
     <!-- Table Method
@@ -281,7 +280,7 @@
 
       function initTime(){
         $.ajax({
-          url:"wr/function/gettime",
+          url:"function/gettime",
           type:"get",
           async: false,
           success:function(data){
@@ -317,7 +316,7 @@
           var osignTableInit = new Object();
           osignTableInit.Init = function () {
               $('#td_sign').bootstrapTable({
-                  url: "wr/function/getallusersign",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+                  url: "function/getallusersign",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
                   method: "post",                      //请求方式（*）
                   cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                   pagination: true,                   //是否显示分页（*）
@@ -377,7 +376,7 @@
                           $('#removeText').text("是否删除" + row.name + "本周签到数据？");
                           $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
                             $.ajax({
-                              url: "wr/function/deletesign",
+                              url: "function/deletesign",
                               type: "post",
                               data:{
                                 name: row.name,
@@ -409,7 +408,7 @@
           var oreportTableInit = new Object();
           oreportTableInit.Init = function () {
               $('#td_report').bootstrapTable({
-                  url: "wr/function/getalluserreport",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+                  url: "function/getalluserreport",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
                   method: "post",                      //请求方式（*）
                   cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                   pagination: true,                   //是否显示分页（*）
@@ -449,7 +448,7 @@
                         $('#removeText').text("是否删除");
                         $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
                           $.ajax({
-                            url: "wr/function/deleterep",
+                            url: "function/deleterep",
                             type: "post",
                             data:{
                               name: row.name,
@@ -479,7 +478,7 @@
 
       function initNTable(){
         $('#td_N').bootstrapTable({
-          url: "wr/function/getallnotications",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+          url: "function/getallnotications",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
           method: "get",                      //请求方式（*）
           cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
           pagination: true,                   //是否显示分页（*）
@@ -518,7 +517,7 @@
                 $('#removeText').text("是否删除");
                 $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
                   $.ajax({
-                    url: "wr/function/deletenotification",
+                    url: "function/deletenotification",
                     type: "post",
                     data:{
                       id: row.id,
@@ -544,7 +543,7 @@
 
       function initMRTable(){
         $('#td_MR').bootstrapTable({
-          url: "wr/function/getallmeetingrecords",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+          url: "function/getallmeetingrecords",                  //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
           method: "get",                      //请求方式（*）
           cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
           pagination: true,                   //是否显示分页（*）
@@ -577,7 +576,7 @@
                 $('#removeText').text("是否删除");
                 $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
                   $.ajax({
-                    url: "wr/function/deletemeetingrecord",
+                    url: "function/deletemeetingrecord",
                     type: "post",
                     data:{
                       id:row.id

@@ -74,13 +74,15 @@ public class SignService {
 	}
 
 	//添加考勤
-	public void addSign(String username, String term, int nw, int late, int dayoff, int totalTime,
+	public void addSign(String username, String term, int nw, int late, int dayoff, String totalTime,
 			String sun_am_in, String sun_am_out, String sun_pm_in, String sun_pm_out, String sun_eve_in, String sun_eve_out,
 			String mon_am_in, String mon_am_out, String mon_pm_in, String mon_pm_out, String mon_eve_in, String mon_eve_out,
 			String tues_am_in, String tues_am_out, String tues_pm_in, String tues_pm_out, String tues_eve_in, String tues_eve_out,
 			String wed_am_in, String wed_am_out, String wed_pm_in, String wed_pm_out, String wed_eve_in, String wed_eve_out,
 			String thur_am_in, String thur_am_out, String thur_pm_in, String thur_pm_out, String thur_eve_in, String thur_eve_out,
-			String fri_am_in, String fri_am_out, String fri_pm_in, String fri_pm_out, String fri_eve_in, String fri_eve_out,String note, int year, int month) {
+			String fri_am_in, String fri_am_out, String fri_pm_in, String fri_pm_out, String fri_eve_in, String fri_eve_out,
+			String sat_am_in, String sat_am_out, String sat_pm_in, String sat_pm_out, String sat_eve_in, String sat_eve_out,
+			String note, int year, int month) {
 		User user = userDaoImpl.getUserByUsername(username);
 		String name = user.getName();
 		Sign sign = new Sign();
@@ -135,6 +137,13 @@ public class SignService {
 		sign.setFri_pm_out(fri_pm_out);
 		sign.setFri_eve_in(fri_eve_in);
 		sign.setFri_eve_out(fri_eve_out);
+		
+		sign.setSat_am_in(sat_am_in);
+		sign.setSat_am_out(sat_am_out);
+		sign.setSat_pm_in(sat_pm_in);
+		sign.setSat_pm_out(sat_pm_out);
+		sign.setSat_eve_in(sat_eve_in);
+		sign.setSat_eve_out(sat_eve_out);
 		
 		sign.setYear(year);
 		sign.setMonth(month);
@@ -232,7 +241,7 @@ public class SignService {
 						if (sign.getNw() == nw) {
 							HSSFCell cell1 = row.createCell(colnum);
 					        int qualify = sign.getQualify();
-					        int totaltime = sign.getTotalTime();
+					        String totaltime = sign.getTotalTime();
 					        String qString =null;
 					        
 					        if (qualify == 1) {

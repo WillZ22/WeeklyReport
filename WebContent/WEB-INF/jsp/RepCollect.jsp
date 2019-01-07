@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<% String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"; %>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <base href=" <%=basePath%>">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,22 +15,22 @@
     <title>WeeklyReport</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
 		<!--Font Awesome CSS-->
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
-    <link href="wr/Static/css/style.css" rel="stylesheet">
+    <link href="Static/css/style.css" rel="stylesheet">
 
     <!--Wang Editor CSS-->
-    <link rel="stylesheet" href="wr/Static/wangEditor-3.1.0/wangEditor.min.css">
+    <link rel="stylesheet" href="Static/wangEditor-3.1.0/wangEditor.min.css">
 
     <!--datetimepicker CSS-->
-    <link href="wr/Static/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link href="Static/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 
     <!--Bootstrap table-->
-    <link rel="stylesheet" href="wr/Static/bootstrap-table/bootstrap-table.min.css">
+    <link rel="stylesheet" href="Static/bootstrap-table/bootstrap-table.min.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -167,9 +165,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <%-- <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
     <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> --%>
-    <script src="wr/Static/bootstrap-table/bootstrap-table.min.js"></script>
-    <script src="wr/Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
-    <script src="wr/Static/wangEditor-3.1.0/wangEditor.min.js"></script>
+    <script src="Static/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+    <script src="Static/wangEditor-3.1.0/wangEditor.min.js"></script>
     <script type="text/javascript">
 
     var nownw;
@@ -200,7 +198,7 @@
 
     function initTime(){
       $.ajax({
-        url:"wr/function/gettime",
+        url:"function/gettime",
         type:"get",
         async: false,
         success:function(data){
@@ -227,7 +225,7 @@
           function initTable(){
             var head = "周报汇总";
             $('#td_RC').bootstrapTable({
-              url: "wr/function/getrepsbytermandnw", //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+              url: "function/getrepsbytermandnw", //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
               method: "post",                      //请求方式（*）
               cache: true,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
               pagination: true,                   //是否显示分页（*）
@@ -282,7 +280,7 @@
                     formatter: function(value, row, index){
                         var ret = "";
                         $.ajax({
-                          url:'wr/function/getfilelist',
+                          url:'function/getfilelist',
                           type: 'post',
                           data: {
                             term: row.term,
@@ -309,7 +307,7 @@
                         form.attr("style","display:none");
                         form.attr("target","");
                         form.attr("method","post");
-                        form.attr("action","wr/function/downloadsinglefile");
+                        form.attr("action","function/downloadsinglefile");
 
                         var input1 = $("<input>");
                         input1.attr("type","hidden");
@@ -356,7 +354,7 @@
                   events:{
                     'click #editTable':function(e, value, row, index){
                       $.ajax({
-                        url: "wr/function/getmemberrep",
+                        url: "function/getmemberrep",
                         type: "post",
                         data:{
                           nw: row.nw,

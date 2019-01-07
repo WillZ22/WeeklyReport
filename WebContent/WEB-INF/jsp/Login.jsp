@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+%>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
+    <base href=" <%=basePath%>">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -73,7 +77,6 @@
     <div id='stars2'></div>
     <div id='stars3'></div>
     <div class="loginPage">
-
       <form method="POST" class="form-login" id="loginform">
         <h3 id="welcome">欢迎</h3>
         <div class="form-group">

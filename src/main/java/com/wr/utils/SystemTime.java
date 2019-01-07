@@ -1,12 +1,8 @@
 package com.wr.utils;
 
-import java.time.DayOfWeek;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.validation.constraints.Null;
 
 public class SystemTime {
 
@@ -19,57 +15,61 @@ public class SystemTime {
 	public static int day = 0;
 	private static Calendar cal ;
 	
-	private Timer timer ;
-	private Task task;
+	public static Boolean systemStatus = false;
 
 
-	public void start(String term, int start_NW_of_Term) {
-		//调用方法前先结束任务，重置时间
-		this.term = term;
-		this.start_NW_of_Term = start_NW_of_Term;
-		
+	public static void start(String term, int start_NW_of_Term) {
+		reset();
+
 		Date date = new Date();
-		
-		cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.setFirstDayOfWeek(Calendar.SUNDAY);
-		
-		this.year = cal.get(Calendar.YEAR);
+		SystemTime.term = term;
+		SystemTime.start_NW_of_Term = start_NW_of_Term;
+		SystemTime.cal = Calendar.getInstance();
+		SystemTime.cal.setTime(date);
+		SystemTime.cal.setFirstDayOfWeek(Calendar.SUNDAY);
+		SystemTime.year = cal.get(Calendar.YEAR);
+		SystemTime.month = cal.get(Calendar.MONTH) + 1;
+		SystemTime.day = cal.get(Calendar.DAY_OF_MONTH);		
+		SystemTime.week = cal.get(Calendar.DAY_OF_WEEK) - 1;
+		SystemTime.now_NW_of_Year = cal.get(Calendar.WEEK_OF_YEAR);		
+		SystemTime.systemStatus = true;
 
-		this.month = cal.get(Calendar.MONTH) + 1;
-
-		this.day = cal.get(Calendar.DAY_OF_MONTH);
-
-		
-		this.week = cal.get(Calendar.DAY_OF_WEEK) - 1;
-
-		this.now_NW_of_Year = cal.get(Calendar.WEEK_OF_YEAR);
-
-		
-		Timer timer = new Timer();
-		Task task = new Task();
-		timer.schedule(task, 1000,10000);
 	}	
 	
 	
-	class Task extends TimerTask {
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			SystemTime.week =  cal.get(Calendar.DAY_OF_WEEK) - 1;
+	
+	public static void fresh() {
+		
+		if (SystemTime.systemStatus == false) {
+			return;
+		} else {
+			Date date = new Date();
+			cal.setTime(date);
+			
+			System.out.println(".............................................");
+			
+			SystemTime.year = cal.get(Calendar.YEAR);
+			SystemTime.month = cal.get(Calendar.MONTH) + 1;
+			SystemTime.day = cal.get(Calendar.DAY_OF_MONTH);
+			SystemTime.week = cal.get(Calendar.DAY_OF_WEEK) - 1;
+			
 			if (SystemTime.now_NW_of_Year < cal.get(Calendar.WEEK_OF_YEAR)) {
-				SystemTime.start_NW_of_Term += 1;
+				int n = cal.get(Calendar.WEEK_OF_YEAR) - SystemTime.now_NW_of_Year;
+				SystemTime.start_NW_of_Term += n;
 				SystemTime.now_NW_of_Year = cal.get(Calendar.WEEK_OF_YEAR);
-			}
-			if (SystemTime.start_NW_of_Term >= 25) {
-				cancel();
+			} else if (SystemTime.now_NW_of_Year > cal.get(Calendar.WEEK_OF_YEAR)) {
 				reset();
 			}
-		}	  	
+			
+			if (SystemTime.start_NW_of_Term > 25) {
+				reset();
+			}
+			
+		}
 	}
 	
 	
-	private void reset() {
+	private static void reset() {
 		start_NW_of_Term = 0;
 	 	term = null;
 		week = 0;
@@ -79,8 +79,14 @@ public class SystemTime {
 		month = 0;
 	}
 	
+	
 //	public static void main(String[] args) {
-//		SystemTime systemTime = new SystemTime();
-//		systemTime.start("2018上半年", 1);
+//		SystemTime.start("2019上半年", 1);
+//		System.out.println(SystemTime.now_NW_of_Year+" "+SystemTime.start_NW_of_Term);
+//		
+//		SystemTime.now_NW_of_Year = 1;
+//		SystemTime.fresh();
+//		System.out.println(SystemTime.now_NW_of_Year+" "+SystemTime.start_NW_of_Term);
 //	}
+	
 }

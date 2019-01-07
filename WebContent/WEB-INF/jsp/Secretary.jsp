@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+ request.getContextPath()+"/";
 %>
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
-    <link href="wr/Static/css/style.css" rel="stylesheet">
+    <link href="Static/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -56,7 +56,7 @@
 
               <div id="navbar" class="navbar-collapse collapse" style="text-align: center;">
                 <ul class="nav navbar-nav" style="display: inline-block;float: none;">
-                  <li><a href="wr/page/mainpage">首页</a></li>
+                  <li><a href="page/mainpage">首页</a></li>
                   <li><a href="javascript:void(0)" onclick="sr()">考勤审核</a></li>
                   <li><a href="javascript:void(0)" onclick="mr()">会议记录</a></li>
                   <li class="dropdown">
@@ -68,7 +68,7 @@
                       <li><a href="JavaScript:void(0)" onclick="pi()">个人信息</a></li>
                       <li><a href="JavaScript:void(0)" onclick="cp()">修改密码</a></li>
                       <li class="divider"></li>
-                      <li><a href="wr/loginpage/logout">退出</a></li>
+                      <li><a href="loginpage/logout.do">退出</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -160,8 +160,245 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
+    <script src="Static/js/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="wr/Static/js/mainpage.js"></script>
+    <script src="Static/js/mainpage.js"></script>
+    <script type="text/javascript">
+
+
+    $(function(){
+      queryM(1);
+      getFirstNotification();
+    });
+
+
+      function queryM(page){
+        $.ajax({
+          url:"function/getmeetingreportpagecutlist",
+          type:"post",
+          async: false,
+          contentType:"application/x-www-form-urlencoded",
+          data:{
+            pagenum:page,
+            pagecut:5
+          },
+          success:function(data){
+            $('#record').html(" ");
+            for (var i = 0; i < data.length; i++) {
+               var mrid = data[i].id ;
+               var year = data[i].year;
+               var month = data[i].month;
+               var day = data[i].day;
+               var title = year + "年" + month + "月" + day + "会议记录";
+               $('#record').append('<a href="javascript:void(0)" dataid = "'+ mrid +'" onclick = "mjump('+mrid+')">'+ title +'</a><br/>');
+            }
+          }
+        })
+      }
+
+      function mjump(mrid){
+        $.ajax({
+          url:"function/mjump",
+          type: "post",
+          data:{
+            mrid:mrid
+          },
+          contentType:"application/x-www-form-urlencoded",
+          success:function(data){
+            $("#content").html(data);
+          }
+        })
+      }
+
+      function getFirstNotification(){
+        $.ajax({
+          url:"function/getfirstnotification",
+          type: "get",
+          async: false,
+          success:function(data){
+            if(data == ""){
+              return;
+            }
+            $('#title').html(data.title);
+            var con = toTextarea(data.content);
+            $('#articleCotent').html(con);
+            $('#info').html(data.year + "年" + data.month + "月" + data.day + "日");
+          }
+        })
+      }
+
+      function toTextarea(str){
+          var reg=new RegExp("<br/>","g");
+          var regSpace=new RegExp("&nbsp;","g");
+          str = str.replace(reg,"\n");
+          str = str.replace(regSpace," ");
+          return str;
+      };
+
+
+      function wr(){
+        $.ajax({
+          url:"page/writereport",
+          type:"get",
+          async: true,
+          success:function(data){
+            $.ajaxSetup ({ cache: false });
+            $("#content").html(data);
+          }
+        })
+      }
+
+      function ws(){
+        $.ajax({
+          url:"page/writesign",
+          type:"get",
+          async: true,
+          success:function(data){
+          $("#content").html(data);
+          }
+        })
+      }
+
+      function cp(){
+        $.ajax({
+          url:"page/changepw",
+          type:"get",
+          async: true,
+          success:function(data){
+          $("#content").html(data);
+          }
+        })
+      }
+
+      function pi(){
+        $.ajax({
+            url:"page/personalinfo",
+            type:"get",
+            success:function(data){
+              $("#content").html(data);
+            }
+          })
+      }
+
+      function sr(){
+          $.ajax({
+              url:"page/signreview",
+              type:"get",
+              success:function(data){
+                $("#content").html(data);
+              }
+            })
+      }
+
+      function mr(){
+          $.ajax({
+              url:"page/meetingrecord",
+              type:"get",
+              success:function(data){
+                $("#content").html(data);
+              }
+            })
+      }
+
+      function um(){
+        $.ajax({
+          url:"page/usermanage",
+          type:"get",
+          success:function(data){
+            $("#content").html(data);
+          }
+        })
+      }
+
+      function dm(){
+        $.ajax({
+          url:"page/datamanage",
+          type:"get",
+          success:function(data){
+            $("#content").html(data);
+          }
+        })
+      }
+
+      // function si(){
+      //   $.ajax({
+      //     url:"wr/page/signinput",
+      //     type:"get",
+      //     success:function(data){
+      //       $("#content").html(data);
+      //     }
+      //   })
+      // }
+
+        function sysc(){
+          $.ajax({
+            url:"page/systemcontrol",
+            type:"get",
+            async: true,
+            success:function(data){
+            $("#content").html(data);
+            }
+          })
+        }
+
+        function rc(){
+            $.ajax({
+                url:"page/reportcollect",
+                type:"get",
+                success:function(data){
+                  $("#content").html(data);
+                }
+              })
+        }
+        function sc(){
+            $.ajax({
+                url:"page/signcollect",
+                type:"get",
+                success:function(data){
+                  $("#content").html(data);
+                }
+              })
+        }
+        function rs(){
+          $.ajax({
+            url:"page/reportsearch",
+            type:"get",
+            async: true,
+            success:function(data){
+            $("#content").html(data);
+            }
+          })
+        }
+        function se(){
+          $.ajax({
+            url:"page/summaryexport",
+            type:"get",
+            success:function(data){
+              $("#content").html(data);
+            }
+          })
+        }
+
+        function rn(){
+          $.ajax({
+            url:"page/notification",
+            type:"get",
+            success:function(data){
+              $("#content").html(data);
+            }
+          })
+        }
+
+        function rr(){
+            $.ajax({
+                url:"page/reportreview",
+                type:"get",
+                success:function(data){
+                  $("#content").html(data);
+                }
+              })
+        }
+
+    </script>
   </body>
 </html>

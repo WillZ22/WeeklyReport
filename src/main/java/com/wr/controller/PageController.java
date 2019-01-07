@@ -22,18 +22,18 @@ public class PageController {
 		String role = (String) session.getAttribute("role");
 		switch (role) {
 		case "admin":
-			return "redirect:/page/admin";
+			return "redirect:admin";
 			
 		case "groupmember":
-			return "redirect:/page/gmember";
+			return "redirect:gmember";
 			
 		case "groupleader":
-			return "redirect:/page/gleader";
+			return "redirect:gleader";
 
 		case "teacher":
-			return "redirect:/page/teacher";
+			return "redirect:teacher";
 		case "secretary":
-			return "redirect:/page/secretary";
+			return "redirect:secretary";
 		default:
 			break;
 		}
@@ -43,31 +43,31 @@ public class PageController {
 	
 	@RequestMapping(value = "/gmember")
 	public String group_member() {
-//		TODO
+
 		return "GroupMember";
 	}
 	
 	@RequestMapping(value = "/gleader")
 	public String group_leader() {
-//		TODO
+
 		return "GroupLeader";
 	}
 	
 	@RequestMapping(value = "/teacher")
 	public String teacher() {
-//		TODO
+
 		return "Boss";
 	}
 	
 	@RequestMapping(value = "/admin")
 	public String admin() {
-//		TODO
+
 		return "Admin";
 	}
 	
 	@RequestMapping(value = "/secretary")
 	public String secretary() {
-//		TODO
+
 		return "Secretary";
 	}
 	

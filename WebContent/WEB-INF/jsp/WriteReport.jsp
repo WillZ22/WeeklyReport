@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<% String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"; %>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 
   <head>
-    <base href=" <%=basePath%>">
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,28 +16,28 @@
     <link rel="icon" href="#">
 
     <!-- Bootstrap core CSS -->
-    <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!--Font Awesome CSS-->
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
-    <link href="wr/Static/css/style.css" rel="stylesheet">
+    <link href="Static/css/style.css" rel="stylesheet">
 
     <!--datetimepicker CSS-->
-    <link href="wr/Static/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link href="Static/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 
     <!--Bootstrap table CSS-->
-    <link rel="stylesheet" href="wr/Static/bootstrap-table/bootstrap-table.min.css">
+    <link rel="stylesheet" href="Static/bootstrap-table/bootstrap-table.min.css">
 
     <!--Wang Editor CSS-->
-    <link rel="stylesheet" href="wr/Static/wangEditor-3.1.0/wangEditor.min.css">
+    <link rel="stylesheet" href="Static/wangEditor-3.1.0/wangEditor.min.css">
 
     <!--Bootstrapvalidator CSS-->
-    <link rel="stylesheet" href="wr/Static/bootstrapvalidator/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="Static/bootstrapvalidator/bootstrapValidator.min.css">
 
 
-    <link rel="stylesheet" href="wr/Static/bootstrap-fileinput/css/fileinput.min.css">
+    <link rel="stylesheet" href="Static/bootstrap-fileinput/css/fileinput.min.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -253,13 +253,13 @@
 
     <%-- <script src="wr/Static/js/jquery-3.3.1.min.js"></script>
     <script src="wr/Static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> --%>
-    <script src="wr/Static/datetimepicker/bootstrap-datetimepicker.min.js"></script>
-    <script src="wr/Static/bootstrap-table/bootstrap-table.min.js"></script>
-    <script src="wr/Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
-    <script src="wr/Static/wangEditor-3.1.0/wangEditor.min.js"></script>
-    <script src="wr/Static/bootstrapvalidator/bootstrapValidator.min.js"></script>
-    <script src="wr/Static/bootstrap-fileinput/js/fileinput.min.js"></script>
-    <script src="wr/Static/bootstrap-fileinput/js/zh.js"></script>
+    <script src="Static/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="Static/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="Static/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+    <script src="Static/wangEditor-3.1.0/wangEditor.min.js"></script>
+    <script src="Static/bootstrapvalidator/bootstrapValidator.min.js"></script>
+    <script src="Static/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script src="Static/bootstrap-fileinput/js/zh.js"></script>
 
 
     <script type="text/javascript">
@@ -304,7 +304,7 @@
 
     function initTime(){
       $.ajax({
-        url:"wr/function/gettime",
+        url:"function/gettime",
         type:"get",
         async: false,
         success:function(data){
@@ -320,14 +320,17 @@
 
         function initTable () {
             $('#td_WR').bootstrapTable({
-                url: "wr/function/getuserreptable", //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
+                url: "function/getuserreptable", //请求后台的URL（*）//bootstrap table要求的数据要有rows和total
                 method: "post",                      //请求方式（*）
                 cache: true,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                 pagination: true,                   //是否显示分页（*）
                 sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
                 contentType: "application/x-www-form-urlencoded",
                 pageNumber: 1,                       //初始化加载第一页，默认第一页
+                sortStable:true,
                 pageSize: 10,                       //每页的记录行数（*）
+                sortName:"nw",
+                sortOrder:"desc",
                 pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
                 uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
                 queryParams : function (params) {
@@ -355,7 +358,7 @@
                     formatter: function(value, row, index){
                         var ret = "";
                         $.ajax({
-                          url:'wr/function/getuserfilelist',
+                          url:'function/getuserfilelist',
                           type: 'post',
                           data: {
                             term: row.term,
@@ -382,7 +385,7 @@
                         form.attr("style","display:none");
                         form.attr("target","");
                         form.attr("method","post");
-                        form.attr("action","wr/function/download");
+                        form.attr("action","function/download");
 
                         var input1 = $("<input>");
                         input1.attr("type","hidden");
@@ -455,7 +458,7 @@
                           $('#btn_save').removeAttr('disabled');
                         }
                         $.ajax({
-                          url: "wr/function/getrep",
+                          url: "function/getrep",
                           type: "post",
                           data:{
                             nw: row.nw,
@@ -486,7 +489,7 @@
                         $('#removeText').text("是否删除" + row.term + "第" + row.nw + "周周报");
                         $('#removeBtn').click(function(){             //TODO:添加删除后台数据的方法
                           $.ajax({
-                            url: "wr/function/deletereport",
+                            url: "function/deletereport",
                             type: "post",
                             data:{
                               nw: row.nw,
@@ -567,7 +570,8 @@
       // editor.customConfig.uploadImgServer = '/upload' ; // 上传图片到服务器
       editor2 = new E('#div3', '#div4');
       editor1.customConfig.showLinkImg = false;
-      editor1.customConfig.uploadImgShowBase64 = true ;
+      editor1.customConfig.uploadImgServer = 'function/saveImage';
+      editor1.customConfig.uploadFileName = 'image';
       editor1.customConfig.menus = [
         'head',  // 标题
         'bold',  // 粗体
@@ -585,7 +589,8 @@
 
 
       editor2.customConfig.showLinkImg = false;
-      editor2.customConfig.uploadImgShowBase64 = true ;
+      editor2.customConfig.uploadImgServer = 'function/saveImage';
+      editor2.customConfig.uploadFileName = 'image';
       editor2.customConfig.menus = [
         'head',  // 标题
         'bold',  // 粗体
@@ -680,11 +685,11 @@
 
     //新添加周报按钮
     $('#btn_new').click(function(){
-      if (nowweek != 5) {
-        alert("不在规定时间内，不得提交");
-      } else{
+      // if (nowweek != 5) {
+      //   alert("不在规定时间内，不得提交");
+      // } else{
         $('#newModal').modal('show');
-      }
+      // }
     });
 
 
@@ -714,7 +719,7 @@
             }
 
             $.ajax({
-              url:"wr/function/reportsubmit",
+              url:"function/reportsubmit",
               type:"post",
               data:formData,
               processData:false,
@@ -766,7 +771,7 @@
         }
 
         $.ajax({
-          url:"wr/function/repupdate",
+          url:"function/repupdate",
           type:"post",
           data:formData,
           processData:false,

@@ -24,12 +24,10 @@ public class AInterceptor implements HandlerInterceptor{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
 		String islogin = (String) request.getSession().getAttribute("isLogin");
 		String role = (String) request.getSession().getAttribute("role");
 		if (islogin == null) {
-			response.sendRedirect("/wr/loginpage");
+			response.sendRedirect(request.getContextPath()+"/loginpage");
 			return false;
 		} else if (!role.equals("admin")) {
 			return false;

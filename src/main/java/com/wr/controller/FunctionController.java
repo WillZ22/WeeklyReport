@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -56,7 +58,6 @@ import net.sf.json.JsonConfig;
 @Controller
 @RequestMapping("/function")
 public class FunctionController {
-	
 	
 	@Autowired
 	ReportService reportService;
@@ -433,12 +434,18 @@ public class FunctionController {
 		String fri_eve_in = request.getParameter("fri_eve_in");
 		String fri_eve_out = request.getParameter("fri_eve_out");
 		
+		String sat_am_in = request.getParameter("sat_am_in");
+		String sat_am_out = request.getParameter("sat_am_out");
+		String sat_pm_in = request.getParameter("sat_pm_in");
+		String sat_pm_out = request.getParameter("sat_pm_out");
+		String sat_eve_in = request.getParameter("sat_eve_in");
+		String sat_eve_out = request.getParameter("sat_eve_out");
 		
 		String note = request.getParameter("note");
 		
 		int late = Integer.parseInt(request.getParameter("late"));
 		int dayoff = Integer.parseInt(request.getParameter("dayoff"));
-		int totalTime = Integer.parseInt(request.getParameter("totaltime"));  
+		String totalTime = request.getParameter("totaltime"); 
 
 		Sign sign = signSerivce.getSign(username, term, nw);
 		if (sign == null) {
@@ -448,7 +455,9 @@ public class FunctionController {
 					tues_am_in, tues_am_out, tues_pm_in, tues_pm_out, tues_eve_in, tues_eve_out, 
 					wed_am_in, wed_am_out, wed_pm_in, wed_pm_out, wed_eve_in, wed_eve_out, 
 					thur_am_in, thur_am_out, thur_pm_in, thur_pm_out, thur_eve_in, thur_eve_out, 
-					fri_am_in, fri_am_out, fri_pm_in, fri_pm_out, fri_eve_in, fri_eve_out, note, year, month);
+					fri_am_in, fri_am_out, fri_pm_in, fri_pm_out, fri_eve_in, fri_eve_out, 
+					sat_am_in, sat_am_out, sat_pm_in, sat_pm_out, sat_eve_in, sat_eve_out, 
+					note, year, month);
 		} else {
 			sign.setDayoff(dayoff);
 			sign.setLate(late);
@@ -494,6 +503,13 @@ public class FunctionController {
 			sign.setFri_pm_out(fri_pm_out);
 			sign.setFri_eve_in(fri_eve_in);
 			sign.setFri_eve_out(fri_eve_out);
+			
+			sign.setSat_am_in(sat_am_in);
+			sign.setSat_am_out(sat_am_out);
+			sign.setSat_pm_in(sat_pm_in);
+			sign.setSat_pm_out(sat_pm_out);
+			sign.setSat_eve_in(sat_eve_in);
+			sign.setSat_eve_out(sat_eve_out);
 			
 			sign.setNote(note);
 			signSerivce.updateSign(sign);
@@ -1118,8 +1134,7 @@ public class FunctionController {
 		String half = request.getParameter("half");
 		String term = year + half;
 		int start_NW_of_Term = Integer.parseInt(request.getParameter("nw"));
-		SystemTime systemTime = new SystemTime();
-		systemTime.start(term, start_NW_of_Term);
+		SystemTime.start(term, start_NW_of_Term);
 		return "sucesse";
 	}
 	
@@ -1213,6 +1228,57 @@ public class FunctionController {
 		jObject.put("name", name);
 		jObject.put("email", email);
 		return jObject.toString();
+	}
+	
+	
+	@RequestMapping(value = "/saveImage", method =RequestMethod.POST)
+	@ResponseBody
+	public String saveImage(@RequestParam(value = "image", required = false)MultipartFile[] files,HttpServletRequest request,HttpServletResponse response , HttpSession session) {
+		
+		List<String> pathList = new ArrayList<>();
+		JSONObject jsonObject = new JSONObject();
+		String username = (String) session.getAttribute("username"); 
+		
+		String term = SystemTime.term;
+		int year = SystemTime.year;
+		int month = SystemTime.month;
+		int nw = SystemTime.start_NW_of_Term;
+
+		
+		if (files != null && files.length > 0) {
+			//根据不同用户，不同日期生成不同存储路径
+			String savePath ="image/"+year+"/"+month;
+			//获取项目绝对路径,将文件存储到该路径
+			String realPath = request.getServletContext().getRealPath("/") + savePath;
+			for(MultipartFile  file : files) {
+				if (!file.isEmpty()) {
+
+					SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");				
+					String fileName = username + "_" +df.format(new Date()) + ".jpg";
+					
+					//要存储的文件
+					File desFile = new File(realPath, fileName);
+					if (!desFile.exists()) {
+						desFile.mkdirs();	
+					}
+					//转存
+					try {
+						file.transferTo(desFile);
+					} catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+					//访问file的url
+					String acessUrl = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()
+					+ request.getContextPath() + "/" + savePath + "/" + fileName;
+					pathList.add(acessUrl);	
+				}
+			}
+			jsonObject.put("errno", 0);
+			jsonObject.put("data", pathList);
+		} 
+		return jsonObject.toString();
 	}
 	
 }

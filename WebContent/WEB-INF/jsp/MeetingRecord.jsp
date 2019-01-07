@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+ request.getContextPath() +"/";
 %>
 
 <!DOCTYPE html>
@@ -21,13 +21,13 @@
     <title>WeeklyReport</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="wr/Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
 		<%-- <!--Font Awesome CSS-->
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> --%>
 
     <!-- Custom styles for this project -->
-    <link href="wr/Static/css/style.css" rel="stylesheet">
+    <link href="Static/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -73,7 +73,7 @@
 
     function initTime(){
       $.ajax({
-        url:"wr/function/gettime",
+        url:"function/gettime",
         type:"get",
         async: false,
         success:function(data){
@@ -100,7 +100,7 @@
       var str = $('#cont').val();
       str = textareaTo(str);
       $.ajax({
-        url: "wr/function/submitmeetingrecord",
+        url: "function/submitmeetingrecord",
         type: "post",
         data:{
           content:str

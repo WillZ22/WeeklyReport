@@ -28,7 +28,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 		if (str == null) {
 			return true;
 		}
-		response.sendRedirect("/wr/page/mainpage");
+		response.sendRedirect(request.getContextPath()+"/page/mainpage");
 		return false;
 	}
 

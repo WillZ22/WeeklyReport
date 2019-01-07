@@ -82,6 +82,15 @@
 	    <bean class="com.wr.Interceptor.AInterceptor"></bean>
 	  </mvc:interceptor>
 	  
+	  <mvc:interceptor>
+	    <mvc:mapping path="/function/reportsubmit"/>
+	    <mvc:mapping path="/function/submitsign"/>
+	    <mvc:mapping path="/function/saveimage"/>
+	    <!--管理员-->
+	    <bean class="com.wr.Interceptor.GMAndGLInterceptor"></bean>
+	  </mvc:interceptor>
+	  
+	  
 	</mvc:interceptors>
 	
 </beans>

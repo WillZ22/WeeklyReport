@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<% String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"; %>
+
 <!DOCTYPE html>
 <html>
 <head>
-  <base href=" <%=basePath%>">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +20,7 @@
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this project -->
-    <link href="wr/Static/css/style.css" rel="stylesheet">
+    <link href="Static/css/style.css" rel="stylesheet">
 
 </head>
 <body>
@@ -101,7 +100,7 @@
 
     function initTime(){
       $.ajax({
-        url:'wr/function/gettime',
+        url:'function/gettime',
         type: 'get',
         async: true,
         success:function(data){
@@ -119,7 +118,7 @@
       var m = confirm("确认修改系统时间吗？（系统运行时修改可能造成系统异常）")
       if(m == true){
         $.ajax({
-              url:'wr/function/startsystem',
+              url:'function/startsystem',
               type:"post",
               data: {
                 nw: $('#nw').val(),

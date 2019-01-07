@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wr.service.UserService;
+import com.wr.utils.SystemTime;
 
 @Controller
 @RequestMapping("/loginpage")
@@ -31,7 +32,9 @@ public class LoginController {
 	public String loginValidate(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws IOException {
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
+		System.out.println(request.getContextPath());
 		boolean isTrue = userService.login(username, password);
+		SystemTime.fresh();
 		if (isTrue == true) {
 			String role = userService.getUser(username).getRole();
 			request.getSession().setAttribute("isLogin", "yes");
@@ -43,10 +46,10 @@ public class LoginController {
 		}
 	}
 	
-	@RequestMapping(value = "/logout")
-	public void logOut(HttpServletResponse response, HttpSession session) throws IOException {
+	@RequestMapping(value = "/logout.do")
+	public String logOut(HttpServletResponse response, HttpSession session) throws IOException {
 		  session.invalidate();
-		  response.sendRedirect("/wr/loginpage");
+		  return "redirect:/";
 	}
 	
 }
