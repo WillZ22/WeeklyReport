@@ -1,3 +1,5 @@
+
+
 $(function(){
   queryM(1);
   getFirstNotification();
@@ -6,7 +8,7 @@ $(function(){
 
   function queryM(page){
     $.ajax({
-      url:"wr/function/getmeetingreportpagecutlist",
+      url:"function/getmeetingreportpagecutlist",
       type:"post",
       async: false,
       contentType:"application/x-www-form-urlencoded",
@@ -30,7 +32,7 @@ $(function(){
 
   function mjump(mrid){
     $.ajax({
-      url:"wr/function/mjump",
+      url:"function/mjump",
       type: "post",
       data:{
         mrid:mrid
@@ -44,7 +46,7 @@ $(function(){
 
   function getFirstNotification(){
     $.ajax({
-      url:"wr/function/getfirstnotification",
+      url:"function/getfirstnotification",
       type: "get",
       async: false,
       success:function(data){
@@ -70,7 +72,7 @@ $(function(){
 
   function wr(){
     $.ajax({
-      url:"wr/page/writereport",
+      url:"page/writereport",
       type:"get",
       async: true,
       success:function(data){
@@ -82,7 +84,7 @@ $(function(){
 
   function ws(){
     $.ajax({
-      url:"wr/page/writesign",
+      url:"page/writesign",
       type:"get",
       async: true,
       success:function(data){
@@ -93,7 +95,7 @@ $(function(){
 
   function cp(){
     $.ajax({
-      url:"wr/page/changepw",
+      url:"page/changepw",
       type:"get",
       async: true,
       success:function(data){
@@ -104,7 +106,7 @@ $(function(){
 
   function pi(){
     $.ajax({
-        url:"wr/page/personalinfo",
+        url:"page/personalinfo",
         type:"get",
         success:function(data){
           $("#content").html(data);
@@ -114,7 +116,7 @@ $(function(){
 
   function sr(){
       $.ajax({
-          url:"wr/page/signreview",
+          url:"page/signreview",
           type:"get",
           success:function(data){
             $("#content").html(data);
@@ -124,7 +126,7 @@ $(function(){
 
   function mr(){
       $.ajax({
-          url:"wr/page/meetingrecord",
+          url:"page/meetingrecord",
           type:"get",
           success:function(data){
             $("#content").html(data);
@@ -134,7 +136,7 @@ $(function(){
 
   function um(){
     $.ajax({
-      url:"wr/page/usermanage",
+      url:"page/usermanage",
       type:"get",
       success:function(data){
         $("#content").html(data);
@@ -144,7 +146,7 @@ $(function(){
 
   function dm(){
     $.ajax({
-      url:"wr/page/datamanage",
+      url:"page/datamanage",
       type:"get",
       success:function(data){
         $("#content").html(data);
@@ -164,7 +166,7 @@ $(function(){
 
     function sysc(){
       $.ajax({
-        url:"wr/page/systemcontrol",
+        url:"page/systemcontrol",
         type:"get",
         async: true,
         success:function(data){
@@ -175,7 +177,7 @@ $(function(){
 
     function rc(){
         $.ajax({
-            url:"wr/page/reportcollect",
+            url:"page/reportcollect",
             type:"get",
             success:function(data){
               $("#content").html(data);
@@ -184,7 +186,7 @@ $(function(){
     }
     function sc(){
         $.ajax({
-            url:"wr/page/signcollect",
+            url:"page/signcollect",
             type:"get",
             success:function(data){
               $("#content").html(data);
@@ -193,7 +195,7 @@ $(function(){
     }
     function rs(){
       $.ajax({
-        url:"wr/page/reportsearch",
+        url:"page/reportsearch",
         type:"get",
         async: true,
         success:function(data){
@@ -203,7 +205,7 @@ $(function(){
     }
     function se(){
       $.ajax({
-        url:"wr/page/summaryexport",
+        url:"page/summaryexport",
         type:"get",
         success:function(data){
           $("#content").html(data);
@@ -213,7 +215,7 @@ $(function(){
 
     function rn(){
       $.ajax({
-        url:"wr/page/notification",
+        url:"page/notification",
         type:"get",
         success:function(data){
           $("#content").html(data);
@@ -223,7 +225,7 @@ $(function(){
 
     function rr(){
         $.ajax({
-            url:"wr/page/reportreview",
+            url:"page/reportreview",
             type:"get",
             success:function(data){
               $("#content").html(data);
