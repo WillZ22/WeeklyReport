@@ -270,13 +270,12 @@
         var minute = out_m - in_m;
 
         if(minute < 0){
-          minute = -minute;
           hour = hour - 1;
+          minute = 60 + minute;
         }
 
         minute = (minute/60).toFixed(1);
         var result = parseInt(hour) + parseFloat(minute);
-        result = parseFloat(result);
         return result;
       }
 

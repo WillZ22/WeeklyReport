@@ -685,11 +685,11 @@
 
     //新添加周报按钮
     $('#btn_new').click(function(){
-      // if (nowweek != 5) {
-      //   alert("不在规定时间内，不得提交");
-      // } else{
+      if (nowweek != 5) {
+        alert("不在规定时间内，不得提交");
+      } else{
         $('#newModal').modal('show');
-      // }
+      }
     });
 
 
