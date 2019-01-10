@@ -181,9 +181,7 @@ public class Sign {
 		this.dayoff = dayoff;
 	}
 	
-	@Column(nullable=false) 
-//	@NotEmpty(message = "总时间不能为空")
-	//@Range(min=0, max=200, message="超出验证范围") 
+	@Column(nullable=true) 
 	public String getTotalTime() {
 		return totalTime;
 	}
