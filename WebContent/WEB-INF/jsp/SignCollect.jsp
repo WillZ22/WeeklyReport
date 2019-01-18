@@ -243,7 +243,7 @@
                 </tr>
 
                 <tr>
-                  <th>总计：</th>
+                  <th>总计</th>
                   <td><input class="form-control pull-right" disabled="disabled" step="0.1"  type="number" id="sun_sum"  max="24" min="0"></td>
                   <td><input class="form-control pull-right" disabled="disabled" step="0.1"  type="number" id="mon_sum"  max="24" min="0"></td>
                   <td><input class="form-control pull-right" disabled="disabled" step="0.1"  type="number" id="tues_sum" max="24" min="0"></td>
@@ -572,6 +572,7 @@
                               $('#dayoff').val(data.dayoff);
                               $('#totaltime').val(data.totalTime);
                               $('#note').val(toTextarea(data.note));
+                              calculate();
                               $('#checkmodal').modal();
                             }
                           });
