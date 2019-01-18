@@ -64,7 +64,7 @@ public class FunctionController {
 	
 	@Autowired
 	SignService signSerivce;
-
+	
 	@Autowired
 	UserService userService;
 	
@@ -74,7 +74,6 @@ public class FunctionController {
 	@Autowired
 	NotificationService notificationService;
 	
-
 	
 	/****************************** Main Page *************************************/
 	@RequestMapping(value = "/njump", method = RequestMethod.POST)
