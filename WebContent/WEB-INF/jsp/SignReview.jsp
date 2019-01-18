@@ -274,8 +274,8 @@
         var sat_sum = calculateMethod($("#sat_am_in").val(), $("#sat_am_out").val()) + calculateMethod($("#sat_pm_in").val(), $("#sat_pm_out").val()) + calculateMethod($("#sat_eve_in").val(), $("#sat_eve_out").val());
         sat_sum = sat_sum.toFixed(1);
         $('#sat_sum').val(sat_sum);
-        var total = sun_sum + mon_sum + tues_sum + wed_sum + thur_sum + fri_sum + sat_sum;
-        total = total.toFixed(1);
+        var total = parseFloat(sun_sum) + parseFloat(mon_sum) + parseFloat(tues_sum) + parseFloat(wed_sum)
+         + parseFloat(thur_sum) + parseFloat(fri_sum) + parseFloat(sat_sum);
         $('#totaltime').val(total);
       };
 
