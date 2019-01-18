@@ -244,13 +244,13 @@
 
                 <tr>
                   <th>总计</th>
-                  <td><input class="form-control pull-right" disabled="disabled" step="0.1"  type="number" id="sun_sum"  max="24" min="0"></td>
-                  <td><input class="form-control pull-right" disabled="disabled" step="0.1"  type="number" id="mon_sum"  max="24" min="0"></td>
-                  <td><input class="form-control pull-right" disabled="disabled" step="0.1"  type="number" id="tues_sum" max="24" min="0"></td>
-                  <td><input class="form-control pull-right" disabled="disabled" step="0.1"  type="number" id="wed_sum"  max="24" min="0"></td>
-                  <td><input class="form-control pull-right" disabled="disabled" step="0.1"  type="number" id="thur_sum" max="24" min="0"></td>
-                  <td><input class="form-control pull-right" disabled="disabled" step="0.1"  type="number" id="fri_sum"  max="24" min="0"></td>
-                  <td><input class="form-control pull-right" disabled="disabled" step="0.1"  type="number" id="sat_sum"  max="24" min="0"></td>
+                  <td><input class="form-control pull-right" step="0.1" disabled="disabled" type="number" id="sun_sum"  max="24" min="0"></td>
+                  <td><input class="form-control pull-right" step="0.1" disabled="disabled" type="number" id="mon_sum"  max="24" min="0"></td>
+                  <td><input class="form-control pull-right" step="0.1" disabled="disabled" type="number" id="tues_sum" max="24" min="0"></td>
+                  <td><input class="form-control pull-right" step="0.1" disabled="disabled" type="number" id="wed_sum"  max="24" min="0"></td>
+                  <td><input class="form-control pull-right" step="0.1" disabled="disabled" type="number" id="thur_sum" max="24" min="0"></td>
+                  <td><input class="form-control pull-right" step="0.1" disabled="disabled" type="number" id="fri_sum"  max="24" min="0"></td>
+                  <td><input class="form-control pull-right" step="0.1" disabled="disabled" type="number" id="sat_sum"  max="24" min="0"></td>
                 </tr>
 
                 <tr>
@@ -303,20 +303,28 @@
 
       function calculate(){
         var sun_sum = calculateMethod($("#sun_am_in").val(), $("#sun_am_out").val()) + calculateMethod($("#sun_pm_in").val(), $("#sun_pm_out").val()) + calculateMethod($("#sun_eve_in").val(), $("#sun_eve_out").val());
+        sun_sum = sun_sum.toFixed(1);
         $('#sun_sum').val(sun_sum);
         var mon_sum = calculateMethod($("#mon_am_in").val(), $("#mon_am_out").val()) + calculateMethod($("#mon_pm_in").val(), $("#mon_pm_out").val()) + calculateMethod($("#mon_eve_in").val(), $("#mon_eve_out").val());
+        mon_sum = mon_sum.toFixed(1);
         $('#mon_sum').val(mon_sum);
         var tues_sum = calculateMethod($("#tues_am_in").val(), $("#tues_am_out").val()) + calculateMethod($("#tues_pm_in").val(), $("#tues_pm_out").val()) + calculateMethod($("#tues_eve_in").val(), $("#tues_eve_out").val());
+        tues_sum = tues_sum.toFixed(1);
         $('#tues_sum').val(tues_sum);
         var wed_sum = calculateMethod($("#wed_am_in").val(), $("#wed_am_out").val()) + calculateMethod($("#wed_pm_in").val(), $("#wed_pm_out").val()) + calculateMethod($("#wed_eve_in").val(), $("#wed_eve_out").val());
+        wed_sum = wed_sum.toFixed(1);
         $('#wed_sum').val(wed_sum);
         var thur_sum = calculateMethod($("#thur_am_in").val(), $("#thur_am_out").val()) + calculateMethod($("#thur_pm_in").val(), $("#thur_pm_out").val()) + calculateMethod($("#thur_eve_in").val(), $("#thur_eve_out").val());
+        thur_sum = thur_sum.toFixed(1);
         $('#thur_sum').val(thur_sum);
         var fri_sum = calculateMethod($("#fri_am_in").val(), $("#fri_am_out").val()) + calculateMethod($("#fri_pm_in").val(), $("#fri_pm_out").val()) + calculateMethod($("#fri_eve_in").val(), $("#fri_eve_out").val());
+        fri_sum = fri_sum.toFixed(1);
         $('#fri_sum').val(fri_sum);
         var sat_sum = calculateMethod($("#sat_am_in").val(), $("#sat_am_out").val()) + calculateMethod($("#sat_pm_in").val(), $("#sat_pm_out").val()) + calculateMethod($("#sat_eve_in").val(), $("#sat_eve_out").val());
+        sat_sum = sat_sum.toFixed(1);
         $('#sat_sum').val(sat_sum);
         var total = sun_sum + mon_sum + tues_sum + wed_sum + thur_sum + fri_sum + sat_sum;
+        total = total.toFixed(1);
         $('#totaltime').val(total);
       };
 
